@@ -16,7 +16,6 @@ Heavily inspired by the built-in `StatusBar` module and [react-native-transparen
 [![Platform - iOS](https://img.shields.io/badge/platform-iOS-000.svg?style=flat&logo=apple)](https://developer.apple.com/ios)
 
 <p>
-  <img height="520" src="https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/ios_demo.gif?raw=true" alt="iOS demo"></img>
   <img width="300" src="https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/android_demo.gif?raw=true" alt="android demo"></img>
 </p>
 
