@@ -178,7 +178,7 @@ public class MainActivity extends ReactActivity {
 
 You can setup your initial status bar style in **Xcode > General > Deployment Info**:
 
-![Xcode setup](https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/xcode_setup.gif?raw=true)
+![Xcode setup](https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/xcode_setup.png?raw=true)
 
 ## Usage
 
