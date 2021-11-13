@@ -1,5 +1,6 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
   container: {
@@ -10,8 +11,10 @@ const styles = StyleSheet.create({
 
 export const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Hello world</Text>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <Text>Hello world</Text>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
