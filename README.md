@@ -102,12 +102,15 @@ buildscript {
 
 ```xml
 <resources>
+
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
     <!-- StatusBar initial style: true = dark-content, false = light-content -->
     <item name="android:windowLightStatusBar">true</item>
+
     <!-- NavigationBar stays translucent on Android < 8.1 -->
     <item name="android:windowTranslucentNavigation">true</item>
   </style>
+
 </resources>
 ```
 
@@ -115,12 +118,15 @@ buildscript {
 
 ```xml
 <resources>
+
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
     <!-- StatusBar initial style: true = dark-content, false = light-content -->
     <item name="android:windowLightStatusBar">true</item>
+
     <!-- NavigationBar initial style: true = dark-content, false = light-content -->
     <item name="android:windowLightNavigationBar">true</item>
   </style>
+
 </resources>
 ```
 
