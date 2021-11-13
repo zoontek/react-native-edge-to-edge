@@ -130,7 +130,7 @@ buildscript {
 </resources>
 ```
 
-4. To initialize the module, edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
+4. Finally edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
 ```java
 import com.facebook.react.ReactActivity;
