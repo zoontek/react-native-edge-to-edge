@@ -182,17 +182,17 @@ const App = () => {
 
 ### StatusBar
 
-```ts
+A component to control your app status bar.
+
+```tsx
+import { StatusBar } from "react-native-bars";
+
 type StatusBarProps = {
   // Should transition between status bar property changes be animated? (has no effect on Android)
   animated?: boolean;
   // Sets the color of the status bar content
   barStyle: "light-content" | "dark-content";
 };
-```
-
-```js
-import { StatusBar } from "react-native-bars";
 
 const App = () => (
   <>
@@ -206,27 +206,46 @@ const App = () => (
 
 The height of the status bar, which includes the top notch height, if present.
 
+```ts
+const height: number = StatusBar.currentHeight;
+```
+
 #### StatusBar.pushStackEntry
+
+```ts
+const entry: StatusBarProps = StatusBar.pushStackEntry(
+  props /*: StatusBarProps*/,
+);
+```
 
 #### StatusBar.popStackEntry
 
+```ts
+StatusBar.popStackEntry(entry/*: StatusBarProps*/): void;
+```
+
 #### StatusBar.replaceStackEntry
+
+```ts
+const entry: StatusBarProps = StatusBar.replaceStackEntry(
+  entry /*: StatusBarProps*/,
+  props /*: StatusBarProps*/,
+);
+```
 
 ---
 
 ### NavigationBar
 
-Has no effect on iOS or Android < 8.1.
+A component to control your app navigation bar. It has no effect on iOS and Android < 8.1.
 
-```ts
+```tsx
+import { NavigationBar } from "react-native-bars";
+
 type NavigationBarProps = {
   // Sets the color of the navigation bar content
   barStyle: "light-content" | "dark-content";
 };
-```
-
-```js
-import { NavigationBar } from "react-native-bars";
 
 const App = () => (
   <>
@@ -240,27 +259,48 @@ const App = () => (
 
 The height of the navigation bar, which includes the bottom notch height, if present.
 
+```ts
+const height: number = NavigationBar.currentHeight;
+```
+
 #### NavigationBar.pushStackEntry
+
+```ts
+const entry: NavigationBarProps = NavigationBar.pushStackEntry(
+  props /*: NavigationBarProps*/,
+);
+```
 
 #### NavigationBar.popStackEntry
 
+```ts
+NavigationBar.popStackEntry(entry/*: NavigationBarProps*/): void;
+```
+
 #### NavigationBar.replaceStackEntry
+
+```ts
+const entry: NavigationBarProps = NavigationBar.replaceStackEntry(
+  entry /*: NavigationBarProps*/,
+  props /*: NavigationBarProps*/,
+);
+```
 
 ---
 
 ### SystemBars
 
-```ts
+A component to control both your app status and navigation bars.
+
+```tsx
+import { NavigationBar } from "react-native-bars";
+
 type SystemBarsProps = {
   // Should transition between bars property changes be animated? (has no effect on Android)
   animated?: boolean;
   // Sets the color of the bars content
   barStyle: "light-content" | "dark-content";
 };
-```
-
-```js
-import { SystemBars } from "react-native-bars";
 
 const App = () => (
   <>
