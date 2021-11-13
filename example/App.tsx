@@ -13,12 +13,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export const App = () => {
+const App = () => {
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <SafeAreaView style={styles.container}>
-        <Text>Hello world</Text>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <SafeAreaView style={styles.container}>
+      <Text>Hello world</Text>
+    </SafeAreaView>
   );
 };
+
+export default () => (
+  <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+    <App />
+  </SafeAreaProvider>
+);
