@@ -27,9 +27,9 @@ Components to control your app status and navigation bars.
 ## Installation
 
 ```bash
-$ yarn add react-native-bars
+$ npm install --save react-native-bars
 # --- or ---
-$ npm i --save react-native-bars
+$ yarn add react-native-bars
 ```
 
 ## 🆘 Manual linking
