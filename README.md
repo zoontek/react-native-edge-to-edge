@@ -105,31 +105,42 @@ buildscript {
 <resources>
 
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- Set status bar background transparent -->
+    <item name="android:statusBarColor">@android:color/transparent</item>
     <!-- StatusBar initial style: true = dark-content, false = light-content -->
     <item name="android:windowLightStatusBar">true</item>
-
-    <!-- NavigationBar stays translucent on Android < 8.1 -->
+    <!-- NavigationBar will stay translucent on Android < 8.1 -->
     <item name="android:windowTranslucentNavigation">true</item>
   </style>
 
 </resources>
 ```
 
+**👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles.**
+
 3. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:
 
 ```xml
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-    <!-- StatusBar initial style: true = dark-content, false = light-content -->
-    <item name="android:windowLightStatusBar">true</item>
+    <!-- Set bars background transparent -->
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
 
-    <!-- NavigationBar initial style: true = dark-content, false = light-content -->
+    <!-- Bars initial styles: true = dark-content, false = light-content -->
+    <item name="android:windowLightStatusBar">true</item>
     <item name="android:windowLightNavigationBar">true</item>
+
+    <!-- Disable auto contrasted background (on Android 10+) -->
+    <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
+    <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
   </style>
 
 </resources>
 ```
+
+**👉 Dont forget to edit `android:windowLightStatusBar` and `android:windowLightNavigationBar` to match your initial styles.**
 
 4. Finally edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
