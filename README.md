@@ -20,9 +20,9 @@ Components to control your app status and navigation bars.
 
 ## Support
 
-| version | react-native version | Android version | iOS version |
-| ------- | -------------------- | --------------- | ----------- |
-| 1.0.0+  | 0.65.0+              | 6.0+            | 11.0+       |
+| version | RN version | Android version | iOS version |
+| ------- | ---------- | --------------- | ----------- |
+| 1.0.0+  | 0.65.0+    | 6.0+            | 11.0+       |
 
 ## Installation
 
