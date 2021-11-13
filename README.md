@@ -93,7 +93,7 @@ public class MainApplication extends Application implements ReactApplication {
 
 ### Android
 
-1. As this library only support Android 6+, first edit your `android/build.gradle` file:
+1. As this library only support Android 6+, first you probably have to edit your `android/build.gradle` file:
 
 ```gradle
 buildscript {
@@ -106,7 +106,8 @@ buildscript {
     // …
 ```
 
-2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:
+2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
+_👉  Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
 
 ```xml
 <resources>
@@ -123,9 +124,8 @@ buildscript {
 </resources>
 ```
 
-**👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles.**
-
-3. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:
+3. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
+_👉  Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
 
 ```xml
 <resources xmlns:tools="http://schemas.android.com/tools">
@@ -146,8 +146,6 @@ buildscript {
 
 </resources>
 ```
-
-**👉 Dont forget to edit `android:windowLightStatusBar` and `android:windowLightNavigationBar` to match your initial styles.**
 
 4. Finally edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
