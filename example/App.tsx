@@ -1,6 +1,10 @@
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+  SafeAreaView,
+} from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
   container: {
@@ -11,7 +15,7 @@ const styles = StyleSheet.create({
 
 export const App = () => {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <SafeAreaView style={styles.container}>
         <Text>Hello world</Text>
       </SafeAreaView>
