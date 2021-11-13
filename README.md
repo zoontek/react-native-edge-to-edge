@@ -24,7 +24,7 @@ Heavily inspired by the built-in `StatusBar` module and [react-native-transparen
 This module will works best with:
 
 - [react-native-bootsplash](https://github.com/zoontek/react-native-bootsplash): A splash screen library to wait until your app finished loading.
-- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context): A library to handle safe area insets.
+- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context): A library to handle safe area insets and avoid drawing below status and navigation bars.
 
 ## Support
 
