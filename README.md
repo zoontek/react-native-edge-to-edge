@@ -85,7 +85,7 @@ public class MainApplication extends Application implements ReactApplication {
 
 ### Android
 
-1. Edit your `android/build.gradle` file:
+1. As this library only support Android 6+, first edit your `android/build.gradle` file:
 
 ```gradle
 buildscript {
@@ -98,7 +98,7 @@ buildscript {
     // …
 ```
 
-2. Edit your `android/app/src/main/res/values/styles.xml` file:
+2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:
 
 ```xml
 <resources>
@@ -114,7 +114,7 @@ buildscript {
 </resources>
 ```
 
-3. Create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:
+3. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:
 
 ```xml
 <resources>
@@ -130,7 +130,7 @@ buildscript {
 </resources>
 ```
 
-4. Edit the `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
+4. To initialize the module, edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
 ```java
 import com.facebook.react.ReactActivity;
@@ -157,6 +157,8 @@ public class MainActivity extends ReactActivity {
 
 ### iOS
 
+You can setup your initial status bar style in Xcode > General > Deployment Info:
+
 ![Xcode setup](https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/xcode_setup.gif?raw=true)
 
 ## Usage
@@ -180,7 +182,7 @@ const App = () => {
 
 ## API
 
-### StatusBar
+### `<StatusBar />`
 
 A component to control your app status bar.
 
@@ -235,7 +237,7 @@ const entry: StatusBarProps = StatusBar.replaceStackEntry(
 
 ---
 
-### NavigationBar
+### `<NavigationBar />`
 
 A component to control your app navigation bar. It has no effect on iOS and Android < 8.1.
 
@@ -288,7 +290,7 @@ const entry: NavigationBarProps = NavigationBar.replaceStackEntry(
 
 ---
 
-### SystemBars
+### `<SystemBars />`
 
 A component to control both your app status and navigation bars.
 
