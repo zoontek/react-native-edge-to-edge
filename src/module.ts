@@ -3,7 +3,7 @@ import { SystemBarStyle } from "./types";
 
 export const NativeModule:
   | {
-      navigationBarHeight: SystemBarStyle;
+      navigationBarHeight: number;
       setNavigationBarStyle: (style: SystemBarStyle) => void;
     }
   | undefined = NativeModules.RNBars;
