@@ -1,10 +1,6 @@
 import * as React from "react";
-import { Platform, StatusBar as RNStatusBar } from "react-native";
+import { StatusBar as RNStatusBar } from "react-native";
 import { StatusBarProps } from "./types";
-
-const isSupportedPlatform =
-  Platform.OS === "ios" ||
-  (Platform.OS === "android" && Platform.Version >= 27);
 
 export class StatusBar extends React.Component<StatusBarProps> {
   private static propsStack: StatusBarProps[] = [];
@@ -59,7 +55,6 @@ export class StatusBar extends React.Component<StatusBarProps> {
       const lastEntry = StatusBar.propsStack[StatusBar.propsStack.length - 1];
 
       if (
-        isSupportedPlatform &&
         lastEntry != null &&
         // Update only if style have changed.
         (!oldProps || oldProps.barStyle !== lastEntry.barStyle)
