@@ -109,17 +109,23 @@ buildscript {
 ```
 
 2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
-_👉  Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
+   _👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
 
 ```xml
 <resources>
 
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- Allow drawing under the system bars background -->
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:fitsSystemWindows">false</item>
+
     <!-- Set status bar background transparent -->
     <item name="android:statusBarColor">@android:color/transparent</item>
-    <!-- StatusBar initial style: true = dark-content, false = light-content -->
+
+    <!-- Status bar initial style: true = dark-content, false = light-content -->
     <item name="android:windowLightStatusBar">true</item>
-    <!-- NavigationBar will stay translucent on Android < 8.1 -->
+
+    <!-- Navigation bar will stay translucent on Android < 8.1 -->
     <item name="android:windowTranslucentNavigation">true</item>
   </style>
 
@@ -127,13 +133,17 @@ _👉  Dont forget to edit `android:windowLightStatusBar` to match your initial 
 ```
 
 3. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
-_👉  Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
+   _👉 Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
 
 ```xml
 <resources xmlns:tools="http://schemas.android.com/tools">
 
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-    <!-- Set bars background transparent -->
+    <!-- Allow drawing under the system bars background -->
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:fitsSystemWindows">false</item>
+
+    <!-- Set system bars background transparent -->
     <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="android:navigationBarColor">@android:color/transparent</item>
 
@@ -141,7 +151,7 @@ _👉  Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationB
     <item name="android:windowLightStatusBar">true</item>
     <item name="android:windowLightNavigationBar">true</item>
 
-    <!-- Disable auto contrasted background (on Android 10+) -->
+    <!-- Disable auto contrasted system bars background (on Android 10+) -->
     <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
     <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
   </style>

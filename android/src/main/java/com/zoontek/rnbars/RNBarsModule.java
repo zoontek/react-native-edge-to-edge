@@ -76,7 +76,7 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
           window.clearFlags(
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
           );
 
           int flags = decorView.getSystemUiVisibility();
@@ -116,12 +116,14 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
       return;
     }
 
+    final Window window = activity.getWindow();
+    final View decorView = window.getDecorView();
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
       UiThreadUtil.runOnUiThread(new Runnable() {
 
         @Override
         public void run() {
-          View decorView = activity.getWindow().getDecorView();
           int flags = decorView.getSystemUiVisibility();
 
           if ("dark-content".equals(style)) {
