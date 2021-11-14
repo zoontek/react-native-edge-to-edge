@@ -122,9 +122,6 @@ buildscript {
     <!-- Set status bar background transparent -->
     <item name="android:statusBarColor">@android:color/transparent</item>
 
-    <!-- Status bar initial style: true = dark-content, false = light-content -->
-    <item name="android:windowLightStatusBar">true</item>
-
     <!-- Navigation bar will stay translucent on Android < 8.1 -->
     <item name="android:windowTranslucentNavigation">true</item>
   </style>
@@ -146,10 +143,6 @@ buildscript {
     <!-- Set system bars background transparent -->
     <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="android:navigationBarColor">@android:color/transparent</item>
-
-    <!-- Bars initial styles: true = dark-content, false = light-content -->
-    <item name="android:windowLightStatusBar">true</item>
-    <item name="android:windowLightNavigationBar">true</item>
 
     <!-- Disable auto contrasted system bars background (on Android 10+) -->
     <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
@@ -177,7 +170,7 @@ public class MainActivity extends ReactActivity {
       @Override
       protected void loadApp(String appKey) {
         super.loadApp(appKey);
-        RNBars.init(MainActivity.this); // <- initialize the module
+        RNBars.init(MainActivity.this, "dark-content"); // <- initialize with initial bars styles (could be light-content)
       }
     };
   }

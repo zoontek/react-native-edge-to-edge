@@ -22,7 +22,7 @@ public class MainActivity extends ReactActivity {
       @Override
       protected void loadApp(String appKey) {
         super.loadApp(appKey);
-        RNBars.init(MainActivity.this);
+        RNBars.init(MainActivity.this, "dark-content");
       }
     };
   }

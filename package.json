@@ -1,6 +1,6 @@
 {
   "name": "react-native-bars",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "Components to control your app status and navigation bars.",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",

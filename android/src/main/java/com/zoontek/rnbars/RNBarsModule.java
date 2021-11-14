@@ -11,6 +11,8 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -58,7 +60,7 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
     return constants;
   }
 
-  static public void init(@Nullable final Activity activity) {
+  static public void init(@Nullable final Activity activity, @NonNull final String styles) {
     if (activity == null) {
       FLog.w(
         ReactConstants.TAG,
@@ -68,6 +70,10 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
 
     final Window window = activity.getWindow();
     final View decorView = window.getDecorView();
+
+    WindowCompat.setDecorFitsSystemWindows(window, false);
+    WindowInsetsControllerCompat insetsController =
+      new WindowInsetsControllerCompat(window, decorView);
 
     activity.runOnUiThread(new Runnable() {
 
@@ -79,13 +85,11 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
               WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
           );
 
-          int flags = decorView.getSystemUiVisibility();
-          flags |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-          flags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-          decorView.setSystemUiVisibility(flags);
-
           window.setStatusBarColor(Color.TRANSPARENT);
           window.setNavigationBarColor(Color.TRANSPARENT);
+
+          insetsController.setAppearanceLightStatusBars("dark-content".equals(styles));
+          insetsController.setAppearanceLightNavigationBars("dark-content".equals(styles));
 
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.setStatusBarContrastEnforced(false);
@@ -95,12 +99,34 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
           window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
           window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
-          int flags = decorView.getSystemUiVisibility();
-          flags |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-          decorView.setSystemUiVisibility(flags);
-
           window.setStatusBarColor(Color.TRANSPARENT);
+
+          insetsController.setAppearanceLightStatusBars("dark-content".equals(styles));
         }
+      }
+    });
+  }
+
+  @ReactMethod
+  public void setStatusBarStyle(@Nullable final String style) {
+    final Activity activity = getCurrentActivity();
+
+    if (activity == null) {
+      FLog.w(
+        ReactConstants.TAG,
+        NAME + ": Ignored navigation bar change, current activity is null.");
+      return;
+    }
+
+    final Window window = activity.getWindow();
+    final View decorView = window.getDecorView();
+
+    UiThreadUtil.runOnUiThread(new Runnable() {
+
+      @Override
+      public void run() {
+        new WindowInsetsControllerCompat(window, decorView)
+          .setAppearanceLightStatusBars("dark-content".equals(style));
       }
     });
   }
@@ -124,15 +150,8 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
 
         @Override
         public void run() {
-          int flags = decorView.getSystemUiVisibility();
-
-          if ("dark-content".equals(style)) {
-            flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-          } else {
-            flags &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-          }
-
-          decorView.setSystemUiVisibility(flags);
+          new WindowInsetsControllerCompat(window, decorView)
+            .setAppearanceLightNavigationBars("dark-content".equals(style));
         }
       });
     }
