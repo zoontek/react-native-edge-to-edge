@@ -114,7 +114,7 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
     if (activity == null) {
       FLog.w(
         ReactConstants.TAG,
-        NAME + ": Ignored navigation bar change, current activity is null.");
+        NAME + ": Ignored status bar change, current activity is null.");
       return;
     }
 
