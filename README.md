@@ -95,7 +95,7 @@ public class MainApplication extends Application implements ReactApplication {
 
 ### Android
 
-1. As this library only support Android 6+, first you probably have to edit your `android/build.gradle` file:
+1. As this library only support Android 6+, you probably have to edit your `android/build.gradle` file:
 
 ```gradle
 buildscript {
