@@ -76,7 +76,6 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
       new WindowInsetsControllerCompat(window, decorView);
 
     activity.runOnUiThread(new Runnable() {
-
       @Override
       public void run() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -95,13 +94,18 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
             window.setStatusBarContrastEnforced(false);
             window.setNavigationBarContrastEnforced(false);
           }
-        } else {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
           window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
           window.setStatusBarColor(Color.TRANSPARENT);
 
           insetsController.setAppearanceLightStatusBars("dark-content".equals(styles));
+        } else {
+          window.addFlags(
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+          );
         }
       }
     });
@@ -118,17 +122,18 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    final Window window = activity.getWindow();
-    final View decorView = window.getDecorView();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      final Window window = activity.getWindow();
+      final View decorView = window.getDecorView();
 
-    UiThreadUtil.runOnUiThread(new Runnable() {
-
-      @Override
-      public void run() {
-        new WindowInsetsControllerCompat(window, decorView)
-          .setAppearanceLightStatusBars("dark-content".equals(style));
-      }
-    });
+      UiThreadUtil.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          new WindowInsetsControllerCompat(window, decorView)
+            .setAppearanceLightStatusBars("dark-content".equals(style));
+        }
+      });
+    }
   }
 
   @ReactMethod
@@ -142,12 +147,11 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    final Window window = activity.getWindow();
-    final View decorView = window.getDecorView();
-
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-      UiThreadUtil.runOnUiThread(new Runnable() {
+      final Window window = activity.getWindow();
+      final View decorView = window.getDecorView();
 
+      UiThreadUtil.runOnUiThread(new Runnable() {
         @Override
         public void run() {
           new WindowInsetsControllerCompat(window, decorView)
