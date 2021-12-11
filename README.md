@@ -317,7 +317,7 @@ const entry: NavigationBarProps = NavigationBar.replaceStackEntry(
 A component to control both your app status and navigation bars.
 
 ```tsx
-import { NavigationBar } from "react-native-bars";
+import { SystemBars } from "react-native-bars";
 
 type SystemBarsProps = {
   // Should transition between bars property changes be animated? (has no effect on Android)
