@@ -53,20 +53,25 @@ export class StatusBar extends React.Component<StatusBarProps> {
       const oldProps = StatusBar.mergedProps;
       const lastEntry = StatusBar.propsStack[StatusBar.propsStack.length - 1];
 
-      if (
-        lastEntry != null &&
-        // Update only if style have changed.
-        (!oldProps || oldProps.barStyle !== lastEntry.barStyle)
-      ) {
-        if (Platform.OS === "android") {
-          NativeModule?.setStatusBarStyle(lastEntry.barStyle);
-        } else {
-          RNStatusBar.setBarStyle(lastEntry.barStyle, lastEntry.animated);
+      if (lastEntry != null) {
+        // Update only if style have changed or if current props are unavailable.
+        if (oldProps?.barStyle !== lastEntry.barStyle) {
+          if (Platform.OS === "android") {
+            NativeModule?.setStatusBarStyle(lastEntry.barStyle);
+          } else {
+            RNStatusBar.setBarStyle(lastEntry.barStyle, lastEntry.animated);
+          }
         }
-      }
 
-      // Update the current prop values.
-      StatusBar.mergedProps = { barStyle: "light-content", ...lastEntry };
+        // Update the current props values.
+        StatusBar.mergedProps = {
+          ...lastEntry,
+          barStyle: "light-content",
+        };
+      } else {
+        // Reset current props when the stack is empty.
+        StatusBar.mergedProps = null;
+      }
     });
   }
 

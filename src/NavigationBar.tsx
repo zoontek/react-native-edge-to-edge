@@ -55,17 +55,21 @@ export class NavigationBar extends React.Component<NavigationBarProps> {
       const lastEntry =
         NavigationBar.propsStack[NavigationBar.propsStack.length - 1];
 
-      if (
-        isSupportedPlatform &&
-        lastEntry != null &&
-        // Update only if style have changed.
-        (!oldProps || oldProps.barStyle !== lastEntry.barStyle)
-      ) {
-        NativeModule?.setNavigationBarStyle(lastEntry.barStyle);
-      }
+      if (lastEntry != null) {
+        // Update only if style have changed or if current props are unavailable.
+        if (isSupportedPlatform && oldProps?.barStyle !== lastEntry.barStyle) {
+          NativeModule?.setNavigationBarStyle(lastEntry.barStyle);
+        }
 
-      // Update the current prop values.
-      NavigationBar.mergedProps = { barStyle: "light-content", ...lastEntry };
+        // Update the current props values.
+        NavigationBar.mergedProps = {
+          ...lastEntry,
+          barStyle: "light-content",
+        };
+      } else {
+        // Reset current props when the stack is empty.
+        NavigationBar.mergedProps = null;
+      }
     });
   }
 
