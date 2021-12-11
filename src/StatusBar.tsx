@@ -15,8 +15,6 @@ export class StatusBar extends React.Component<StatusBarProps> {
     return { animated, barStyle };
   }
 
-  static currentHeight = RNStatusBar.currentHeight ?? undefined;
-
   static pushStackEntry(props: StatusBarProps): StatusBarProps {
     const entry = StatusBar.createStackEntry(props);
     StatusBar.propsStack.push(entry);

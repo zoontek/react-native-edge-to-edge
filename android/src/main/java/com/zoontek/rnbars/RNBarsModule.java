@@ -1,11 +1,9 @@
 package com.zoontek.rnbars;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -21,7 +19,6 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.module.annotations.ReactModule;
-import com.facebook.react.uimanager.PixelUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,18 +42,6 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
   @Override
   public Map<String, Object> getConstants() {
     final HashMap<String, Object> constants = new HashMap<>();
-    final Context context = getReactApplicationContext();
-    final boolean hasPermanentMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey();
-
-    final int navigationBarHeightResId =
-      context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-
-    final float navigationBarHeight =
-      navigationBarHeightResId > 0 && !hasPermanentMenuKey
-        ? PixelUtil.toDIPFromPixel(context.getResources().getDimensionPixelSize(navigationBarHeightResId))
-        : 0;
-
-    constants.put("navigationBarHeight", navigationBarHeight);
     return constants;
   }
 

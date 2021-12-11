@@ -226,14 +226,6 @@ const App = () => (
 );
 ```
 
-#### StatusBar.currentHeight
-
-The height of the status bar, which includes the top notch height, if present.
-
-```ts
-const height: number = StatusBar.currentHeight;
-```
-
 #### StatusBar.pushStackEntry
 
 ```ts
@@ -277,14 +269,6 @@ const App = () => (
     {/* … */}
   </>
 );
-```
-
-#### NavigationBar.currentHeight
-
-The height of the navigation bar, which includes the bottom notch height, if present.
-
-```ts
-const height: number = NavigationBar.currentHeight;
 ```
 
 #### NavigationBar.pushStackEntry
