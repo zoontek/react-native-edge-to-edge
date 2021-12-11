@@ -38,13 +38,6 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
     return NAME;
   }
 
-  @Nullable
-  @Override
-  public Map<String, Object> getConstants() {
-    final HashMap<String, Object> constants = new HashMap<>();
-    return constants;
-  }
-
   static public void init(@Nullable final Activity activity, @NonNull final String styles) {
     if (activity == null) {
       FLog.w(
