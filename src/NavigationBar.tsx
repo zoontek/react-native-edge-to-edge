@@ -5,19 +5,19 @@ import { NavigationBarProps } from "./types";
 
 const isSupportedPlatform = Platform.OS === "android" && Platform.Version >= 27;
 
+function createStackEntry({
+  barStyle = "light-content",
+}: NavigationBarProps): NavigationBarProps {
+  return { barStyle };
+}
+
 export class NavigationBar extends React.Component<NavigationBarProps> {
   private static propsStack: NavigationBarProps[] = [];
   private static immediate: NodeJS.Immediate | null = null;
   private static mergedProps: NavigationBarProps | null = null;
 
-  private static createStackEntry({
-    barStyle = "light-content",
-  }: NavigationBarProps): NavigationBarProps {
-    return { barStyle };
-  }
-
   static pushStackEntry(props: NavigationBarProps): NavigationBarProps {
-    const entry = NavigationBar.createStackEntry(props);
+    const entry = createStackEntry(props);
     NavigationBar.propsStack.push(entry);
     NavigationBar.updatePropsStack();
     return entry;
@@ -35,7 +35,7 @@ export class NavigationBar extends React.Component<NavigationBarProps> {
     entry: NavigationBarProps,
     props: NavigationBarProps,
   ): NavigationBarProps {
-    const newEntry = NavigationBar.createStackEntry(props);
+    const newEntry = createStackEntry(props);
     const index = NavigationBar.propsStack.indexOf(entry);
     if (index !== -1) {
       NavigationBar.propsStack[index] = newEntry;

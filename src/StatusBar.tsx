@@ -3,20 +3,20 @@ import { Platform, StatusBar as RNStatusBar } from "react-native";
 import { NativeModule } from "./module";
 import { StatusBarProps } from "./types";
 
+function createStackEntry({
+  animated = false,
+  barStyle = "light-content",
+}: StatusBarProps): StatusBarProps {
+  return { animated, barStyle };
+}
+
 export class StatusBar extends React.Component<StatusBarProps> {
   private static propsStack: StatusBarProps[] = [];
   private static immediate: NodeJS.Immediate | null = null;
   private static mergedProps: StatusBarProps | null = null;
 
-  private static createStackEntry({
-    animated = false,
-    barStyle = "light-content",
-  }: StatusBarProps): StatusBarProps {
-    return { animated, barStyle };
-  }
-
   static pushStackEntry(props: StatusBarProps): StatusBarProps {
-    const entry = StatusBar.createStackEntry(props);
+    const entry = createStackEntry(props);
     StatusBar.propsStack.push(entry);
     StatusBar.updatePropsStack();
     return entry;
@@ -34,7 +34,7 @@ export class StatusBar extends React.Component<StatusBarProps> {
     entry: StatusBarProps,
     props: StatusBarProps,
   ): StatusBarProps {
-    const newEntry = StatusBar.createStackEntry(props);
+    const newEntry = createStackEntry(props);
     const index = StatusBar.propsStack.indexOf(entry);
     if (index !== -1) {
       StatusBar.propsStack[index] = newEntry;
