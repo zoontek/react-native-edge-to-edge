@@ -3,22 +3,20 @@ import { Platform, StatusBar as RNStatusBar } from "react-native";
 import { NativeModule } from "./module";
 import { StatusBarProps } from "./types";
 
+function createStackEntry({
+  animated = false,
+  barStyle = "light-content",
+}: StatusBarProps): StatusBarProps {
+  return { animated, barStyle };
+}
+
 export class StatusBar extends React.Component<StatusBarProps> {
   private static propsStack: StatusBarProps[] = [];
   private static immediate: NodeJS.Immediate | null = null;
   private static mergedProps: StatusBarProps | null = null;
 
-  private static createStackEntry({
-    animated = false,
-    barStyle = "light-content",
-  }: StatusBarProps): StatusBarProps {
-    return { animated, barStyle };
-  }
-
-  static currentHeight = RNStatusBar.currentHeight ?? undefined;
-
   static pushStackEntry(props: StatusBarProps): StatusBarProps {
-    const entry = StatusBar.createStackEntry(props);
+    const entry = createStackEntry(props);
     StatusBar.propsStack.push(entry);
     StatusBar.updatePropsStack();
     return entry;
@@ -36,7 +34,7 @@ export class StatusBar extends React.Component<StatusBarProps> {
     entry: StatusBarProps,
     props: StatusBarProps,
   ): StatusBarProps {
-    const newEntry = StatusBar.createStackEntry(props);
+    const newEntry = createStackEntry(props);
     const index = StatusBar.propsStack.indexOf(entry);
     if (index !== -1) {
       StatusBar.propsStack[index] = newEntry;
@@ -55,20 +53,25 @@ export class StatusBar extends React.Component<StatusBarProps> {
       const oldProps = StatusBar.mergedProps;
       const lastEntry = StatusBar.propsStack[StatusBar.propsStack.length - 1];
 
-      if (
-        lastEntry != null &&
-        // Update only if style have changed.
-        (!oldProps || oldProps.barStyle !== lastEntry.barStyle)
-      ) {
-        if (Platform.OS === "android") {
-          NativeModule?.setStatusBarStyle(lastEntry.barStyle);
-        } else {
-          RNStatusBar.setBarStyle(lastEntry.barStyle, lastEntry.animated);
+      if (lastEntry != null) {
+        // Update only if style have changed or if current props are unavailable.
+        if (oldProps?.barStyle !== lastEntry.barStyle) {
+          if (Platform.OS === "android") {
+            NativeModule?.setStatusBarStyle(lastEntry.barStyle);
+          } else {
+            RNStatusBar.setBarStyle(lastEntry.barStyle, lastEntry.animated);
+          }
         }
-      }
 
-      // Update the current prop values.
-      StatusBar.mergedProps = { barStyle: "light-content", ...lastEntry };
+        // Update the current props values.
+        StatusBar.mergedProps = {
+          ...lastEntry,
+          barStyle: "light-content",
+        };
+      } else {
+        // Reset current props when the stack is empty.
+        StatusBar.mergedProps = null;
+      }
     });
   }
 

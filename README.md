@@ -226,14 +226,6 @@ const App = () => (
 );
 ```
 
-#### StatusBar.currentHeight
-
-The height of the status bar, which includes the top notch height, if present.
-
-```ts
-const height: number = StatusBar.currentHeight;
-```
-
 #### StatusBar.pushStackEntry
 
 ```ts
@@ -279,14 +271,6 @@ const App = () => (
 );
 ```
 
-#### NavigationBar.currentHeight
-
-The height of the navigation bar, which includes the bottom notch height, if present.
-
-```ts
-const height: number = NavigationBar.currentHeight;
-```
-
 #### NavigationBar.pushStackEntry
 
 ```ts
@@ -317,7 +301,7 @@ const entry: NavigationBarProps = NavigationBar.replaceStackEntry(
 A component to control both your app status and navigation bars.
 
 ```tsx
-import { NavigationBar } from "react-native-bars";
+import { SystemBars } from "react-native-bars";
 
 type SystemBarsProps = {
   // Should transition between bars property changes be animated? (has no effect on Android)
