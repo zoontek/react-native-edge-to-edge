@@ -64,10 +64,7 @@ export class StatusBar extends React.Component<StatusBarProps> {
         }
 
         // Update the current props values.
-        StatusBar.mergedProps = {
-          ...lastEntry,
-          barStyle: "light-content",
-        };
+        StatusBar.mergedProps = { ...lastEntry };
       } else {
         // Reset current props when the stack is empty.
         StatusBar.mergedProps = null;

@@ -62,10 +62,7 @@ export class NavigationBar extends React.Component<NavigationBarProps> {
         }
 
         // Update the current props values.
-        NavigationBar.mergedProps = {
-          ...lastEntry,
-          barStyle: "light-content",
-        };
+        NavigationBar.mergedProps = { ...lastEntry };
       } else {
         // Reset current props when the stack is empty.
         NavigationBar.mergedProps = null;
