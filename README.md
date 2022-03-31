@@ -179,7 +179,7 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void loadApp(String appKey) {
       super.loadApp(appKey);
-      RNBars.init(MainActivity.this, "dark-content"); // <- initialize with initial bars styles (could be light-content)
+      RNBars.init(getPlainActivity(), "dark-content"); // <- initialize with initial bars styles (could be light-content)
     }
   }
 }
