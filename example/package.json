@@ -8,13 +8,13 @@
     "pod-update": "cd ./ios && pod update && cd ..",
     "postinstall": "yarn clean-modules && yarn pod-update",
     "start": "react-native start",
-    "reinstall": "yarn clean && yarn install",
-    "react-native-bars": "file:../",
-    "react-native-safe-area-context": "^4.2.4"
+    "reinstall": "yarn clean && yarn install"
   },
   "dependencies": {
     "react": "17.0.2",
-    "react-native": "0.68.0"
+    "react-native": "0.68.0",
+    "react-native-bars": "file:../",
+    "react-native-safe-area-context": "^4.2.4"
   },
   "resolutions": {
     "@types/react": "^17"
