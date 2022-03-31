@@ -49,6 +49,10 @@ Because this package targets React Native 0.65.0+, you will probably don't need 
 <details>
   <summary><b>👀 See manual linking instructions</b></summary>
 
+## Setup
+
+ℹ️ For `react-native` < `0.68` documentation, check the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md)
+
 ### Android
 
 1. Add the following lines to `android/settings.gradle`:
@@ -100,7 +104,7 @@ public class MainApplication extends Application implements ReactApplication {
 ```gradle
 buildscript {
   ext {
-    buildToolsVersion = "30.0.2"
+    buildToolsVersion = "31.0.0"
     minSdkVersion = 23 // <- set at least 23
     compileSdkVersion = 31 // <- set at least 31
     targetSdkVersion = 31 // <- set at least 31
@@ -115,6 +119,8 @@ buildscript {
 <resources>
 
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- … -->
+
     <!-- Allow drawing under the system bars background -->
     <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     <item name="android:fitsSystemWindows">false</item>
@@ -136,6 +142,8 @@ buildscript {
 <resources xmlns:tools="http://schemas.android.com/tools">
 
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- … -->
+
     <!-- Allow drawing under the system bars background -->
     <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     <item name="android:fitsSystemWindows">false</item>
@@ -156,23 +164,23 @@ buildscript {
 
 ```java
 import com.facebook.react.ReactActivity;
-import com.facebook.react.ReactActivityDelegate; // <- add this necessary import
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
 import com.zoontek.rnbars.RNBars; // <- add this necessary import
 
 public class MainActivity extends ReactActivity {
 
   // …
 
-  @Override
-  protected ReactActivityDelegate createReactActivityDelegate() {
-    return new ReactActivityDelegate(this, getMainComponentName()) {
+  public static class MainActivityDelegate extends ReactActivityDelegate {
 
-      @Override
-      protected void loadApp(String appKey) {
-        super.loadApp(appKey);
-        RNBars.init(MainActivity.this, "dark-content"); // <- initialize with initial bars styles (could be light-content)
-      }
-    };
+    // …
+
+    @Override
+    protected void loadApp(String appKey) {
+      super.loadApp(appKey);
+      RNBars.init(getPlainActivity(), "dark-content"); // <- initialize with initial bars styles (could be light-content)
+    }
   }
 }
 ```

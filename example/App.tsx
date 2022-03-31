@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#374151",
-    fontFamily: "monospace",
     fontSize: 20,
     fontWeight: "700",
   },
@@ -26,15 +25,18 @@ const styles = StyleSheet.create({
   tag: {
     backgroundColor: "#E5E7EB",
     borderRadius: 4,
+    paddingHorizontal: 8,
+  },
+  tagText: {
     color: "#374151",
-    fontFamily: "monospace",
     fontSize: 16,
     lineHeight: 32,
-    paddingHorizontal: 8,
     textAlignVertical: "center",
   },
   darkTag: {
     backgroundColor: "#374151",
+  },
+  darkTagText: {
     color: "#E5E7EB",
   },
 });
@@ -67,7 +69,10 @@ const Line = ({
     <Space size={16} />
 
     <View style={styles.row}>
-      <Text style={[styles.tag, dark && styles.darkTag]}>{left}</Text>
+      <View style={[styles.tag, dark && styles.darkTag]}>
+        <Text style={[styles.tagText, dark && styles.darkTagText]}>{left}</Text>
+      </View>
+
       <Space size={16} />
 
       <Switch
@@ -81,7 +86,12 @@ const Line = ({
       />
 
       <Space size={16} />
-      <Text style={[styles.tag, dark && styles.darkTag]}>{right}</Text>
+
+      <View style={[styles.tag, dark && styles.darkTag]}>
+        <Text style={[styles.tagText, dark && styles.darkTagText]}>
+          {right}
+        </Text>
+      </View>
     </View>
   </View>
 );
