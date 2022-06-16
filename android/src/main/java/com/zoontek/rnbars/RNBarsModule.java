@@ -50,7 +50,7 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
     final View decorView = window.getDecorView();
 
     WindowCompat.setDecorFitsSystemWindows(window, false);
-    WindowInsetsControllerCompat insetsController =
+    final WindowInsetsControllerCompat insetsController =
       new WindowInsetsControllerCompat(window, decorView);
 
     activity.runOnUiThread(new Runnable() {
