@@ -31,7 +31,7 @@
     "systembars"
   ],
   "scripts": {
-    "format": "prettier '**/*.{js,json,md,ts,tsx}' --write",
+    "format": "prettier '**/*' -u -w",
     "setup-hooks": "git config --local core.hooksPath .hooks",
     "prepare": "yarn setup-hooks && bob build"
   },
@@ -48,13 +48,10 @@
     "trailingComma": "all"
   },
   "lint-staged": {
-    "**/*.{js,json,md,ts,tsx}": "prettier --write"
+    "*": "prettier -u -w"
   },
   "peerDependencies": {
     "react-native": ">=0.65.0"
-  },
-  "resolutions": {
-    "@types/react": "^17"
   },
   "devDependencies": {
     "@types/react-native": "^0.68.0",
