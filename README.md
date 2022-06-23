@@ -187,7 +187,7 @@ public class MainActivity extends ReactActivity {
 
 #### Setup with react-native-bootsplash
 
-For a perfect `react-native-bars` + `react-native-bootsplash` match, check the bootplash example app `styles.xml` files:
+For a perfect `react-native-bars` + `react-native-bootsplash` match 💞, check the bootplash example app `styles.xml` files:
 
 - [values/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values/styles.xml)
 - [values-v27/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v27/styles.xml)
