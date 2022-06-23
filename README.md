@@ -112,55 +112,7 @@ buildscript {
     // …
 ```
 
-2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
-   _👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
-
-```xml
-<resources>
-
-  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-    <!-- … -->
-
-    <!-- Allow drawing under the system bars background -->
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    <item name="android:fitsSystemWindows">false</item>
-
-    <!-- Set status bar background transparent -->
-    <item name="android:statusBarColor">@android:color/transparent</item>
-
-    <!-- Navigation bar will stay translucent on Android < 8.1 -->
-    <item name="android:windowTranslucentNavigation">true</item>
-  </style>
-
-</resources>
-```
-
-3. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
-   _👉 Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
-
-```xml
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-    <!-- … -->
-
-    <!-- Allow drawing under the system bars background -->
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    <item name="android:fitsSystemWindows">false</item>
-
-    <!-- Set system bars background transparent -->
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:navigationBarColor">@android:color/transparent</item>
-
-    <!-- Disable auto contrasted system bars background (on Android 10+) -->
-    <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
-    <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
-  </style>
-
-</resources>
-```
-
-4. Finally edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
+2. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
 ```java
 import com.facebook.react.ReactActivity;
@@ -184,6 +136,62 @@ public class MainActivity extends ReactActivity {
   }
 }
 ```
+
+3. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
+   _👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
+
+```xml
+<resources>
+
+  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- … -->
+
+    <!-- Allow drawing under the system bars background -->
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:fitsSystemWindows">false</item>
+
+    <!-- Set status bar background transparent -->
+    <item name="android:statusBarColor">@android:color/transparent</item>
+
+    <!-- Navigation bar will stay translucent on Android < 8.1 -->
+    <item name="android:windowTranslucentNavigation">true</item>
+  </style>
+
+</resources>
+```
+
+4. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
+   _👉 Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
+
+```xml
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- … -->
+
+    <!-- Allow drawing under the system bars background -->
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:fitsSystemWindows">false</item>
+
+    <!-- Set system bars background transparent -->
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
+
+    <!-- Disable auto contrasted system bars background -->
+    <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
+    <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
+  </style>
+
+</resources>
+```
+
+#### Setup with react-native-bootsplash
+
+For a perfect `react-native-bars` + `react-native-bootsplash` compatibility, check the bootplash example app `styles.xml` files:
+
+- [values/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values/styles.xml)
+- [values-v27/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v27/styles.xml)
+- [values-v31/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v31/styles.xml)
 
 ### iOS
 
