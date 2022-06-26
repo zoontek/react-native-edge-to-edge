@@ -1,17 +1,11 @@
 # ➖ react-native-bars
 
-<a href="https://github.com/sponsors/zoontek">
-  <img align="right" width="160" alt="This library helped you? Consider sponsoring!" src=".github/funding-octocat.svg">
-</a>
-
-Components to control your app status and navigation bars.
-
-Heavily inspired by the built-in `StatusBar` module and [react-native-transparent-status-and-navigation-bar](https://github.com/MoOx/react-native-transparent-status-and-navigation-bar) by [@MoOx](https://github.com/MoOx) (Thanks to them 💖).
+Components to control your app status and navigation bars.<br />
+Inspired by the built-in `StatusBar` module and [react-native-transparent-status-and-navigation-bar](https://github.com/MoOx/react-native-transparent-status-and-navigation-bar) by [@MoOx](https://github.com/MoOx) (Thanks to them 💖).
 
 [![npm version](https://badge.fury.io/js/react-native-bars.svg)](https://www.npmjs.org/package/react-native-bars)
 [![npm](https://img.shields.io/npm/dt/react-native-bars.svg)](https://www.npmjs.org/package/react-native-bars)
 [![MIT](https://img.shields.io/dub/l/vibe-d.svg)](https://opensource.org/licenses/MIT)
-<br>
 [![Platform - Android](https://img.shields.io/badge/platform-Android-3ddc84.svg?style=flat&logo=android)](https://www.android.com)
 [![Platform - iOS](https://img.shields.io/badge/platform-iOS-000.svg?style=flat&logo=apple)](https://developer.apple.com/ios)
 
@@ -21,12 +15,15 @@ Heavily inspired by the built-in `StatusBar` module and [react-native-transparen
   <img width="300" src="https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/android_demo.gif?raw=true" alt="android demo"></img>
 </p>
 
-## Recommendations
+## Funding
 
-This module will works best with:
+<a href="https://github.com/sponsors/zoontek">
+  <img align="right" width="150" alt="This library helped you? Consider sponsoring!" src=".github/funding-octocat.svg">
+</a>
 
-- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context): A library to handle safe area insets and avoid drawing below status and navigation bars.
-- [react-native-bootsplash](https://github.com/zoontek/react-native-bootsplash): A splash screen library to wait until your app finished loading.
+This module is provided **as is**, I work on it in my free time.
+
+If your company uses it in a production app, consider sponsoring this project 💰. You also can contact me for **premium** enterprise support, help with issues, prioritize bugfixes, feature requests, etc.
 
 ## Support
 
@@ -42,6 +39,13 @@ $ npm install --save react-native-bars
 $ yarn add react-native-bars
 ```
 
+## Recommendations
+
+This module will works best with:
+
+- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context): A library to handle safe area insets and avoid drawing below status and navigation bars.
+- [react-native-bootsplash](https://github.com/zoontek/react-native-bootsplash): A splash screen library to wait until your app finished loading.
+
 ## 🆘 Manual linking
 
 Because this package targets React Native 0.65.0+, you will probably don't need to link it manually. Otherwise if it's not the case, follow this additional instructions:
@@ -50,8 +54,6 @@ Because this package targets React Native 0.65.0+, you will probably don't need 
   <summary><b>👀 See manual linking instructions</b></summary>
 
 ## Setup
-
-ℹ️ For `react-native` < `0.68` documentation, check the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md)
 
 ### Android
 
@@ -96,6 +98,8 @@ public class MainApplication extends Application implements ReactApplication {
 </details>
 
 ## Setup
+
+ℹ️ For `react-native` < `0.68` documentation, check the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md)
 
 ### Android
 
@@ -185,7 +189,7 @@ public class MainActivity extends ReactActivity {
 </resources>
 ```
 
-#### Setup with react-native-bootsplash
+#### With react-native-bootsplash
 
 For a perfect `react-native-bars` + `react-native-bootsplash` match 💞, check the bootplash example app `styles.xml` files:
 
@@ -193,7 +197,7 @@ For a perfect `react-native-bars` + `react-native-bootsplash` match 💞, check 
 - [values-v27/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v27/styles.xml)
 - [values-v31/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v31/styles.xml)
 
-### iOS
+## iOS 
 
 You can setup your initial status bar style in **Xcode > General > Deployment Info**:
 
