@@ -195,7 +195,6 @@ For a perfect `react-native-bars` + `react-native-bootsplash` match 💞, check 
 
 - [values/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values/styles.xml)
 - [values-v27/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v27/styles.xml)
-- [values-v31/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v31/styles.xml)
 
 ## iOS 
 
