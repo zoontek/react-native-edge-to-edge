@@ -99,7 +99,7 @@ public class MainApplication extends Application implements ReactApplication {
 
 ## Setup
 
-ℹ️ For `react-native` < `0.68` documentation, check the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md)
+ℹ️ For `react-native` < `0.68` documentation, you can use the latest version but have to follow the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md) for setup.
 
 ### Android
 
