@@ -99,7 +99,7 @@ public class MainApplication extends Application implements ReactApplication {
 
 ## Setup
 
-ℹ️ For `react-native` < `0.68` setup, follow the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md) (it works with the latest `react-native-bars` version too).
+ℹ️ For `react-native` < `0.68` setup, follow the [`v1.1.2 README.md`]([https://github.com/zoontek/react-native-bootsplash/blob/4.1.3/README.md](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md)) (it will works with the latest `react-native-bars` version too).
 
 ### Android
 
