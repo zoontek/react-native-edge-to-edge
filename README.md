@@ -119,24 +119,20 @@ buildscript {
 2. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
 ```java
-import com.facebook.react.ReactActivity;
-import com.facebook.react.ReactActivityDelegate;
-import com.facebook.react.ReactRootView;
-import com.zoontek.rnbars.RNBars; // <- add this necessary import
+// …
+
+// Add these required imports:
+import android.os.Bundle;
+import com.zoontek.rnbars.RNBars;
 
 public class MainActivity extends ReactActivity {
 
   // …
 
-  public static class MainActivityDelegate extends ReactActivityDelegate {
-
-    // …
-
-    @Override
-    protected void loadApp(String appKey) {
-      super.loadApp(appKey);
-      RNBars.init(getPlainActivity(), "dark-content"); // <- initialize with initial bars styles (could be light-content)
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState); // or super.onCreate(null) with react-native-screens
+    RNBars.init(getPlainActivity(), "dark-content"); // <- initialize with initial bars styles (could be light-content)
   }
 }
 ```
@@ -196,7 +192,7 @@ For a perfect `react-native-bars` + `react-native-bootsplash` match 💞, check 
 - [values/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values/styles.xml)
 - [values-v27/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v27/styles.xml)
 
-## iOS 
+## iOS
 
 You can setup your initial status bar style in **Xcode > General > Deployment Info**:
 
