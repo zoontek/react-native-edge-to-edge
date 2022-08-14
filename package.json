@@ -1,6 +1,6 @@
 {
   "name": "react-native-bars",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "MIT",
   "description": "Components to control your app status and navigation bars.",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "format": "prettier '**/*' -u -w",
-    "postinstall": "git config --local core.hooksPath .hooks",
+    "setup-hooks": "git config --local core.hooksPath .hooks",
     "prepack": "bob build"
   },
   "react-native-builder-bob": {
