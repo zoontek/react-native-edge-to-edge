@@ -177,7 +177,7 @@ public class MainActivity extends ReactActivity {
 </resources>
 ```
 
-5. Then update your `AndroidManifest.xml` file to set `android:windowSoftInputMode` to `adjustResize` <sup>([why is this needed?](https://github.com/zoontek/react-native-bars/issues/15))</sup>:
+5. Then update your `AndroidManifest.xml` file to set `android:windowSoftInputMode` to `adjustPan` <sup>([why is this needed?](https://github.com/zoontek/react-native-bars/issues/15))</sup>:
 
 ```diff
 <activity
