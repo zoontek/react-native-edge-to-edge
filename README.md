@@ -146,10 +146,6 @@ public class MainActivity extends ReactActivity {
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
     <!-- … -->
 
-    <!-- Allow drawing under the system bars background -->
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    <item name="android:fitsSystemWindows">false</item>
-
     <!-- Set status bar background transparent -->
     <item name="android:statusBarColor">@android:color/transparent</item>
 
@@ -160,7 +156,7 @@ public class MainActivity extends ReactActivity {
 </resources>
 ```
 
-4. Then for Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
+4. For Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
    _👉 Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
 
 ```xml
@@ -168,10 +164,6 @@ public class MainActivity extends ReactActivity {
 
   <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
     <!-- … -->
-
-    <!-- Allow drawing under the system bars background -->
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    <item name="android:fitsSystemWindows">false</item>
 
     <!-- Set system bars background transparent -->
     <item name="android:statusBarColor">@android:color/transparent</item>
@@ -183,6 +175,17 @@ public class MainActivity extends ReactActivity {
   </style>
 
 </resources>
+```
+
+5. Then update your `AndroidManifest.xml` file to set `android:windowSoftInputMode` to `adjustResize` <sup>([why is this needed?](https://github.com/zoontek/react-native-bars/issues/15))</sup>:
+
+```diff
+<activity
+    android:name=".MainActivity"
+    // …
+    android:launchMode="singleTask"
+-   android:windowSoftInputMode="adjustResize"
++   android:windowSoftInputMode="adjustPan"
 ```
 
 #### With react-native-bootsplash
