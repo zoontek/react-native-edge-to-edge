@@ -1,11 +1,9 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { NavigationBar, StatusBar } from "react-native-bars";
-import {
-  initialWindowMetrics,
-  SafeAreaProvider,
-  SafeAreaView,
-} from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
   container: {
@@ -149,8 +147,12 @@ const App = () => {
   );
 };
 
+const Stack = createNativeStackNavigator();
+
 export default () => (
-  <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-    <App />
-  </SafeAreaProvider>
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="App" component={App} />
+    </Stack.Navigator>
+  </NavigationContainer>
 );
