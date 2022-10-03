@@ -177,17 +177,6 @@ public class MainActivity extends ReactActivity {
 </resources>
 ```
 
-5. Then update your `AndroidManifest.xml` file to set `android:windowSoftInputMode` to `adjustPan` <sup>([why is this needed?](https://github.com/zoontek/react-native-bars/issues/15))</sup>:
-
-```diff
-<activity
-    android:name=".MainActivity"
-    // …
-    android:launchMode="singleTask"
--   android:windowSoftInputMode="adjustResize"
-+   android:windowSoftInputMode="adjustPan"
-```
-
 #### With react-native-bootsplash
 
 For a perfect `react-native-bars` + `react-native-bootsplash` match 💞, check the bootplash example app `styles.xml` files:
