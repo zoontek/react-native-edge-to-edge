@@ -9,7 +9,10 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.facebook.common.logging.FLog;
@@ -19,9 +22,6 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.module.annotations.ReactModule;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ReactModule(name = RNBarsModule.NAME)
 public class RNBarsModule extends ReactContextBaseJavaModule {
@@ -49,10 +49,29 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
     final Window window = activity.getWindow();
     final View decorView = window.getDecorView();
 
-    WindowCompat.setDecorFitsSystemWindows(window, false);
-
     final WindowInsetsControllerCompat insetsController =
       new WindowInsetsControllerCompat(window, decorView);
+
+    WindowCompat.setDecorFitsSystemWindows(window, false);
+
+    ViewCompat.setOnApplyWindowInsetsListener(decorView, new OnApplyWindowInsetsListener() {
+      @Override
+      @NonNull
+      public WindowInsetsCompat onApplyWindowInsets(@NonNull View view,
+                                                    @NonNull WindowInsetsCompat windowInsets) {
+        int paddingBottom = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+
+        if (paddingBottom != view.getPaddingBottom()) {
+          int paddingLeft = view.getPaddingLeft();
+          int paddingTop = view.getPaddingTop();
+          int paddingRight = view.getPaddingRight();
+
+          view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        }
+
+        return windowInsets;
+      }
+    });
 
     activity.runOnUiThread(new Runnable() {
       @Override
