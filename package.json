@@ -1,6 +1,6 @@
 {
   "name": "react-native-bars",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "license": "MIT",
   "description": "Components to control your app status and navigation bars.",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
@@ -54,13 +54,13 @@
     "react-native": ">=0.65.0"
   },
   "devDependencies": {
-    "@types/react-native": "^0.69.5",
+    "@types/react-native": "^0.70.4",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.1.1",
-    "react": "^18.0.0",
-    "react-native": "^0.69.4",
+    "react": "18.1.0",
+    "react-native": "0.70.1",
     "react-native-builder-bob": "^0.18.3",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.4"
   }
 }

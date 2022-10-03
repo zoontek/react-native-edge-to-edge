@@ -65,6 +65,7 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
           int paddingLeft = view.getPaddingLeft();
           int paddingTop = view.getPaddingTop();
           int paddingRight = view.getPaddingRight();
+
           view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
 
