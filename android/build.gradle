@@ -55,4 +55,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+" // From node_modules
+    implementation "androidx.core:core:${safeExtGet("androidXCoreVersion", "1.9.0")}"
 }
