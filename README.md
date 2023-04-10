@@ -3,11 +3,12 @@
 Components to control your app status and navigation bars.<br />
 Inspired by the built-in `StatusBar` module and [react-native-transparent-status-and-navigation-bar](https://github.com/MoOx/react-native-transparent-status-and-navigation-bar) by [@MoOx](https://github.com/MoOx) (Thanks to them 💖).
 
-[![npm version](https://badge.fury.io/js/react-native-bars.svg)](https://www.npmjs.org/package/react-native-bars)
-[![npm](https://img.shields.io/npm/dt/react-native-bars.svg)](https://www.npmjs.org/package/react-native-bars)
-[![MIT](https://img.shields.io/dub/l/vibe-d.svg)](https://opensource.org/licenses/MIT)
-[![Platform - Android](https://img.shields.io/badge/platform-Android-3ddc84.svg?style=flat&logo=android)](https://www.android.com)
-[![Platform - iOS](https://img.shields.io/badge/platform-iOS-000.svg?style=flat&logo=apple)](https://developer.apple.com/ios)
+[![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-bars/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/react-native-bars?style=for-the-badge)](https://www.npmjs.org/package/react-native-bars)
+[![npm downloads](https://img.shields.io/npm/dt/react-native-bars.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/react-native-bars)
+<br />
+[![platform - android](https://img.shields.io/badge/platform-Android-3ddc84.svg?logo=android&style=for-the-badge)](https://www.android.com)
+[![platform - ios](https://img.shields.io/badge/platform-iOS-000.svg?logo=apple&style=for-the-badge)](https://developer.apple.com/ios)
 
 <br>
 
