@@ -27,9 +27,10 @@ If your company uses it in a production app, consider sponsoring this project �
 
 ## Support
 
-| version | RN version | Android version | iOS version |
-| ------- | ---------- | --------------- | ----------- |
-| 1.0.0+  | 0.65.0+    | 6.0+            | 11.0+       |
+| package version | react-native version |
+| --------------- | -------------------- |
+| 2.0.0+          | 0.70.0+              |
+| 1.0.0+          | 0.65.0+              |
 
 ## Installation
 
@@ -44,79 +45,14 @@ $ yarn add react-native-bars
 This module will works best with:
 
 - [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context): A library to handle safe area insets and avoid drawing below status and navigation bars.
-- [react-native-bootsplash](https://github.com/zoontek/react-native-bootsplash): A splash screen library to wait until your app finished loading.
-
-## 🆘 Manual linking
-
-Because this package targets React Native 0.65.0+, you will probably don't need to link it manually. Otherwise if it's not the case, follow this additional instructions:
-
-<details>
-  <summary><b>👀 See manual linking instructions</b></summary>
 
 ## Setup
 
-### Android
-
-1. Add the following lines to `android/settings.gradle`:
-
-```gradle
-include ':react-native-bars'
-project(':react-native-bars').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-bars/android')
-```
-
-2. Add the implementation line to the dependencies in `android/app/build.gradle`:
-
-```gradle
-dependencies {
-  // ...
-  implementation project(':react-native-bars')
-}
-```
-
-3. Add the import and link the package in `MainApplication.java`:
-
-```java
-import com.zoontek.rnbars.RNBarsPackage; // <- add the RNBarsPackage import
-
-public class MainApplication extends Application implements ReactApplication {
-
-  // …
-
-  @Override
-  protected List<ReactPackage> getPackages() {
-    @SuppressWarnings("UnnecessaryLocalVariable")
-    List<ReactPackage> packages = new PackageList(this).getPackages();
-    // …
-    packages.add(new RNBarsPackage());
-    return packages;
-  }
-
-  // …
-}
-```
-
-</details>
-
-## Setup
-
-ℹ️ For `react-native` < `0.68` setup, follow the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md) (it will works with the latest `react-native-bars` version too).
+ℹ️ For `react-native` < `0.70` setup, use latest v1 and follow [this README](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md).
 
 ### Android
 
-1. As this library only support Android 6+, you probably have to edit your `android/build.gradle` file:
-
-```gradle
-buildscript {
-  ext {
-    buildToolsVersion = "31.0.0"
-    minSdkVersion = 23 // <- set at least 23
-    compileSdkVersion = 31 // <- set at least 31
-    targetSdkVersion = 31 // <- set at least 31
-
-    // …
-```
-
-2. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
+1. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
 ```java
 // …
@@ -137,7 +73,7 @@ public class MainActivity extends ReactActivity {
 }
 ```
 
-3. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
+2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
    _👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
 
 ```xml
@@ -156,7 +92,7 @@ public class MainActivity extends ReactActivity {
 </resources>
 ```
 
-4. For Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
+3. For Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
    _👉 Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
 
 ```xml
@@ -177,13 +113,6 @@ public class MainActivity extends ReactActivity {
 </resources>
 ```
 
-#### With react-native-bootsplash
-
-For a perfect `react-native-bars` + `react-native-bootsplash` match 💞, check the bootplash example app `styles.xml` files:
-
-- [values/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values/styles.xml)
-- [values-v27/styles.xml](https://github.com/zoontek/react-native-bootsplash/blob/master/example/android/app/src/main/res/values-v27/styles.xml)
-
 ## iOS
 
 You can setup your initial status bar style in **Xcode > General > Deployment Info**:
@@ -192,9 +121,8 @@ You can setup your initial status bar style in **Xcode > General > Deployment In
 
 ## Usage
 
-```js
-import * as React from "react";
-import { StatusBar, NavigationBar, SystemBars } from "react-native-bars";
+```tsx
+import { NavigationBar, StatusBar, SystemBars } from "react-native-bars";
 
 const App = () => {
   return (

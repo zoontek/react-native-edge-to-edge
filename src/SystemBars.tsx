@@ -4,7 +4,7 @@ import { StatusBar } from "./StatusBar";
 import { SystemBarsProps } from "./types";
 
 export class SystemBars extends React.Component<SystemBarsProps> {
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return (
       <>
         <StatusBar

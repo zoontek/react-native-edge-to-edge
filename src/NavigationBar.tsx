@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Platform } from "react-native";
-import { NativeModule } from "./module";
+import NativeModule from "./NativeRNBars";
 import { NavigationBarProps } from "./types";
 
 const isSupportedPlatform = Platform.OS === "android" && Platform.Version >= 27;
@@ -72,11 +72,11 @@ export class NavigationBar extends React.Component<NavigationBarProps> {
 
   private stackEntry: NavigationBarProps | null = null;
 
-  componentDidMount() {
+  override componentDidMount() {
     this.stackEntry = NavigationBar.pushStackEntry(this.props);
   }
 
-  componentDidUpdate() {
+  override componentDidUpdate() {
     if (this.stackEntry) {
       this.stackEntry = NavigationBar.replaceStackEntry(
         this.stackEntry,
@@ -85,13 +85,13 @@ export class NavigationBar extends React.Component<NavigationBarProps> {
     }
   }
 
-  componentWillUnmount() {
+  override componentWillUnmount() {
     if (this.stackEntry) {
       NavigationBar.popStackEntry(this.stackEntry);
     }
   }
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return null;
   }
 }

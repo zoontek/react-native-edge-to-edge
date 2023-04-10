@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Platform, StatusBar as RNStatusBar } from "react-native";
-import { NativeModule } from "./module";
+import NativeModule from "./NativeRNBars";
 import { StatusBarProps } from "./types";
 
 function createStackEntry({
@@ -74,11 +74,11 @@ export class StatusBar extends React.Component<StatusBarProps> {
 
   private stackEntry: StatusBarProps | null = null;
 
-  componentDidMount() {
+  override componentDidMount() {
     this.stackEntry = StatusBar.pushStackEntry(this.props);
   }
 
-  componentDidUpdate() {
+  override componentDidUpdate() {
     if (this.stackEntry) {
       this.stackEntry = StatusBar.replaceStackEntry(
         this.stackEntry,
@@ -87,13 +87,13 @@ export class StatusBar extends React.Component<StatusBarProps> {
     }
   }
 
-  componentWillUnmount() {
+  override componentWillUnmount() {
     if (this.stackEntry) {
       StatusBar.popStackEntry(this.stackEntry);
     }
   }
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     return null;
   }
 }
