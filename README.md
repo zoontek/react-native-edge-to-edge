@@ -73,7 +73,7 @@ public class MainActivity extends ReactActivity {
 }
 ```
 
-3. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
+2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
    _👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
 
 ```xml
@@ -92,7 +92,7 @@ public class MainActivity extends ReactActivity {
 </resources>
 ```
 
-4. For Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
+3. For Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
    _👉 Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
 
 ```xml
@@ -121,9 +121,8 @@ You can setup your initial status bar style in **Xcode > General > Deployment In
 
 ## Usage
 
-```js
-import * as React from "react";
-import { StatusBar, NavigationBar, SystemBars } from "react-native-bars";
+```tsx
+import { NavigationBar, StatusBar, SystemBars } from "react-native-bars";
 
 const App = () => {
   return (
