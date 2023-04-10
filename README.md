@@ -48,7 +48,7 @@ This module will works best with:
 
 ## Setup
 
-ℹ️ For `react-native` < `0.70` setup, follow the [`v1.1.2 README.md`](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md).
+ℹ️ For `react-native` < `0.70` setup, use latest v1 and follow [this README](https://github.com/zoontek/react-native-bars/blob/1.1.2/README.md).
 
 ### Android
 
