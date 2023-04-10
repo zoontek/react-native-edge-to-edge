@@ -7,6 +7,6 @@ import androidx.annotation.NonNull;
 public class RNBars {
 
   public static void init(@NonNull final Activity activity, @NonNull final String styles) {
-    RNBarsModule.init(activity, styles);
+    RNBarsModuleImpl.init(activity, styles);
   }
 }

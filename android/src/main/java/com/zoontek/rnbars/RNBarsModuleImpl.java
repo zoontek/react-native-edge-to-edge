@@ -16,27 +16,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.facebook.common.logging.FLog;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.common.ReactConstants;
-import com.facebook.react.module.annotations.ReactModule;
 
-@ReactModule(name = RNBarsModule.NAME)
-public class RNBarsModule extends ReactContextBaseJavaModule {
+public class RNBarsModuleImpl {
 
   public static final String NAME = "RNBars";
-
-  public RNBarsModule(ReactApplicationContext reactContext) {
-    super(reactContext);
-  }
-
-  @Override
-  @NonNull
-  public String getName() {
-    return NAME;
-  }
 
   static public void init(@Nullable final Activity activity, @NonNull final String styles) {
     if (activity == null) {
@@ -109,10 +94,8 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
     });
   }
 
-  @ReactMethod
-  public void setStatusBarStyle(@Nullable final String style) {
-    final Activity activity = getCurrentActivity();
-
+  public static void setStatusBarStyle(@Nullable final Activity activity,
+                                       @NonNull final String style) {
     if (activity == null) {
       FLog.w(
         ReactConstants.TAG,
@@ -134,10 +117,8 @@ public class RNBarsModule extends ReactContextBaseJavaModule {
     }
   }
 
-  @ReactMethod
-  public void setNavigationBarStyle(@Nullable final String style) {
-    final Activity activity = getCurrentActivity();
-
+  public static void setNavigationBarStyle(@Nullable final Activity activity,
+                                           @NonNull final String style) {
     if (activity == null) {
       FLog.w(
         ReactConstants.TAG,

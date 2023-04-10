@@ -1,6 +1,6 @@
 {
   "name": "react-native-bars",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "license": "MIT",
   "description": "Components to control your app status and navigation bars.",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
@@ -33,7 +33,8 @@
   "scripts": {
     "format": "prettier '**/*' -u -w",
     "setup-hooks": "git config --local core.hooksPath .hooks",
-    "prepack": "bob build"
+    "prepack": "bob build",
+    "typecheck": "tsc --noEmit"
   },
   "react-native-builder-bob": {
     "source": "src",
@@ -51,7 +52,8 @@
     "*": "prettier -u -w"
   },
   "peerDependencies": {
-    "react-native": ">=0.65.0"
+    "react": ">=18.1.0",
+    "react-native": ">=0.70.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -63,5 +65,13 @@
     "react-native": "0.71.6",
     "react-native-builder-bob": "^0.20.4",
     "typescript": "^5.0.4"
+  },
+  "codegenConfig": {
+    "name": "RNBarsSpec",
+    "type": "modules",
+    "jsSrcsDir": "./src",
+    "android": {
+      "javaPackageName": "com.zoontek.rnbars"
+    }
   }
 }

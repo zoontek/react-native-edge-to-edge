@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Platform } from "react-native";
-import { NativeModule } from "./module";
+import NativeModule from "./NativeRNBars";
 import { NavigationBarProps } from "./types";
 
 const isSupportedPlatform = Platform.OS === "android" && Platform.Version >= 27;

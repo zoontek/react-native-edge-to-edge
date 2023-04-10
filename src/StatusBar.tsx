@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Platform, StatusBar as RNStatusBar } from "react-native";
-import { NativeModule } from "./module";
+import NativeModule from "./NativeRNBars";
 import { StatusBarProps } from "./types";
 
 function createStackEntry({
