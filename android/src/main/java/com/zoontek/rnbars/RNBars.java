@@ -6,7 +6,14 @@ import androidx.annotation.NonNull;
 
 public class RNBars {
 
-  public static void init(@NonNull final Activity activity, @NonNull final String styles) {
-    RNBarsModuleImpl.init(activity, styles);
+  public static void init(@NonNull final Activity activity,
+                          @NonNull final String styles) {
+    RNBarsModuleImpl.init(activity, styles, true);
+  }
+
+  public static void init(@NonNull final Activity activity,
+                          @NonNull final String styles,
+                          boolean enableKeyboardHandling) {
+    RNBarsModuleImpl.init(activity, styles, enableKeyboardHandling);
   }
 }
