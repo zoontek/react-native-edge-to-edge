@@ -69,7 +69,7 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState); // or super.onCreate(null) with react-native-screens
-    RNBars.init(this, "dark-content"); // <- initialize with initial bars styles (could be light-content)
+    RNBars.init(this, "dark-content"); // initialize with initial bars styles (could be light-content)
   }
 }
 ```
