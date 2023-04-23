@@ -74,41 +74,18 @@ public class MainActivity extends ReactActivity {
 }
 ```
 
-2. To setup initial bar styles on Android < 8.1, edit your `android/app/src/main/res/values/styles.xml` file:<br>
-   _👉 Dont forget to edit `android:windowLightStatusBar` to match your initial styles._
+2. To set initial bar styles, edit your `android/app/src/main/res/values/styles.xml` file:<br>
 
 ```xml
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"><!-- use tools -->
 
-  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+  <!-- make AppTheme inherit from Theme.EdgeToEdge -->
+  <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->
 
-    <!-- Set status bar background transparent -->
-    <item name="android:statusBarColor">@android:color/transparent</item>
-
-    <!-- Navigation bar will stay translucent on Android < 8.1 -->
-    <item name="android:windowTranslucentNavigation">true</item>
-  </style>
-
-</resources>
-```
-
-3. For Android >= 8.1, create (or edit) your `android/app/src/main/res/values-v27/styles.xml` file:<br>
-   _👉 Dont forget to edit `android:{windowLightStatusBar,windowLightNavigationBar}` to match your initial styles._
-
-```xml
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-    <!-- … -->
-
-    <!-- Set system bars background transparent -->
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:navigationBarColor">@android:color/transparent</item>
-
-    <!-- Disable auto contrasted system bars background -->
-    <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
-    <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
+    <!-- set bars initial styles: true = dark-content, false = light-content -->
+    <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
   </style>
 
 </resources>
