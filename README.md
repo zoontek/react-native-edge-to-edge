@@ -74,7 +74,7 @@ public class MainActivity extends ReactActivity {
 }
 ```
 
-2. To set initial bar styles, edit your `android/app/src/main/res/values/styles.xml` file:<br>
+2. To set the initial system bars styles, edit your `android/app/src/main/res/values/styles.xml` file:<br>
 
 ```xml
 <resources xmlns:tools="http://schemas.android.com/tools"><!-- use tools -->
@@ -93,7 +93,7 @@ public class MainActivity extends ReactActivity {
 
 ## iOS
 
-You can setup your initial status bar style in **Xcode > General > Deployment Info**:
+To set the initial status bar style, go to **Xcode > General > Deployment Info**:
 
 ![Xcode setup](https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/xcode_setup.png?raw=true)
 
