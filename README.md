@@ -16,16 +16,6 @@ Inspired by the built-in `StatusBar` module and [react-native-transparent-status
   <img width="300" src="https://raw.githubusercontent.com/zoontek/react-native-bars/HEAD/docs/android_demo.gif?raw=true" alt="android demo"></img>
 </p>
 
-## Funding
-
-<a href="https://github.com/sponsors/zoontek">
-  <img align="right" width="150" alt="This library helped you? Consider sponsoring!" src=".github/funding-octocat.svg">
-</a>
-
-This module is provided **as is**, I work on it in my free time.
-
-If your company uses it in a production app, consider sponsoring this project 💰. You also can contact me for **premium** enterprise support, help with issues, prioritize bugfixes, feature requests, etc.
-
 ## Support
 
 | package version | react-native version |
