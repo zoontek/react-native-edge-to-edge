@@ -18,10 +18,8 @@ Inspired by the built-in `StatusBar` module and [react-native-transparent-status
 
 ## Support
 
-| package version | react-native version |
-| --------------- | -------------------- |
-| 2.0.0+          | 0.70.0+              |
-| 1.0.0+          | 0.65.0+              |
+This library follows the React Native [releases support policy](https://github.com/reactwg/react-native-releases#releases-support-policy).<br>
+It is supporting the **latest version**, and the **two previous minor series**.
 
 ## Installation
 
