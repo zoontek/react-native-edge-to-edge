@@ -43,6 +43,8 @@ This module will works best with:
 
 1. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
 
+_📍 If you want to disable keyboard handling, use `RNBars.init(this, "dark-content", false)` + an external keyboard handling library like [`react-native-keyboard-controller`](https://github.com/kirillzyusko/react-native-keyboard-controller) or [`react-native-avoid-softinput`](https://github.com/mateusz1913/react-native-avoid-softinput)._
+
 ```java
 // …
 
