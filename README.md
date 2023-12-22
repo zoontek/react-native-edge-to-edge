@@ -41,13 +41,13 @@ This module will works best with:
 
 ### Android
 
-1. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.java` file:
+1. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.{java,kt}` file:
 
 _📍 If you want to disable keyboard handling, use `RNBars.init(this, "dark-content", false)` + an external keyboard handling library like [`react-native-keyboard-controller`](https://github.com/kirillzyusko/react-native-keyboard-controller) or [`react-native-avoid-softinput`](https://github.com/mateusz1913/react-native-avoid-softinput)._
 
 ```java
+// Java (react-native < 0.73)
 // …
-
 // Add these required imports:
 import android.os.Bundle;
 import com.zoontek.rnbars.RNBars;
@@ -60,6 +60,24 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState); // or super.onCreate(null) with react-native-screens
     RNBars.init(this, "dark-content"); // initialize with initial bars styles (could be light-content)
+  }
+}
+```
+
+```kotlin
+// Kotlin (react-native >= 0.73)
+// …
+// Add these required imports:
+import android.os.Bundle
+import com.zoontek.rnbars.RNBars
+
+class MainActivity : ReactActivity() { {
+
+  // …
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState) // or super.onCreate(null) with react-native-screens
+    RNBars.init(this, "dark-content") // initialize with initial bars styles (could be light-content)
   }
 }
 ```

@@ -46,7 +46,10 @@
     ]
   },
   "prettier": {
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ]
   },
   "lint-staged": {
     "*": "prettier -u -w"
@@ -58,14 +61,14 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
-    "@types/react": "^18.2.21",
-    "lint-staged": "^14.0.1",
-    "prettier": "^2.8.8",
-    "prettier-plugin-organize-imports": "^3.2.3",
+    "@types/react": "^18.2.45",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "react": "18.2.0",
-    "react-native": "0.72.4",
-    "react-native-builder-bob": "^0.21.3",
-    "typescript": "^5.2.2"
+    "react-native": "0.73.1",
+    "react-native-builder-bob": "^0.23.2",
+    "typescript": "^5.3.3"
   },
   "codegenConfig": {
     "name": "RNBarsSpec",
