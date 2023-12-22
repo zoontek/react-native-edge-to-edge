@@ -30,7 +30,8 @@ public class RNBars {
     RNBarsModuleImpl.init(activity, getDarkContentBarsStyle(activity), true);
   }
 
-  public static void init(@NonNull final Activity activity, boolean enableKeyboardHandling) {
+  public static void init(@NonNull final Activity activity,
+                          boolean enableKeyboardHandling) {
     RNBarsModuleImpl.init(activity, getDarkContentBarsStyle(activity), enableKeyboardHandling);
   }
 }
