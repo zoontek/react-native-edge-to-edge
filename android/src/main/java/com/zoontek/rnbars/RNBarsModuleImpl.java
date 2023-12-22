@@ -24,7 +24,7 @@ public class RNBarsModuleImpl {
   public static final String NAME = "RNBars";
 
   static public void init(@Nullable final Activity activity,
-                          @NonNull final String styles,
+                          boolean darkContentBarsStyle,
                           boolean enableKeyboardHandling) {
     if (activity == null) {
       FLog.w(
@@ -74,8 +74,8 @@ public class RNBarsModuleImpl {
           window.setStatusBarColor(Color.TRANSPARENT);
           window.setNavigationBarColor(Color.TRANSPARENT);
 
-          insetsController.setAppearanceLightStatusBars("dark-content".equals(styles));
-          insetsController.setAppearanceLightNavigationBars("dark-content".equals(styles));
+          insetsController.setAppearanceLightStatusBars(darkContentBarsStyle);
+          insetsController.setAppearanceLightNavigationBars(darkContentBarsStyle);
 
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.setStatusBarContrastEnforced(false);
@@ -87,7 +87,7 @@ public class RNBarsModuleImpl {
 
           window.setStatusBarColor(Color.TRANSPARENT);
 
-          insetsController.setAppearanceLightStatusBars("dark-content".equals(styles));
+          insetsController.setAppearanceLightStatusBars(darkContentBarsStyle);
         } else {
           window.addFlags(
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |

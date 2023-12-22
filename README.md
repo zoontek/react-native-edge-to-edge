@@ -43,7 +43,7 @@ This module will works best with:
 
 1. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.{java,kt}` file:
 
-_📍 If you want to disable keyboard handling, use `RNBars.init(this, "dark-content", false)` + an external keyboard handling library like [`react-native-keyboard-controller`](https://github.com/kirillzyusko/react-native-keyboard-controller) or [`react-native-avoid-softinput`](https://github.com/mateusz1913/react-native-avoid-softinput)._
+_📍 If you want to disable keyboard handling, use `RNBars.init(this, false)` + an external keyboard handling library like [`react-native-keyboard-controller`](https://github.com/kirillzyusko/react-native-keyboard-controller) or [`react-native-avoid-softinput`](https://github.com/mateusz1913/react-native-avoid-softinput)._
 
 ```java
 // Java (react-native < 0.73)
@@ -59,7 +59,7 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState); // or super.onCreate(null) with react-native-screens
-    RNBars.init(this, "dark-content"); // initialize with initial bars styles (could be light-content)
+    RNBars.init(this); // initialize react-native-bars
   }
 }
 ```
@@ -77,7 +77,7 @@ class MainActivity : ReactActivity() { {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState) // or super.onCreate(null) with react-native-screens
-    RNBars.init(this, "dark-content") // initialize with initial bars styles (could be light-content)
+    RNBars.init(this) // initialize react-native-bars
   }
 }
 ```
@@ -85,15 +85,14 @@ class MainActivity : ReactActivity() { {
 2. To set the initial system bars styles, edit your `android/app/src/main/res/values/styles.xml` file:<br>
 
 ```xml
-<resources xmlns:tools="http://schemas.android.com/tools"><!-- use tools -->
+<resources>
 
   <!-- make AppTheme inherit from Theme.EdgeToEdge -->
   <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->
 
-    <!-- set bars initial styles: true = dark-content, false = light-content -->
-    <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-    <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+    <!-- set initial bars style -->
+    <item name="darkContentBarsStyle">true</item>
   </style>
 
 </resources>

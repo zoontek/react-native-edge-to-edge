@@ -2,4 +2,5 @@
 
 <resources>
     <public name="Theme.EdgeToEdge" type="style" />
+    <public name="darkContentBarsStyle" type="attr" />
 </resources>

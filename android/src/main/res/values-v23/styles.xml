@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <style name="Theme.EdgeToEdge.v23" parent="Theme.EdgeToEdge.Common">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.Common">
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?darkContentBarsStyle</item>
     </style>
-
-    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.v23" />
 </resources>

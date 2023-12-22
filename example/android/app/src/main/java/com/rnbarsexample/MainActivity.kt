@@ -24,6 +24,6 @@ class MainActivity : ReactActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState) // or super.onCreate(null) with react-native-screens
-    RNBars.init(this, "dark-content") // initialize with initial bars styles (could be light-content)
+    RNBars.init(this) // initialize react-native-bars
   }
 }
