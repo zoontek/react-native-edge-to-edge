@@ -58,7 +58,7 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState); // or super.onCreate(null) with react-native-screens
+    super.onCreate(savedInstanceState); // super.onCreate(null) with react-native-screens
     RNBars.init(this); // initialize react-native-bars
   }
 }
@@ -76,7 +76,7 @@ class MainActivity : ReactActivity() { {
   // …
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState) // or super.onCreate(null) with react-native-screens
+    super.onCreate(savedInstanceState) // super.onCreate(null) with react-native-screens
     RNBars.init(this) // initialize react-native-bars
   }
 }

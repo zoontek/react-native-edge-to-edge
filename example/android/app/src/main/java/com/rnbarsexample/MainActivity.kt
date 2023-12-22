@@ -23,7 +23,7 @@ class MainActivity : ReactActivity() {
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState) // or super.onCreate(null) with react-native-screens
+    super.onCreate(savedInstanceState) // super.onCreate(null) with react-native-screens
     RNBars.init(this) // initialize react-native-bars
   }
 }
