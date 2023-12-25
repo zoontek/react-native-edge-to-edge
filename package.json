@@ -9,10 +9,9 @@
   "module": "dist/module/index.js",
   "types": "dist/typescript/index.d.ts",
   "files": [
-    "/android",
-    "/src",
-    "/dist",
-    "package.json"
+    "android",
+    "src",
+    "dist"
   ],
   "repository": {
     "type": "git",
