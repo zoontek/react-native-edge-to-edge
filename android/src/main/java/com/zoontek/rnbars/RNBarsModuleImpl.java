@@ -81,6 +81,16 @@ public class RNBarsModuleImpl {
             window.setStatusBarContrastEnforced(false);
             window.setNavigationBarContrastEnforced(false);
           }
+
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams layoutParams = window.getAttributes();
+
+            layoutParams.layoutInDisplayCutoutMode = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+              ? WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+              : WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+
+            window.setAttributes(layoutParams);
+          }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
           window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
