@@ -4,10 +4,13 @@
     <style name="Theme.EdgeToEdge.Common" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="darkContentBarsStyle">false</item>
     </style>
 
-    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.Common">
+    <style name="Theme.EdgeToEdge.DayNight" parent="Theme.EdgeToEdge.Common">
+        <item name="darkContentBarsStyle">true</item>
+    </style>
+
+    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.DayNight">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>

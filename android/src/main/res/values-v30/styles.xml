@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.Common">
+    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.DayNight">
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
 
         <item name="android:enforceStatusBarContrast">false</item>
