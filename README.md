@@ -82,7 +82,7 @@ class MainActivity : ReactActivity() { {
 }
 ```
 
-2. To set the initial system bars styles, edit your `android/app/src/main/res/values/styles.xml` file:<br>
+2. Edit your `android/app/src/main/res/values/styles.xml` file:<br>
 
 ```xml
 <resources>
@@ -91,7 +91,8 @@ class MainActivity : ReactActivity() { {
   <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->
 
-    <!-- set initial bars style -->
+    <!-- optional, used to enforce the initial bars styles -->
+    <!-- default is true in light mode, false in dark mode -->
     <item name="darkContentBarsStyle">true</item>
   </style>
 
