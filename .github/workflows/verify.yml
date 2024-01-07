@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  verify:
+  prepack:
     runs-on: ubuntu-latest
 
     steps:
