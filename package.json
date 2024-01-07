@@ -33,7 +33,7 @@
     "format": "prettier '**/*' --ignore-unknown --write",
     "typecheck": "tsc --noEmit",
     "build": "bob build",
-    "prepack": "yarn format --check --write=false && yarn typecheck && yarn build"
+    "prepack": "yarn format --write=false --check && yarn typecheck && yarn build"
   },
   "react-native-builder-bob": {
     "source": "src",
