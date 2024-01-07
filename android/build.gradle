@@ -27,6 +27,12 @@ android {
 
     if (project.android.hasProperty("namespace")) {
         namespace "com.zoontek.rnbars"
+
+        sourceSets {
+            main {
+                manifest.srcFile "src/main/AndroidManifestNew.xml"
+            }
+        }
     }
     defaultConfig {
         buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
@@ -59,5 +65,4 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+" // From node_modules
-    implementation "androidx.core:core:${safeExtGet("androidXCoreVersion", "1.9.0")}"
 }
