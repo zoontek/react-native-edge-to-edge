@@ -18,7 +18,7 @@ Inspired by the built-in `StatusBar` module and [react-native-transparent-status
 
 ## Support
 
-This library follows the React Native [releases support policy](https://github.com/reactwg/react-native-releases#releases-support-policy).<br>
+This library follows the React Native [releases support policy](https://github.com/reactwg/react-native-releases/blob/main/docs/support.md).<br>
 It is supporting the **latest version**, and the **two previous minor series**.
 
 ## Installation
