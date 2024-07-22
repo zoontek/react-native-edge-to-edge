@@ -3,16 +3,14 @@ package com.zoontek.rnbars;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.OnApplyWindowInsetsListener;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.facebook.common.logging.FLog;
@@ -23,9 +21,7 @@ public class RNBarsModuleImpl {
 
   public static final String NAME = "RNBars";
 
-  static public void init(@Nullable final Activity activity,
-                          boolean darkContentBarsStyle,
-                          boolean enableKeyboardHandling) {
+  static public void init(@Nullable final Activity activity) {
     if (activity == null) {
       FLog.w(
         ReactConstants.TAG,
@@ -39,28 +35,17 @@ public class RNBarsModuleImpl {
     final WindowInsetsControllerCompat insetsController =
       new WindowInsetsControllerCompat(window, decorView);
 
+    final TypedValue typedValue = new TypedValue();
+
+    final boolean darkContentBarsStyle = activity
+      .getTheme()
+      .resolveAttribute(
+        R.attr.darkContentBarsStyle,
+        typedValue,
+        true
+      ) && typedValue.data != 0;
+
     WindowCompat.setDecorFitsSystemWindows(window, false);
-
-    if (enableKeyboardHandling) {
-      ViewCompat.setOnApplyWindowInsetsListener(decorView, new OnApplyWindowInsetsListener() {
-        @Override
-        @NonNull
-        public WindowInsetsCompat onApplyWindowInsets(@NonNull View view,
-                                                      @NonNull WindowInsetsCompat windowInsets) {
-          int paddingBottom = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
-
-          if (paddingBottom != view.getPaddingBottom()) {
-            int paddingLeft = view.getPaddingLeft();
-            int paddingTop = view.getPaddingTop();
-            int paddingRight = view.getPaddingRight();
-
-            view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
-          }
-
-          return windowInsets;
-        }
-      });
-    }
 
     activity.runOnUiThread(new Runnable() {
       @Override
