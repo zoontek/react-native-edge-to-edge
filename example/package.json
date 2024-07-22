@@ -12,6 +12,7 @@
     "reinstall": "yarn clean && yarn install"
   },
   "dependencies": {
+    "@react-native-segmented-control/segmented-control": "^2.5.2",
     "@react-navigation/native": "6.1.18",
     "@react-navigation/native-stack": "6.10.1",
     "react": "18.2.0",
