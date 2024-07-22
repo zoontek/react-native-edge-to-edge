@@ -39,11 +39,8 @@ public class RNBarsModuleImpl {
 
     final boolean darkContentBarsStyle = activity
       .getTheme()
-      .resolveAttribute(
-        R.attr.darkContentBarsStyle,
-        typedValue,
-        true
-      ) && typedValue.data != 0;
+      .resolveAttribute(R.attr.darkContentBarsStyle, typedValue, true)
+        && typedValue.data != 0;
 
     WindowCompat.setDecorFitsSystemWindows(window, false);
 
