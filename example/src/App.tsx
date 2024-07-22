@@ -51,26 +51,29 @@ const Title = ({ text }: { text: string }) => {
   );
 };
 
-const BAR_STYLES: Record<number, SystemBarStyle> = {
+const BAR_STYLES = {
   0: "auto",
   1: "light",
   2: "dark",
-};
+} as const satisfies Record<number, SystemBarStyle>;
+
+type BarStyleIndex = keyof typeof BAR_STYLES;
+
+const isBarStyleIndex = (value: number): value is BarStyleIndex =>
+  value in BAR_STYLES;
 
 const App = () => {
   const dark = useColorScheme() === "dark";
 
-  const [statusBarStyleIndex, setStatusBarStyleIndex] = useState(0);
-  const [navigationBarStyleIndex, setNavigationBarStyleIndex] = useState(0);
+  const [statusBarStyleIndex, setStatusBarStyleIndex] =
+    useState<BarStyleIndex>(0);
+  const [navigationBarStyleIndex, setNavigationBarStyleIndex] =
+    useState<BarStyleIndex>(0);
 
   return (
     <SafeAreaView style={[styles.container, dark && styles.darkContainer]}>
-      <StatusBar
-        style={BAR_STYLES[statusBarStyleIndex] ?? "auto"}
-        animated={true}
-      />
-
-      <NavigationBar style={BAR_STYLES[navigationBarStyleIndex] ?? "auto"} />
+      <StatusBar style={BAR_STYLES[statusBarStyleIndex]} animated={true} />
+      <NavigationBar style={BAR_STYLES[navigationBarStyleIndex]} />
 
       <Title text="Theme" />
 
@@ -92,7 +95,9 @@ const App = () => {
         values={Object.values(BAR_STYLES)}
         selectedIndex={statusBarStyleIndex}
         onChange={({ nativeEvent: { selectedSegmentIndex } }) => {
-          setStatusBarStyleIndex(selectedSegmentIndex);
+          if (isBarStyleIndex(selectedSegmentIndex)) {
+            setStatusBarStyleIndex(selectedSegmentIndex);
+          }
         }}
       />
 
@@ -104,7 +109,9 @@ const App = () => {
         values={Object.values(BAR_STYLES)}
         selectedIndex={navigationBarStyleIndex}
         onChange={({ nativeEvent: { selectedSegmentIndex } }) => {
-          setNavigationBarStyleIndex(selectedSegmentIndex);
+          if (isBarStyleIndex(selectedSegmentIndex)) {
+            setNavigationBarStyleIndex(selectedSegmentIndex);
+          }
         }}
       />
     </SafeAreaView>
