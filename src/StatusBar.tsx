@@ -60,7 +60,9 @@ export class StatusBar extends React.Component<StatusBarProps> {
             NativeModule?.setStatusBarStyle(lastEntry.style);
           } else {
             RNStatusBar.setBarStyle(
-              `${lastEntry.style}-content`,
+              lastEntry.style === "auto"
+                ? "default"
+                : `${lastEntry.style}-content`,
               lastEntry.animated,
             );
           }

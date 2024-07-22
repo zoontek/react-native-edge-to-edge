@@ -107,7 +107,7 @@ public class RNBarsModuleImpl {
         @Override
         public void run() {
           new WindowInsetsControllerCompat(window, decorView)
-            .setAppearanceLightStatusBars("dark-content".equals(style));
+            .setAppearanceLightStatusBars("dark".equals(style));
         }
       });
     }
@@ -130,7 +130,7 @@ public class RNBarsModuleImpl {
         @Override
         public void run() {
           new WindowInsetsControllerCompat(window, decorView)
-            .setAppearanceLightNavigationBars("dark-content".equals(style));
+            .setAppearanceLightNavigationBars("dark".equals(style));
         }
       });
     }

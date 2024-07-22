@@ -1,7 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { StyleSheet, Switch, Text, View } from "react-native";
+import {
+  Appearance,
+  StyleSheet,
+  Switch,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
 import { NavigationBar, StatusBar } from "react-native-bars";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -76,10 +83,10 @@ const Line = ({
       <Switch
         onValueChange={onValueChange}
         value={value}
-        thumbColor={dark ? "#374151" : "#E5E7EB"}
+        thumbColor="#E5E7EB"
         trackColor={{
-          true: dark ? "#6B7280" : "#9CA3AF",
-          false: dark ? "#6B7280" : "#9CA3AF",
+          true: "#9CA3AF",
+          false: "#9CA3AF",
         }}
       />
 
@@ -95,8 +102,8 @@ const Line = ({
 );
 
 const App = () => {
-  const [isLightTheme, setIsLightTheme] = React.useState(true);
-  const dark = !isLightTheme;
+  const colorScheme = useColorScheme();
+  const dark = colorScheme === "dark";
 
   const [isLightStatus, setIsLightStatus] = React.useState(false);
   const [isLightNavigation, setIsLightNavigation] = React.useState(false);
@@ -112,28 +119,30 @@ const App = () => {
         title="Theme"
         left="dark"
         right="light"
-        value={isLightTheme}
-        onValueChange={setIsLightTheme}
+        value={!dark}
         dark={dark}
+        onValueChange={(light) => {
+          Appearance.setColorScheme(light ? "light" : "dark");
+        }}
       />
 
       <Space size={48} />
 
       <Line
         title="<StatusBar />"
-        left="dark-content"
-        right="light-content"
+        left="dark"
+        right="light"
         value={isLightStatus}
-        onValueChange={setIsLightStatus}
         dark={dark}
+        onValueChange={setIsLightStatus}
       />
 
       <Space size={32} />
 
       <Line
         title="<NavigationBar />"
-        left="dark-content"
-        right="light-content"
+        left="dark"
+        right="light"
         value={isLightNavigation}
         onValueChange={setIsLightNavigation}
         dark={dark}

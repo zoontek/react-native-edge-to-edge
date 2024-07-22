@@ -1,4 +1,4 @@
-export type SystemBarStyle = "light" | "dark";
+export type SystemBarStyle = "auto" | "light" | "dark";
 
 export type StatusBarProps = {
   animated?: boolean;
