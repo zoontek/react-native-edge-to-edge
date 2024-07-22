@@ -6,9 +6,9 @@ import { NavigationBarProps } from "./types";
 const isSupportedPlatform = Platform.OS === "android" && Platform.Version >= 27;
 
 function createStackEntry({
-  barStyle = "light-content",
+  style = "light",
 }: NavigationBarProps): NavigationBarProps {
-  return { barStyle };
+  return { style };
 }
 
 export class NavigationBar extends React.Component<NavigationBarProps> {
@@ -57,8 +57,8 @@ export class NavigationBar extends React.Component<NavigationBarProps> {
 
       if (lastEntry != null) {
         // Update only if style have changed or if current props are unavailable.
-        if (isSupportedPlatform && oldProps?.barStyle !== lastEntry.barStyle) {
-          NativeModule?.setNavigationBarStyle(lastEntry.barStyle);
+        if (isSupportedPlatform && oldProps?.style !== lastEntry.style) {
+          NativeModule?.setNavigationBarStyle(lastEntry.style);
         }
 
         // Update the current props values.

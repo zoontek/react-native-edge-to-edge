@@ -105,13 +105,8 @@ const App = () => {
     <SafeAreaView
       style={[styles.container, dark && { backgroundColor: "#1F2937" }]}
     >
-      <StatusBar
-        barStyle={isLightStatus ? "light-content" : "dark-content"}
-        animated={true}
-      />
-      <NavigationBar
-        barStyle={isLightNavigation ? "light-content" : "dark-content"}
-      />
+      <StatusBar style={isLightStatus ? "light" : "dark"} animated={true} />
+      <NavigationBar style={isLightNavigation ? "light" : "dark"} />
 
       <Line
         title="Theme"

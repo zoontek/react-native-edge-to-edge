@@ -5,9 +5,9 @@ import { StatusBarProps } from "./types";
 
 function createStackEntry({
   animated = false,
-  barStyle = "light-content",
+  style = "light",
 }: StatusBarProps): StatusBarProps {
-  return { animated, barStyle };
+  return { animated, style };
 }
 
 export class StatusBar extends React.Component<StatusBarProps> {
@@ -55,11 +55,14 @@ export class StatusBar extends React.Component<StatusBarProps> {
 
       if (lastEntry != null) {
         // Update only if style have changed or if current props are unavailable.
-        if (oldProps?.barStyle !== lastEntry.barStyle) {
+        if (oldProps?.style !== lastEntry.style) {
           if (Platform.OS === "android") {
-            NativeModule?.setStatusBarStyle(lastEntry.barStyle);
+            NativeModule?.setStatusBarStyle(lastEntry.style);
           } else {
-            RNStatusBar.setBarStyle(lastEntry.barStyle, lastEntry.animated);
+            RNStatusBar.setBarStyle(
+              `${lastEntry.style}-content`,
+              lastEntry.animated,
+            );
           }
         }
 

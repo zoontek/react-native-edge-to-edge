@@ -1,12 +1,12 @@
-export type SystemBarStyle = "light-content" | "dark-content";
+export type SystemBarStyle = "light" | "dark";
 
 export type StatusBarProps = {
   animated?: boolean;
-  barStyle: SystemBarStyle;
+  style: SystemBarStyle;
 };
 
 export type NavigationBarProps = {
-  barStyle: SystemBarStyle;
+  style: SystemBarStyle;
 };
 
 export type SystemBarsProps = StatusBarProps;

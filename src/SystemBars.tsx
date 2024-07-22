@@ -7,12 +7,8 @@ export class SystemBars extends React.Component<SystemBarsProps> {
   override render(): React.ReactNode {
     return (
       <>
-        <StatusBar
-          animated={this.props.animated}
-          barStyle={this.props.barStyle}
-        />
-
-        <NavigationBar barStyle={this.props.barStyle} />
+        <StatusBar animated={this.props.animated} style={this.props.style} />
+        <NavigationBar style={this.props.style} />
       </>
     );
   }

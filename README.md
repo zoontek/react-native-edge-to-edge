@@ -43,7 +43,23 @@ This module will works best with:
 
 1. Edit your `android/app/src/main/java/com/yourprojectname/MainActivity.{java,kt}` file:
 
-_📍 If you want to disable keyboard handling, use `RNBars.init(this, false)` + an external keyboard handling library like [`react-native-keyboard-controller`](https://github.com/kirillzyusko/react-native-keyboard-controller) or [`react-native-avoid-softinput`](https://github.com/mateusz1913/react-native-avoid-softinput)._
+```kotlin
+// Kotlin (react-native >= 0.73)
+// …
+// Add these required imports:
+import android.os.Bundle
+import com.zoontek.rnbars.RNBars
+
+class MainActivity : ReactActivity() { {
+
+  // …
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState) // super.onCreate(null) with react-native-screens
+    RNBars.init(this) // initialize react-native-bars
+  }
+}
+```
 
 ```java
 // Java (react-native < 0.73)
@@ -60,24 +76,6 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState); // super.onCreate(null) with react-native-screens
     RNBars.init(this); // initialize react-native-bars
-  }
-}
-```
-
-```kotlin
-// Kotlin (react-native >= 0.73)
-// …
-// Add these required imports:
-import android.os.Bundle
-import com.zoontek.rnbars.RNBars
-
-class MainActivity : ReactActivity() { {
-
-  // …
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState) // super.onCreate(null) with react-native-screens
-    RNBars.init(this) // initialize react-native-bars
   }
 }
 ```
@@ -113,11 +111,11 @@ import { NavigationBar, StatusBar, SystemBars } from "react-native-bars";
 const App = () => {
   return (
     <>
-      <StatusBar animated={true} barStyle="light-content" />
-      <NavigationBar barStyle="light-content" />
+      <StatusBar animated={true} style="light" />
+      <NavigationBar style="light" />
 
       {/* Or, to update both with one component: */}
-      <SystemBars animated={true} barStyle="light-content" />
+      <SystemBars animated={true} style="light" />
     </>
   );
 };
@@ -136,12 +134,12 @@ type StatusBarProps = {
   // Should transition between status bar property changes be animated? (has no effect on Android)
   animated?: boolean;
   // Sets the color of the status bar content
-  barStyle: "light-content" | "dark-content";
+  style: "light" | "dark";
 };
 
 const App = () => (
   <>
-    <StatusBar animated={true} barStyle="dark-content" />
+    <StatusBar animated={true} style="dark" />
     {/* … */}
   </>
 );
@@ -181,12 +179,12 @@ import { NavigationBar } from "react-native-bars";
 
 type NavigationBarProps = {
   // Sets the color of the navigation bar content
-  barStyle: "light-content" | "dark-content";
+  style: "light" | "dark";
 };
 
 const App = () => (
   <>
-    <NavigationBar barStyle="dark-content" />
+    <NavigationBar style="dark" />
     {/* … */}
   </>
 );
@@ -228,12 +226,12 @@ type SystemBarsProps = {
   // Should transition between bars property changes be animated? (has no effect on Android)
   animated?: boolean;
   // Sets the color of the bars content
-  barStyle: "light-content" | "dark-content";
+  style: "light" | "dark";
 };
 
 const App = () => (
   <>
-    <SystemBars animated={true} barStyle="dark-content" />
+    <SystemBars animated={true} style="dark" />
     {/* … */}
   </>
 );
