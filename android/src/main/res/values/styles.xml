@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.EdgeToEdge.Common" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:fitsSystemWindows">false</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    </style>
-
-    <style name="Theme.EdgeToEdge.DayNight" parent="Theme.EdgeToEdge.Common">
+    <style name="Theme.EdgeToEdge.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="darkContentBarsStyle">true</item>
     </style>
 
-    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.DayNight">
-        <item name="android:windowTranslucentStatus">true</item>
+    <style name="Theme.EdgeToEdge.Common" parent="Theme.EdgeToEdge.Base">
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?darkContentBarsStyle</item>
+    </style>
+
+    <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.Common">
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>
