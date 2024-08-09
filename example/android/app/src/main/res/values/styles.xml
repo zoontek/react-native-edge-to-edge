@@ -1,6 +1,5 @@
 <resources>
     <style name="AppTheme" parent="Theme.EdgeToEdge">
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
-        <item name="darkContentBarsStyle">true</item>
     </style>
 </resources>
