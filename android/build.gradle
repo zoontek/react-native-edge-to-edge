@@ -28,7 +28,7 @@ android {
     compileSdkVersion safeExtGet("compileSdkVersion", 34)
 
     if (project.android.hasProperty("namespace")) {
-        namespace "com.zoontek.rnbars"
+        namespace "com.zoontek.rnedgetoedge"
 
         buildFeatures {
             buildConfig true

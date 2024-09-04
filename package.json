@@ -1,10 +1,10 @@
 {
-  "name": "react-native-bars",
-  "version": "2.4.3",
+  "name": "react-native-edge-to-edge",
+  "version": "0.1.0",
   "license": "MIT",
-  "description": "Components to control your app status and navigation bars.",
+  "description": "TODO",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
-  "homepage": "https://github.com/zoontek/react-native-bars",
+  "homepage": "https://github.com/zoontek/react-native-edge-to-edge",
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
   "types": "dist/typescript/index.d.ts",
@@ -15,19 +15,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/zoontek/react-native-bars.git"
+    "url": "https://github.com/zoontek/react-native-edge-to-edge.git"
   },
   "keywords": [
-    "navigation-bar",
-    "navigationbar",
     "react",
     "react-native",
+    "edge-to-edge",
     "status-bar",
-    "statusbar",
+    "navigation-bar",
     "system-bar",
-    "system-bars",
-    "systembar",
-    "systembars"
+    "system-bars"
   ],
   "scripts": {
     "format": "prettier '**/*' -u -w",
@@ -59,17 +56,17 @@
     "@types/react": "^18.2.60",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.0.0",
-    "react": "18.2.0",
-    "react-native": "0.74.3",
-    "react-native-builder-bob": "^0.26.0",
-    "typescript": "^5.5.3"
+    "react": "18.3.1",
+    "react-native": "0.75.2",
+    "react-native-builder-bob": "^0.30.0",
+    "typescript": "^5.5.4"
   },
   "codegenConfig": {
-    "name": "RNBarsSpec",
+    "name": "RNEdgeToEdgeSpec",
     "type": "modules",
     "jsSrcsDir": "./src",
     "android": {
-      "javaPackageName": "com.zoontek.rnbars"
+      "javaPackageName": "com.zoontek.rnedgetoedge"
     }
   }
 }

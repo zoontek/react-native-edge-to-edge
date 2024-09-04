@@ -1,34 +1,49 @@
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
 import {
   Appearance,
+  ColorSchemeName,
   StyleSheet,
+  Switch,
   Text,
   useColorScheme,
   View,
 } from "react-native";
-import { NavigationBar, StatusBar, SystemBarStyle } from "react-native-bars";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SystemBars, SystemBarStyle } from "react-native-edge-to-edge";
+
+const DARK_BACKGROUND = "#1F2937";
+const DARK_TEXT = "#374151";
+const LIGHT_BACKGROUND = "#F9FAFB";
+const LIGHT_TEXT = "#E5E7EB";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: LIGHT_BACKGROUND,
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 16,
   },
   darkContainer: {
-    backgroundColor: "#1F2937",
+    backgroundColor: DARK_BACKGROUND,
   },
   title: {
-    color: "#374151",
+    color: DARK_TEXT,
     fontSize: 20,
     fontWeight: "700",
   },
   darkTitle: {
-    color: "#E5E7EB",
+    color: LIGHT_TEXT,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  text: {
+    color: DARK_TEXT,
+  },
+  darkText: {
+    color: LIGHT_TEXT,
   },
 });
 
@@ -51,79 +66,81 @@ const Title = ({ text }: { text: string }) => {
   );
 };
 
-const BAR_STYLES = {
-  0: "auto",
-  1: "light",
-  2: "dark",
-} as const satisfies Record<number, SystemBarStyle>;
+const STYLES: SystemBarStyle[] = ["auto", "light", "dark"];
 
-type BarStyleIndex = keyof typeof BAR_STYLES;
-
-const isBarStyleIndex = (value: number): value is BarStyleIndex =>
-  value in BAR_STYLES;
-
-const App = () => {
+export const App = () => {
   const dark = useColorScheme() === "dark";
 
-  const [statusBarStyleIndex, setStatusBarStyleIndex] =
-    useState<BarStyleIndex>(0);
-  const [navigationBarStyleIndex, setNavigationBarStyleIndex] =
-    useState<BarStyleIndex>(0);
+  const thumbColor = dark ? LIGHT_TEXT : "#fff";
+  const trackColor = dark
+    ? { false: "#1c1c1f", true: "#2b3e55" }
+    : { false: "#eeeef0", true: "#ccd8e5" };
+
+  const [styleIndex, setStyleIndex] = useState(0);
+  const [statusBarHidden, setStatusBarHidden] = useState(false);
+  const [navigationBarHidden, setNavigationBarHidden] = useState(false);
 
   return (
-    <SafeAreaView style={[styles.container, dark && styles.darkContainer]}>
-      <StatusBar style={BAR_STYLES[statusBarStyleIndex]} animated={true} />
-      <NavigationBar style={BAR_STYLES[navigationBarStyleIndex]} />
+    <View style={[styles.container, dark && styles.darkContainer]}>
+      <SystemBars
+        style={STYLES[styleIndex]}
+        hidden={{
+          statusBar: statusBarHidden,
+          navigationBar: navigationBarHidden,
+        }}
+      />
 
       <Title text="Theme" />
 
       <SegmentedControl
-        values={["light", "dark"]}
+        values={["light", "dark"] satisfies ColorSchemeName[]}
         selectedIndex={dark ? 1 : 0}
-        onChange={({ nativeEvent: { selectedSegmentIndex } }) => {
-          Appearance.setColorScheme(
-            selectedSegmentIndex === 1 ? "dark" : "light",
-          );
-        }}
-      />
-
-      <Space size={48} />
-
-      <Title text="<StatusBar />" />
-
-      <SegmentedControl
-        values={Object.values(BAR_STYLES)}
-        selectedIndex={statusBarStyleIndex}
-        onChange={({ nativeEvent: { selectedSegmentIndex } }) => {
-          if (isBarStyleIndex(selectedSegmentIndex)) {
-            setStatusBarStyleIndex(selectedSegmentIndex);
-          }
+        onValueChange={(value) => {
+          Appearance.setColorScheme(value as ColorSchemeName);
         }}
       />
 
       <Space size={32} />
 
-      <Title text="<NavigationBar />" />
+      <Title text="<SystemBars />" />
 
       <SegmentedControl
-        values={Object.values(BAR_STYLES)}
-        selectedIndex={navigationBarStyleIndex}
-        onChange={({ nativeEvent: { selectedSegmentIndex } }) => {
-          if (isBarStyleIndex(selectedSegmentIndex)) {
-            setNavigationBarStyleIndex(selectedSegmentIndex);
-          }
+        values={STYLES}
+        selectedIndex={styleIndex}
+        onValueChange={(value) => {
+          setStyleIndex(STYLES.indexOf(value as SystemBarStyle));
         }}
       />
-    </SafeAreaView>
+
+      <Space size={16} />
+
+      <View style={styles.row}>
+        <Text style={[styles.text, dark && styles.darkText]}>
+          Hide status bar
+        </Text>
+
+        <Switch
+          thumbColor={thumbColor}
+          trackColor={trackColor}
+          value={statusBarHidden}
+          onValueChange={setStatusBarHidden}
+        />
+      </View>
+
+      <Space size={8} />
+
+      <View style={styles.row}>
+        <Text style={[styles.text, dark && styles.darkText]}>
+          Hide navigation bar (no effect on iOS)
+        </Text>
+
+        <Switch
+          thumbColor={thumbColor}
+          trackColor={trackColor}
+          value={navigationBarHidden}
+          onValueChange={setNavigationBarHidden}
+        />
+      </View>
+    </View>
   );
 };
-
-const Stack = createNativeStackNavigator();
-
-export default () => (
-  <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="App" component={App} />
-    </Stack.Navigator>
-  </NavigationContainer>
-);

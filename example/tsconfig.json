@@ -22,7 +22,7 @@
     "noUnusedParameters": true,
 
     "paths": {
-      "react-native-bars": ["../src"]
+      "react-native-edge-to-edge": ["../src"]
     }
   },
   "include": ["src"],

@@ -1,11 +1,13 @@
-package com.rnbarsexample
+package com.rnedgetoedgeexample
 
 import android.os.Bundle
+
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
-import com.zoontek.rnbars.RNBars
+
+import com.zoontek.rnedgetoedge.EdgeToEdge
 
 class MainActivity : ReactActivity() {
 
@@ -13,7 +15,7 @@ class MainActivity : ReactActivity() {
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.
    */
-  override fun getMainComponentName(): String = "RNBarsExample"
+  override fun getMainComponentName(): String = "RNEdgeToEdgeExample"
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
@@ -24,6 +26,6 @@ class MainActivity : ReactActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState) // super.onCreate(null) with react-native-screens
-    RNBars.init(this) // initialize react-native-bars
+    EdgeToEdge.enable(this) // enable react-native-edge-to-edge
   }
 }

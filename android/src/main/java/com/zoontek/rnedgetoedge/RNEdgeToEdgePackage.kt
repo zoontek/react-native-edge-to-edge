@@ -1,4 +1,4 @@
-package com.zoontek.rnbars
+package com.zoontek.rnedgetoedge
 
 import com.facebook.react.TurboReactPackage
 import com.facebook.react.bridge.NativeModule
@@ -6,10 +6,10 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 
-class RNBarsPackage : TurboReactPackage() {
+class RNEdgeToEdgePackage : TurboReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
     return when (name) {
-      RNBarsModuleImpl.NAME -> RNBarsModule(reactContext)
+      RNEdgeToEdgeModuleImpl.NAME -> RNEdgeToEdgeModule(reactContext)
       else -> null
     }
   }
@@ -20,8 +20,8 @@ class RNBarsPackage : TurboReactPackage() {
       val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
 
       val moduleInfo = ReactModuleInfo(
-        RNBarsModuleImpl.NAME,
-        RNBarsModuleImpl.NAME,
+        RNEdgeToEdgeModuleImpl.NAME,
+        RNEdgeToEdgeModuleImpl.NAME,
         false,
         false,
         true,
@@ -29,7 +29,7 @@ class RNBarsPackage : TurboReactPackage() {
         isTurboModule
       )
 
-      moduleInfos[RNBarsModuleImpl.NAME] = moduleInfo
+      moduleInfos[RNEdgeToEdgeModuleImpl.NAME] = moduleInfo
       moduleInfos
     }
   }

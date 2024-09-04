@@ -1,4 +1,4 @@
-package com.rnbarsexample
+package com.rnedgetoedgeexample
 
 import android.app.Application
 import com.facebook.react.PackageList

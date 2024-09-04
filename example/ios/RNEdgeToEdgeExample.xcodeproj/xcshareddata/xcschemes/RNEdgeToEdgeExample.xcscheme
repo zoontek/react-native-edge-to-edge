@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "RNBarsExample.app"
-               BlueprintName = "RNBarsExample"
-               ReferencedContainer = "container:RNBarsExample.xcodeproj">
+               BuildableName = "RNEdgeToEdgeExample.app"
+               BlueprintName = "RNEdgeToEdgeExample"
+               ReferencedContainer = "container:RNEdgeToEdgeExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNBarsExample.app"
-            BlueprintName = "RNBarsExample"
-            ReferencedContainer = "container:RNBarsExample.xcodeproj">
+            BuildableName = "RNEdgeToEdgeExample.app"
+            BlueprintName = "RNEdgeToEdgeExample"
+            ReferencedContainer = "container:RNEdgeToEdgeExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNBarsExample.app"
-            BlueprintName = "RNBarsExample"
-            ReferencedContainer = "container:RNBarsExample.xcodeproj">
+            BuildableName = "RNEdgeToEdgeExample.app"
+            BlueprintName = "RNEdgeToEdgeExample"
+            ReferencedContainer = "container:RNEdgeToEdgeExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
