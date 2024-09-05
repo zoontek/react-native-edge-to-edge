@@ -1,0 +1,41 @@
+{
+  "name": "react-native-is-edge-to-edge",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "TODO",
+  "author": "Mathieu Acthernoene <zoontek@gmail.com>",
+  "homepage": "https://github.com/zoontek/react-native-edge-to-edge",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zoontek/react-native-edge-to-edge.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "edge-to-edge",
+    "status-bar",
+    "navigation-bar",
+    "system-bar",
+    "system-bars"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18.1.0",
+    "react-native": ">=0.70.0"
+  },
+  "devDependencies": {
+    "react": "18.3.1",
+    "react-native": "0.75.2",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
+  }
+}
