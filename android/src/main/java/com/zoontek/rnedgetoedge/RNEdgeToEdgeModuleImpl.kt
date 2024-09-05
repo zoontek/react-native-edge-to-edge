@@ -19,8 +19,9 @@ import com.facebook.react.common.ReactConstants
 
 object RNEdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
+  private var isInitialHostResume = true
 
-  fun enable(activity: Activity?) {
+  fun onHostResume(activity: Activity?) {
     if (activity == null) {
       return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
     }
@@ -29,12 +30,6 @@ object RNEdgeToEdgeModuleImpl {
       val window = activity.window
       val view = window.decorView
       val context = view.context
-      val typedValue = TypedValue()
-
-      val isLightStatusBar = activity
-        .theme
-        .resolveAttribute(android.R.attr.windowLightStatusBar, typedValue, true) &&
-        typedValue.data != 0
 
       val isDarkMode =
         view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
@@ -57,7 +52,16 @@ object RNEdgeToEdgeModuleImpl {
       }
 
       WindowInsetsControllerCompat(window, view).run {
-        isAppearanceLightStatusBars = isLightStatusBar
+        if (isInitialHostResume) {
+          val typedValue = TypedValue()
+
+          isAppearanceLightStatusBars = activity
+            .theme
+            .resolveAttribute(android.R.attr.windowLightStatusBar, typedValue, true) &&
+            typedValue.data != 0
+        }
+
+        isInitialHostResume = false
         isAppearanceLightNavigationBars = !isDarkMode
       }
 
@@ -69,6 +73,10 @@ object RNEdgeToEdgeModuleImpl {
         }
       }
     }
+  }
+
+  fun onHostDestroy() {
+    isInitialHostResume = true
   }
 
   fun setSystemBarsConfig(activity: Activity?, config: ReadableMap) {
