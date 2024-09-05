@@ -1,7 +1,7 @@
 import { Platform, TurboModuleRegistry } from "react-native";
 
 // Edge-to-edge is only an Android problem
-const enabled =
+const edgeToEdge =
   Platform.OS !== "android" || TurboModuleRegistry.get("RNEdgeToEdge") != null;
 
-export const isEdgeToEdge = () => enabled;
+export const isEdgeToEdge = () => edgeToEdge;
