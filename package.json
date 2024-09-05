@@ -9,9 +9,13 @@
   "module": "dist/module/index.js",
   "types": "dist/typescript/index.d.ts",
   "files": [
-    "android",
+    "dist",
     "src",
-    "dist"
+    "app.plugin.js",
+    "android",
+    "!android/build",
+    "!android/.cxx",
+    "!android/.gradle"
   ],
   "repository": {
     "type": "git",
@@ -53,6 +57,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
+    "@expo/config-plugins": "^7.0.0 || ^8.0.0",
     "@types/react": "^18.2.60",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.0.0",
