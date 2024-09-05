@@ -1,2 +1,2 @@
 export { SystemBars } from "./SystemBars";
-export { SystemBarStyle, SystemBarsProps } from "./types";
+export { SystemBarStyle, SystemBarsEntry, SystemBarsProps } from "./types";

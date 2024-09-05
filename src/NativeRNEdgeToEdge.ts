@@ -2,8 +2,8 @@ import type { TurboModule } from "react-native";
 import { TurboModuleRegistry } from "react-native";
 
 type SystemBarsConfig = {
-  statusBarStyle: string | undefined;
   statusBarHidden: boolean | undefined;
+  statusBarStyle: string | undefined;
   navigationBarHidden: boolean | undefined;
 };
 

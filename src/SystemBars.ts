@@ -1,13 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Appearance, Platform, StatusBar, useColorScheme } from "react-native";
 import NativeModule from "./NativeRNEdgeToEdge";
-import { SystemBarsProps, SystemBarStyle } from "./types";
-
-type SystemBarsEntry = {
-  statusBarStyle: SystemBarStyle | undefined;
-  statusBarHidden: boolean | undefined;
-  navigationBarHidden: boolean | undefined;
-};
+import { SystemBarsEntry, SystemBarsProps } from "./types";
 
 function getColorScheme(): "light" | "dark" {
   return Appearance?.getColorScheme() ?? "light";

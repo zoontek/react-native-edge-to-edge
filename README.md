@@ -69,23 +69,23 @@ const App = () => (
 #### SystemBars.pushStackEntry
 
 ```ts
-const entry: SystemBarsProps = SystemBars.pushStackEntry(
-  props /*: SystemBarsProps*/,
+const entry: SystemBarsEntry = SystemBars.pushStackEntry(
+  props /*: SystemBarsProps */,
 );
 ```
 
 #### SystemBars.popStackEntry
 
 ```ts
-SystemBars.popStackEntry(entry/*: SystemBarsProps*/): void;
+SystemBars.popStackEntry(entry/*: SystemBarsEntry */): void;
 ```
 
 #### SystemBars.replaceStackEntry
 
 ```ts
-const entry: SystemBarsProps = SystemBars.replaceStackEntry(
-  entry /*: SystemBarsProps*/,
-  props /*: SystemBarsProps*/,
+const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
+  entry /*: SystemBarsEntry */,
+  props /*: SystemBarsProps */,
 );
 ```
 
