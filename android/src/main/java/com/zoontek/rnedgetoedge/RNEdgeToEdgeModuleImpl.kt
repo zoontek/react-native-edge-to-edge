@@ -91,7 +91,7 @@ object RNEdgeToEdgeModuleImpl {
     val navigationBarHidden =
       config.takeIf { it.hasKey("navigationBarHidden") }?.getBoolean("navigationBarHidden")
 
-    UiThreadUtil.runOnUiThread {
+    activity.runOnUiThread {
       val window = activity.window
       val insetsController = WindowInsetsControllerCompat(window, window.decorView)
 
