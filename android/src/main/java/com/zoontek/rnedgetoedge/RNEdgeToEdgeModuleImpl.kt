@@ -14,7 +14,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 
 import com.facebook.common.logging.FLog
 import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.bridge.UiThreadUtil
 import com.facebook.react.common.ReactConstants
 
 object RNEdgeToEdgeModuleImpl {
