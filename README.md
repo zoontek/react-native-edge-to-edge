@@ -91,8 +91,8 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 
 ## Credits
 
-This project has been built and is maintained thanks to the support from [Expo.io](https://expo.io).
+This project has been built and is maintained thanks to the support from [Expo.io](https://expo.io)
 
 <a href="https://expo.io">
-  <img width="300" src="./docs/expo.svg" alt="Expo">
+  <img width="200" src="./docs/expo.svg" alt="Expo">
 </a>
