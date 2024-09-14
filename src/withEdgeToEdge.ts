@@ -2,7 +2,6 @@ import {
   ConfigPlugin,
   createRunOncePlugin,
   withAndroidStyles,
-  withPlugins,
 } from "@expo/config-plugins";
 
 const pkg = require("react-native-edge-to-edge/package.json");
@@ -53,7 +52,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
 };
 
 export const withEdgeToEdge = createRunOncePlugin(
-  (config) => withPlugins(config, [withAndroidEdgeToEdgeTheme]),
+  withAndroidEdgeToEdgeTheme,
   pkg.name,
   pkg.version,
 );
