@@ -89,10 +89,8 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 );
 ```
 
-## Sponsors
+## Credits
 
-This module is provided **as is**, I work on it in my free time.
+This project has been built and is maintained thanks to the support from [Expo.io](https://expo.io).
 
-If you or your company uses it in a production app, consider sponsoring this project 💰. You also can contact me for **premium** enterprise support: help with issues, prioritize bugfixes, feature requests, etc.
-
-<a href="https://github.com/sponsors/zoontek"><img align="center" alt="Sponsors list" src="https://raw.githubusercontent.com/zoontek/sponsors/main/sponsorkit/sponsors.svg"></a>
+[![Expo](./docs/expo.svg)](https://expo.io)
