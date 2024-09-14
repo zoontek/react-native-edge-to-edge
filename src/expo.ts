@@ -4,8 +4,6 @@ import {
   withAndroidStyles,
 } from "@expo/config-plugins";
 
-const pkg = require("react-native-edge-to-edge/package.json");
-
 const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
   const ignoreList = new Set([
     "android:enforceNavigationBarContrast",
@@ -51,8 +49,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
   });
 };
 
-export const withEdgeToEdge = createRunOncePlugin(
+export default createRunOncePlugin(
   withAndroidEdgeToEdgeTheme,
-  pkg.name,
-  pkg.version,
+  "react-native-edge-to-edge",
 );
