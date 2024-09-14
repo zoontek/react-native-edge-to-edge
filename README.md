@@ -1,6 +1,6 @@
 # react-native-edge-to-edge
 
-Enable [Edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) mode in React Native.
+Effortlessly enable [edge-to-edge display](https://developer.android.com/develop/ui/views/layout/edge-to-edge) in React Native, allowing your app content to flow seamlessly beneath the status bar and navigation bar, aligning Android behavior with iOS.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-edge-to-edge/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
