@@ -1,6 +1,6 @@
 # react-native-is-edge-to-edge
 
-A companion for libraries authors.
+For library authors, we provide a lightweight package that detects whether `react-native-edge-to-edge` is installed (and whether edge-to-edge is enabled), allowing you to act accordingly.
 
 ## API
 

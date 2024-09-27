@@ -1,12 +1,20 @@
 # react-native-edge-to-edge
 
-Effortlessly enable [edge-to-edge display](https://developer.android.com/develop/ui/views/layout/edge-to-edge) in React Native, allowing your app content to flow seamlessly beneath the status bar and navigation bar.
+Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your app content to flow seamlessly beneath the system bars.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-edge-to-edge/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
 [![npm downloads](https://img.shields.io/npm/dt/react-native-edge-to-edge.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
 
-<img width="250" src="./docs/logo.svg" alt="Logo">
+<img width="240" src="./docs/logo.svg" alt="Logo">
+
+## Credits
+
+This project has been built and is maintained thanks to the support from [Expo.io](https://expo.io).
+
+<a href="https://expo.io">
+  <img width="180" src="./docs/expo.svg" alt="Expo">
+</a>
 
 ## Support
 
@@ -16,23 +24,14 @@ It is supporting the **latest version**, and the **two previous minor series**.
 ## Installation
 
 ```bash
-$ npm install --save react-native-edge-to-edge
+$ npm i -S react-native-edge-to-edge
 # --- or ---
 $ yarn add react-native-edge-to-edge
 ```
 
-## Recommendations
-
-This module will works best with:
-
-- [react-native-keyboard-controller](https://github.com/kirillzyusko/react-native-keyboard-controller): A better approach to keyboard handling than `KeyboardAvoidingView`.
-- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context): A flexible way to handle safe area insets.
-
-## Setup
-
 ### Expo
 
-Add the plugin in your `app.json`:
+Add the library plugin in your `app.json` and run `expo prebuild`:
 
 ```diff
 {
@@ -44,18 +43,21 @@ Add the plugin in your `app.json`:
 
 ### Bare React Native
 
-Edit your `android/app/src/main/res/values/styles.xml` file to inherit from `Theme.EdgeToEdge`:<br>
+Edit your `android/app/src/main/res/values/styles.xml` file:
 
-```xml
+```diff
 <resources>
-  <!-- make AppTheme inherit from Theme.EdgeToEdge -->
-  <style name="AppTheme" parent="Theme.EdgeToEdge">
+- <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
++ <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->
   </style>
 </resources>
 ```
 
 ## API
+
+> [!WARNING]  
+> The API is subject to modification prior to version **1.0.0**.
 
 ### `<SystemBars />`
 
@@ -103,10 +105,14 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 );
 ```
 
-## Credits
+## Third-party librairies
 
-This project has been built and is maintained thanks to the support from [Expo.io](https://expo.io)
+For library authors, we provide a lightweight package, `react-native-is-edge-to-edge` (note the `-is-`!), that detects whether `react-native-edge-to-edge` is installed (and whether edge-to-edge is enabled), allowing you to act accordingly.
 
-<a href="https://expo.io">
-  <img width="200" src="./docs/expo.svg" alt="Expo">
-</a>
+```ts
+import { isEdgeToEdge } from "react-native-is-edge-to-edge";
+
+if (isEdgeToEdge()) {
+  // …
+}
+```
