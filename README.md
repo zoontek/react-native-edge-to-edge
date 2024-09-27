@@ -1,10 +1,12 @@
 # react-native-edge-to-edge
 
-Effortlessly enable [edge-to-edge display](https://developer.android.com/develop/ui/views/layout/edge-to-edge) in React Native, allowing your app content to flow seamlessly beneath the status bar and navigation bar, aligning Android behavior with iOS.
+Effortlessly enable [edge-to-edge display](https://developer.android.com/develop/ui/views/layout/edge-to-edge) in React Native, allowing your app content to flow seamlessly beneath the status bar and navigation bar.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-edge-to-edge/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
 [![npm downloads](https://img.shields.io/npm/dt/react-native-edge-to-edge.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
+
+<img width="250" src="./docs/logo.svg" alt="Logo">
 
 ## Support
 
@@ -28,9 +30,21 @@ This module will works best with:
 
 ## Setup
 
-### Android
+### Expo
 
-Edit your `android/app/src/main/res/values/styles.xml` file:<br>
+Add the plugin in your `app.json`:
+
+```diff
+{
+  "expo": {
++   "plugins": ["react-native-edge-to-edge"]
+  }
+}
+```
+
+### Bare React Native
+
+Edit your `android/app/src/main/res/values/styles.xml` file to inherit from `Theme.EdgeToEdge`:<br>
 
 ```xml
 <resources>

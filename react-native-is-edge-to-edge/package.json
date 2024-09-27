@@ -2,7 +2,7 @@
   "name": "react-native-is-edge-to-edge",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "TODO",
+  "description": "Detect react-native-edge-to-edge package install",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
   "homepage": "https://github.com/zoontek/react-native-edge-to-edge",
   "source": "src/index.ts",
