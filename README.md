@@ -107,7 +107,7 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 
 ## Third-party librairies
 
-For library authors, we provide a lightweight package, `react-native-is-edge-to-edge` (note the `-is-`!), which checks if `react-native-edge-to-edge` is installed (and whether edge-to-edge is enabled), allowing you to act accordingly.
+For library authors, we provide a lightweight package, `react-native-is-edge-to-edge` (note the `-is-`!), which checks if `react-native-edge-to-edge` is installed, allowing you to act accordingly.
 
 ```ts
 import { isEdgeToEdge } from "react-native-is-edge-to-edge";
