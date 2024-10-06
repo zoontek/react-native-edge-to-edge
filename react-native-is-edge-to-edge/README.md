@@ -1,6 +1,6 @@
 # react-native-is-edge-to-edge
 
-For library authors, we provide this lightweight package, which checks if `react-native-edge-to-edge` is installed, allowing you to act accordingly.
+For library authors, we provide thid lightweight package, which checks whether `react-native-edge-to-edge` is installed, making it easy to update your library accordingly:
 
 ## API
 
@@ -8,6 +8,6 @@ For library authors, we provide this lightweight package, which checks if `react
 import { isEdgeToEdge } from "react-native-is-edge-to-edge";
 
 if (isEdgeToEdge()) {
-  // …
+  // …do something
 }
 ```
