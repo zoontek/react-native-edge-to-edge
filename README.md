@@ -93,7 +93,7 @@ Enabling edge-to-edge display disrupts basic Android keyboard management (`andro
 
 ### Safe area management
 
-Effective safe area management is essential to prevent content from being displayed behind transparent system bars. To achieve this, we highly recommend using [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context), a widely known and trusted library.
+Effective safe area management is essential to prevent content from being displayed behind transparent system bars. To achieve this, we highly recommend using [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context), a well-known and trusted library.
 
 ### Modal component quirks
 
