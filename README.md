@@ -55,7 +55,7 @@ Add the library plugin in your `app.json` config file and [create a new build](h
 }
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > This library is not yet supported in the [Expo Go](https://expo.dev/go) sandbox app.
 
 ### Bare React Native
