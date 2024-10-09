@@ -1,6 +1,6 @@
 # react-native-edge-to-edge
 
-Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your app content to flow seamlessly beneath the system bars.
+Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your Android app content to flow seamlessly beneath the system bars.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-edge-to-edge/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
@@ -10,7 +10,7 @@ Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/view
 
 ## Credits
 
-This project has been built and is maintained thanks to the support from [Expo.io](https://expo.io).
+This project has been built and is maintained thanks to the support from [Expo](https://expo.dev).
 
 <a href="https://expo.io">
   <img width="180" src="./docs/expo.svg" alt="Expo">
@@ -45,7 +45,7 @@ $ yarn add react-native-edge-to-edge
 
 ### Expo
 
-Add the library plugin in your `app.json` config file and run `expo prebuild`:
+Add the library plugin in your `app.json` config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build/):
 
 ```diff
 {
@@ -54,6 +54,9 @@ Add the library plugin in your `app.json` config file and run `expo prebuild`:
   }
 }
 ```
+
+> [!NOTE] 
+> This library is not yet supported in the [Expo Go](https://expo.dev/go) sandbox app.
 
 ### Bare React Native
 
@@ -70,12 +73,12 @@ Edit your `android/app/src/main/res/values/styles.xml` file to inherit from the 
 
 ## Considerations
 
-### Third-party librairies
+### Third-party libraries
 
-Many libraries consider the transparency of status and navigation bars. For example, the [`useHideAnimation`](https://github.com/zoontek/react-native-bootsplash?tab=readme-ov-file#usehideanimation) hook in `react-native-bootsplash` has `statusBarTranslucent` and `navigationBarTranslucent` options, the [`useAnimatedKeyboard`](https://docs.swmansion.com/react-native-reanimated/docs/device/useAnimatedKeyboard) in `react-native-reanimated` has an `isStatusBarTranslucentAndroid` option, etc.
+Many libraries expose options that you can set to account for the transparency of status and navigation bars. For example, the [`useHideAnimation`](https://github.com/zoontek/react-native-bootsplash?tab=readme-ov-file#usehideanimation) hook in `react-native-bootsplash` has `statusBarTranslucent` and `navigationBarTranslucent` options, the [`useAnimatedKeyboard`](https://docs.swmansion.com/react-native-reanimated/docs/device/useAnimatedKeyboard) in `react-native-reanimated` has an `isStatusBarTranslucentAndroid` option, etc.
 
 > [!IMPORTANT]  
-> Until third-party libraries officially add support for `react-native-edge-to-edge`, you may need to adjust these options to prevent interference with the library.
+> Until third-party libraries officially add support for `react-native-edge-to-edge` to set these options automatically, you may need to adjust these options to prevent interference with the library.
 
 For library authors, we provide a lightweight package called `react-native-is-edge-to-edge` (note the `-is-`!), which checks whether `react-native-edge-to-edge` is installed, making it easy to update your library accordingly:
 
