@@ -29,6 +29,6 @@
     "@react-native/metro-config": "0.75.4",
     "@types/react": "^18.2.6",
     "babel-plugin-module-resolver": "^5.0.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.3"
   }
 }
