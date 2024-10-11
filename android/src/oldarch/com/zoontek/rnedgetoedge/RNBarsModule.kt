@@ -15,6 +15,10 @@ class RNEdgeToEdgeModule(reactContext: ReactApplicationContext?) :
     reactApplicationContext.addLifecycleEventListener(this)
   }
 
+  override fun invalidate() {
+    reactApplicationContext.removeLifecycleEventListener(this)
+  }
+
   override fun getName(): String {
     return RNEdgeToEdgeModuleImpl.NAME
   }
