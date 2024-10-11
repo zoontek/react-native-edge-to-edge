@@ -26,7 +26,8 @@
     "system-bars"
   ],
   "scripts": {
-    "build": "tsup && tsc --emitDeclarationOnly"
+    "clean": "rm -rf dist",
+    "build": "yarn clean && tsup && tsc --emitDeclarationOnly"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
