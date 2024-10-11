@@ -23,7 +23,7 @@ class RNEdgeToEdgePackage : TurboReactPackage() {
         RNEdgeToEdgeModuleImpl.NAME,
         RNEdgeToEdgeModuleImpl.NAME,
         false,
-        false,
+        true,
         true,
         false,
         isTurboModule
