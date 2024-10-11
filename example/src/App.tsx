@@ -1,41 +1,47 @@
+import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as React from "react";
-import { StyleSheet, Switch, Text, View } from "react-native";
-import { NavigationBar, StatusBar } from "react-native-bars";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  createNativeStackNavigator,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
+import { ReactNode, useState } from "react";
+import {
+  Appearance,
+  Text as BaseText,
+  ColorSchemeName,
+  Modal,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  Switch,
+  TextProps,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+  ViewStyle,
+} from "react-native";
+import { SystemBars, SystemBarStyle } from "react-native-edge-to-edge";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+const DARK_BACKGROUND = "#1F2937";
+const DARK_TEXT = "#374151";
+const LIGHT_BACKGROUND = "#F9FAFB";
+const LIGHT_TEXT = "#E5E7EB";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: LIGHT_BACKGROUND,
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 16,
   },
-  title: {
-    color: "#374151",
-    fontSize: 20,
-    fontWeight: "700",
+  darkContainer: {
+    backgroundColor: DARK_BACKGROUND,
   },
   row: {
     flexDirection: "row",
-  },
-  tag: {
-    backgroundColor: "#E5E7EB",
-    borderRadius: 4,
-    paddingHorizontal: 8,
-  },
-  tagText: {
-    color: "#374151",
-    fontSize: 16,
-    lineHeight: 32,
-    textAlignVertical: "center",
-  },
-  darkTag: {
-    backgroundColor: "#374151",
-  },
-  darkTagText: {
-    color: "#E5E7EB",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
 
@@ -47,112 +53,237 @@ const Space = ({ size }: { size: number }) => (
   />
 );
 
-const Line = ({
+const Text = ({ style, ...props }: TextProps) => {
+  const dark = useColorScheme() === "dark";
+
+  return (
+    <BaseText
+      style={[{ color: dark ? LIGHT_TEXT : DARK_TEXT }, style]}
+      {...props}
+    />
+  );
+};
+
+const Title = ({ children }: { children: ReactNode }) => (
+  <>
+    <Text style={{ fontSize: 20, fontWeight: "700" }}>{children}</Text>
+    <Space size={16} />
+  </>
+);
+
+const Button = ({
   title,
-  left,
-  right,
-  value,
-  onValueChange,
-  dark,
+  style,
+  onPress,
 }: {
   title: string;
-  left: string;
-  right: string;
-  value: boolean;
-  onValueChange: (value: boolean) => void;
-  dark: boolean;
-}) => (
-  <View>
-    <Text style={[styles.title, dark && { color: "#E5E7EB" }]}>{title}</Text>
-    <Space size={16} />
+  style?: StyleProp<ViewStyle>;
+  onPress: () => void;
+}) => {
+  const dark = useColorScheme() === "dark";
 
-    <View style={styles.row}>
-      <View style={[styles.tag, dark && styles.darkTag]}>
-        <Text style={[styles.tagText, dark && styles.darkTagText]}>{left}</Text>
-      </View>
+  return (
+    <TouchableOpacity
+      role="button"
+      onPress={onPress}
+      activeOpacity={0.5}
+      style={[
+        {
+          borderRadius: 8,
+          padding: 10,
+          backgroundColor: dark ? "#374151" : "#e5e7eb",
+        },
+        style,
+      ]}
+    >
+      <Text style={{ textAlign: "center", fontWeight: "600" }}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
 
+const STYLES: SystemBarStyle[] = ["auto", "light", "dark"];
+
+type StackParamList = {
+  Home: undefined;
+  Modal: undefined;
+};
+
+const Stack = createNativeStackNavigator<StackParamList>();
+
+const ModalContent = ({
+  children,
+  onClose,
+}: {
+  children: ReactNode;
+  onClose: () => void;
+}) => {
+  const dark = useColorScheme() === "dark";
+
+  const [styleIndex, setStyleIndex] = useState(0);
+  const insets = useSafeAreaInsets();
+
+  return (
+    <View style={[styles.container, dark && styles.darkContainer]}>
+      <Button
+        title="Close"
+        onPress={onClose}
+        style={{
+          position: "absolute",
+          top: (Platform.OS === "ios" ? 0 : insets.top) + 8,
+          right: insets.right + 8,
+        }}
+      />
+
+      <SystemBars style={STYLES[styleIndex]} />
+
+      <Text>{children}</Text>
       <Space size={16} />
 
-      <Switch
-        onValueChange={onValueChange}
-        value={value}
-        thumbColor={dark ? "#374151" : "#E5E7EB"}
-        trackColor={{
-          true: dark ? "#6B7280" : "#9CA3AF",
-          false: dark ? "#6B7280" : "#9CA3AF",
+      <SegmentedControl
+        values={STYLES}
+        selectedIndex={styleIndex}
+        onValueChange={(value) => {
+          setStyleIndex(STYLES.indexOf(value as SystemBarStyle));
+        }}
+      />
+    </View>
+  );
+};
+
+export const HomeScreen = ({
+  navigation,
+}: NativeStackScreenProps<StackParamList, "Home">) => {
+  const dark = useColorScheme() === "dark";
+
+  const thumbColor = dark ? LIGHT_TEXT : "#fff";
+  const trackColor = dark
+    ? { false: "#1c1c1f", true: "#2b3e55" }
+    : { false: "#eeeef0", true: "#ccd8e5" };
+
+  const [styleIndex, setStyleIndex] = useState(0);
+  const [statusBarHidden, setStatusBarHidden] = useState(false);
+  const [navigationBarHidden, setNavigationBarHidden] = useState(false);
+  const [reactNativeModalVisible, setReactNativeModalVisible] = useState(false);
+
+  const closeReactNativeModal = () => {
+    setReactNativeModalVisible(false);
+  };
+
+  return (
+    <View style={[styles.container, dark && styles.darkContainer]}>
+      <SystemBars
+        style={STYLES[styleIndex]}
+        hidden={{
+          statusBar: statusBarHidden,
+          navigationBar: navigationBarHidden,
+        }}
+      />
+
+      <Title>Theme</Title>
+
+      <SegmentedControl
+        values={["light", "dark"] satisfies ColorSchemeName[]}
+        selectedIndex={dark ? 1 : 0}
+        onValueChange={(value) => {
+          Appearance.setColorScheme(value as ColorSchemeName);
+        }}
+      />
+
+      <Space size={32} />
+
+      <Title>{"<SystemBars />"}</Title>
+
+      <SegmentedControl
+        values={STYLES}
+        selectedIndex={styleIndex}
+        onValueChange={(value) => {
+          setStyleIndex(STYLES.indexOf(value as SystemBarStyle));
         }}
       />
 
       <Space size={16} />
 
-      <View style={[styles.tag, dark && styles.darkTag]}>
-        <Text style={[styles.tagText, dark && styles.darkTagText]}>
-          {right}
-        </Text>
+      <View style={styles.row}>
+        <Text>Hide status bar</Text>
+
+        <Switch
+          thumbColor={thumbColor}
+          trackColor={trackColor}
+          value={statusBarHidden}
+          onValueChange={setStatusBarHidden}
+        />
       </View>
+
+      <Space size={8} />
+
+      <View style={styles.row}>
+        <Text>Hide navigation bar (no effect on iOS)</Text>
+
+        <Switch
+          thumbColor={thumbColor}
+          trackColor={trackColor}
+          value={navigationBarHidden}
+          onValueChange={setNavigationBarHidden}
+        />
+      </View>
+
+      <Space size={16} />
+
+      <Button
+        title="Open React Native Modal"
+        onPress={() => {
+          setReactNativeModalVisible(true);
+        }}
+      />
+
+      <Space size={8} />
+
+      <Button
+        title="Open React Navigation Modal"
+        onPress={() => {
+          navigation.navigate("Modal");
+        }}
+      />
+
+      <Modal
+        visible={reactNativeModalVisible}
+        statusBarTranslucent={true}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onDismiss={closeReactNativeModal}
+        onRequestClose={closeReactNativeModal}
+      >
+        <ModalContent onClose={closeReactNativeModal}>
+          This modal uses the React Native Modal component.{"\n"}On Android, you
+          cannot update the status bar style or hide system bars.
+        </ModalContent>
+      </Modal>
     </View>
-  </View>
-);
-
-const App = () => {
-  const [isLightTheme, setIsLightTheme] = React.useState(true);
-  const dark = !isLightTheme;
-
-  const [isLightStatus, setIsLightStatus] = React.useState(false);
-  const [isLightNavigation, setIsLightNavigation] = React.useState(false);
-
-  return (
-    <SafeAreaView
-      style={[styles.container, dark && { backgroundColor: "#1F2937" }]}
-    >
-      <StatusBar
-        barStyle={isLightStatus ? "light-content" : "dark-content"}
-        animated={true}
-      />
-      <NavigationBar
-        barStyle={isLightNavigation ? "light-content" : "dark-content"}
-      />
-
-      <Line
-        title="Theme"
-        left="dark"
-        right="light"
-        value={isLightTheme}
-        onValueChange={setIsLightTheme}
-        dark={dark}
-      />
-
-      <Space size={48} />
-
-      <Line
-        title="<StatusBar />"
-        left="dark-content"
-        right="light-content"
-        value={isLightStatus}
-        onValueChange={setIsLightStatus}
-        dark={dark}
-      />
-
-      <Space size={32} />
-
-      <Line
-        title="<NavigationBar />"
-        left="dark-content"
-        right="light-content"
-        value={isLightNavigation}
-        onValueChange={setIsLightNavigation}
-        dark={dark}
-      />
-    </SafeAreaView>
   );
 };
 
-const Stack = createNativeStackNavigator();
+const ModalScreen = ({
+  navigation,
+}: NativeStackScreenProps<StackParamList, "Modal">) => (
+  <ModalContent onClose={navigation.goBack}>
+    This modal uses a React Navigation modal.{"\n"}Eveything behaves correctly.
+  </ModalContent>
+);
 
-export default () => (
+export const App = () => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="App" component={App} />
+      <Stack.Screen name="Home" component={HomeScreen} />
+
+      <Stack.Screen
+        name="Modal"
+        component={ModalScreen}
+        options={{
+          presentation: "modal",
+          animation:
+            Platform.OS === "android" ? "slide_from_bottom" : "default",
+        }}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );

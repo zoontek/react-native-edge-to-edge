@@ -1,38 +1,40 @@
 {
-  "name": "react-native-bars",
-  "version": "2.4.3",
+  "name": "react-native-edge-to-edge",
+  "version": "0.1.0",
   "license": "MIT",
-  "description": "Components to control your app status and navigation bars.",
+  "description": "Effortlessly enable edge-to-edge display in React Native",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
-  "homepage": "https://github.com/zoontek/react-native-bars",
+  "homepage": "https://github.com/zoontek/react-native-edge-to-edge",
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
   "types": "dist/typescript/index.d.ts",
   "files": [
-    "android",
+    "dist",
     "src",
-    "dist"
+    "app.plugin.js",
+    "android",
+    "!android/build",
+    "!android/.cxx",
+    "!android/.gradle"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/zoontek/react-native-bars.git"
+    "url": "https://github.com/zoontek/react-native-edge-to-edge.git"
   },
   "keywords": [
-    "navigation-bar",
-    "navigationbar",
     "react",
     "react-native",
+    "edge-to-edge",
     "status-bar",
-    "statusbar",
+    "navigation-bar",
     "system-bar",
-    "system-bars",
-    "systembar",
-    "systembars"
+    "system-bars"
   ],
   "scripts": {
+    "clean": "rm -rf dist",
     "format": "prettier '**/*' -u -w",
     "typecheck": "tsc --noEmit",
-    "build": "bob build",
+    "build": "yarn clean && bob build && rm -rf dist/commonjs/package.json",
     "prepack": "prettier '**/*' -u -c && yarn typecheck && yarn build"
   },
   "react-native-builder-bob": {
@@ -50,26 +52,27 @@
     ]
   },
   "peerDependencies": {
-    "react": ">=18.1.0",
-    "react-native": ">=0.70.0"
+    "react": ">=18.2.0",
+    "react-native": ">=0.73.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
-    "@types/react": "^18.2.60",
+    "@expo/config-plugins": "^7.0.0 || ^8.0.0",
+    "@types/react": "^18.2.6",
     "prettier": "^3.3.3",
-    "prettier-plugin-organize-imports": "^4.0.0",
-    "react": "18.2.0",
-    "react-native": "0.74.3",
-    "react-native-builder-bob": "^0.26.0",
-    "typescript": "^5.5.3"
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "react": "18.3.1",
+    "react-native": "0.75.4",
+    "react-native-builder-bob": "^0.30.2",
+    "typescript": "^5.6.3"
   },
   "codegenConfig": {
-    "name": "RNBarsSpec",
+    "name": "RNEdgeToEdgeSpec",
     "type": "modules",
     "jsSrcsDir": "./src",
     "android": {
-      "javaPackageName": "com.zoontek.rnbars"
+      "javaPackageName": "com.zoontek.rnedgetoedge"
     }
   }
 }

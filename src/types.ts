@@ -1,12 +1,12 @@
-export type SystemBarStyle = "light-content" | "dark-content";
+export type SystemBarStyle = "auto" | "light" | "dark";
 
-export type StatusBarProps = {
-  animated?: boolean;
-  barStyle: SystemBarStyle;
+export type SystemBarsEntry = {
+  statusBarHidden: boolean | undefined;
+  statusBarStyle: SystemBarStyle | undefined;
+  navigationBarHidden: boolean | undefined;
 };
 
-export type NavigationBarProps = {
-  barStyle: SystemBarStyle;
+export type SystemBarsProps = {
+  style?: SystemBarStyle;
+  hidden?: boolean | { statusBar?: boolean; navigationBar?: boolean };
 };
-
-export type SystemBarsProps = StatusBarProps;
