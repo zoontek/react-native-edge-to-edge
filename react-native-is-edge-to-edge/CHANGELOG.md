@@ -2,7 +2,7 @@
 
 ## 0.1.2
 
-- Add ES module build format (f375a84)
+- Add ES module build format (d7e932d)
 
 ## 0.1.1
 
