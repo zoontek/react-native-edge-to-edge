@@ -28,41 +28,14 @@ object RNEdgeToEdgeModuleImpl {
 
     activity.runOnUiThread {
       val window = activity.window
-      val view = window.decorView
-      val context = view.context
-
-      val isDarkMode =
-        view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-          Configuration.UI_MODE_NIGHT_YES
 
       WindowCompat.setDecorFitsSystemWindows(window, false)
 
       window.statusBarColor = Color.TRANSPARENT
 
-      window.navigationBarColor = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> Color.TRANSPARENT
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isDarkMode ->
-          ContextCompat.getColor(context, R.color.systemBarLightScrim)
-        else -> ContextCompat.getColor(context, R.color.systemBarDarkScrim)
-      }
-
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         window.isStatusBarContrastEnforced = false
         window.isNavigationBarContrastEnforced = true
-      }
-
-      WindowInsetsControllerCompat(window, view).run {
-        if (isInitialHostResume) {
-          val typedValue = TypedValue()
-
-          isAppearanceLightStatusBars = activity
-            .theme
-            .resolveAttribute(android.R.attr.windowLightStatusBar, typedValue, true) &&
-            typedValue.data != 0
-        }
-
-        isInitialHostResume = false
-        isAppearanceLightNavigationBars = !isDarkMode
       }
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -70,6 +43,34 @@ object RNEdgeToEdgeModuleImpl {
           Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
             WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
           else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        }
+      }
+
+      if (isInitialHostResume) {
+        isInitialHostResume = false
+
+        val view = window.decorView
+        val context = view.context
+
+        val isDarkMode =
+          view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+            Configuration.UI_MODE_NIGHT_YES
+
+        window.navigationBarColor = when {
+          Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> Color.TRANSPARENT
+          Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isDarkMode ->
+            ContextCompat.getColor(context, R.color.systemBarLightScrim)
+          else -> ContextCompat.getColor(context, R.color.systemBarDarkScrim)
+        }
+
+        WindowInsetsControllerCompat(window, view).run {
+          val typedValue = TypedValue()
+
+          val resolved = activity.theme
+            .resolveAttribute(android.R.attr.windowLightStatusBar, typedValue, true)
+
+          isAppearanceLightStatusBars = resolved && typedValue.data != 0
+          isAppearanceLightNavigationBars = !isDarkMode
         }
       }
     }
