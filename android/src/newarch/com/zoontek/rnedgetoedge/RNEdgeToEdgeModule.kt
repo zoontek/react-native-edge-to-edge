@@ -22,7 +22,7 @@ class RNEdgeToEdgeModule(reactContext: ReactApplicationContext?) :
   }
 
   override fun onHostResume() {
-    RNEdgeToEdgeModuleImpl.onHostResume(currentActivity)
+    RNEdgeToEdgeModuleImpl.onHostResume(reactApplicationContext)
   }
 
   override fun onHostPause() {}

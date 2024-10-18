@@ -13,17 +13,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 import com.facebook.common.logging.FLog
+import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.ReactConstants
 
 object RNEdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
+
   private var isInitialHostResume = true
 
-  fun onHostResume(activity: Activity?) {
-    if (activity == null) {
-      return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
-    }
+  fun onHostResume(reactContext: ReactContext) {
+    val activity = reactContext.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
 
     activity.runOnUiThread {
       val window = activity.window
