@@ -23,7 +23,7 @@ import com.facebook.react.common.ReactConstants
 object RNEdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
-  private var isInitialHostResume = true
+  private var modalListener: RNEdgeToEdgeModalListener? = null
 
   private fun applyEdgeToEdge(window: Window?) {
     if (window == null) {
@@ -66,13 +66,15 @@ object RNEdgeToEdgeModuleImpl {
 
     applyEdgeToEdge(activity.window)
 
-    if (isInitialHostResume) {
-      isInitialHostResume = false
+    if (modalListener == null) {
+      modalListener = RNEdgeToEdgeModalListener(reactContext, { dialog -> applyEdgeToEdge(dialog.window) }, {})
+      modalListener?.enable()
     }
   }
 
   fun onHostDestroy() {
-    isInitialHostResume = true
+    modalListener?.disable()
+    modalListener = null
   }
 
   fun onConfigChange(reactContext: ReactApplicationContext) {
