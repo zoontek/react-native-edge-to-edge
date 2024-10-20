@@ -1,6 +1,7 @@
 package com.zoontek.rnedgetoedge
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
@@ -24,6 +25,10 @@ object RNEdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
   private var modalListener: RNEdgeToEdgeModalListener? = null
+  private val modals = HashSet<Dialog?>()
+
+  private var latestStatusBarHidden = false
+  private var latestNavigationBarHidden = false
 
   private fun applyEdgeToEdge(window: Window?) {
     if (window == null) {
@@ -67,7 +72,24 @@ object RNEdgeToEdgeModuleImpl {
     applyEdgeToEdge(activity.window)
 
     if (modalListener == null) {
-      modalListener = RNEdgeToEdgeModalListener(reactContext, { dialog -> applyEdgeToEdge(dialog.window) }, {})
+      modalListener = RNEdgeToEdgeModalListener(reactContext, { dialog ->
+        modals.add(dialog)
+
+        dialog.window?.let { window ->
+          applyEdgeToEdge(window)
+
+          WindowInsetsControllerCompat(window, window.decorView).run {
+            systemBarsBehavior =
+              WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+            if (latestStatusBarHidden) hide(WindowInsetsCompat.Type.statusBars())
+            if (latestNavigationBarHidden) hide(WindowInsetsCompat.Type.navigationBars())
+          }
+        }
+      }, { dialog ->
+        modals.remove(dialog)
+      })
+
       modalListener?.enable()
     }
   }
@@ -83,6 +105,40 @@ object RNEdgeToEdgeModuleImpl {
     }, 100)
   }
 
+  private fun applySystemBarsConfig(
+    window: Window,
+    statusBarStyle: String?,
+    statusBarHidden: Boolean?,
+    navigationBarHidden: Boolean?
+  ) {
+    WindowInsetsControllerCompat(window, window.decorView).run {
+      statusBarStyle?.let {
+        isAppearanceLightStatusBars = it == "dark"
+      }
+
+      systemBarsBehavior =
+        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+      statusBarHidden?.let {
+        latestStatusBarHidden = it
+
+        when (it) {
+          true -> hide(WindowInsetsCompat.Type.statusBars())
+          else -> show(WindowInsetsCompat.Type.statusBars())
+        }
+      }
+
+      navigationBarHidden?.let {
+        latestNavigationBarHidden = it
+
+        when (it) {
+          true -> hide(WindowInsetsCompat.Type.navigationBars())
+          else -> show(WindowInsetsCompat.Type.navigationBars())
+        }
+      }
+    }
+  }
+
   fun setSystemBarsConfig(activity: Activity?, config: ReadableMap) {
     if (activity == null) {
       return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
@@ -96,30 +152,23 @@ object RNEdgeToEdgeModuleImpl {
       config.takeIf { it.hasKey("navigationBarHidden") }?.getBoolean("navigationBarHidden")
 
     activity.runOnUiThread {
-      val window = activity.window
-      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-
-      statusBarStyle?.let {
-        insetsController.isAppearanceLightStatusBars = it == "dark"
-      }
-
-      if (statusBarHidden != null || navigationBarHidden != null) {
-        insetsController.systemBarsBehavior =
-          WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-        statusBarHidden?.let {
-          when (it) {
-            true -> insetsController.hide(WindowInsetsCompat.Type.statusBars())
-            else -> insetsController.show(WindowInsetsCompat.Type.statusBars())
-          }
-        }
-        navigationBarHidden?.let {
-          when (it) {
-            true -> insetsController.hide(WindowInsetsCompat.Type.navigationBars())
-            else -> insetsController.show(WindowInsetsCompat.Type.navigationBars())
-          }
+      modals.forEach { dialog ->
+        dialog?.window?.let { window ->
+          applySystemBarsConfig(
+            window,
+            statusBarStyle,
+            statusBarHidden,
+            navigationBarHidden
+          )
         }
       }
+
+      applySystemBarsConfig(
+        activity.window,
+        statusBarStyle,
+        statusBarHidden,
+        navigationBarHidden
+      )
     }
   }
 }
