@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.util.TypedValue
+import android.view.Window
 import android.view.WindowManager
 
 import androidx.core.content.ContextCompat
@@ -15,44 +15,36 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 import com.facebook.common.logging.FLog
-import com.facebook.react.bridge.ReactContext
+import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.UiThreadUtil
 import com.facebook.react.common.ReactConstants
 
 object RNEdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
-  private var isInitialApplyCall = true
+  private var isInitialHostResume = true
 
-  private fun applyEdgeToEdge(reactContext: ReactContext) {
-    val activity = reactContext.currentActivity
-      ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
+  private fun applyEdgeToEdge(window: Window?) {
+    if (window == null) {
+      return FLog.w(ReactConstants.TAG, "$NAME: Ignored, window is null.")
+    }
 
-    activity.runOnUiThread {
-      val window = activity.window
-      val view = window.decorView
+    val view = window.decorView
 
-      val insetsController = WindowInsetsControllerCompat(window, view)
-
+    UiThreadUtil.runOnUiThread {
       WindowCompat.setDecorFitsSystemWindows(window, false)
 
       window.statusBarColor = Color.TRANSPARENT
       window.navigationBarColor = ContextCompat.getColor(view.context, R.color.navigationBarColor)
 
-      if (isInitialApplyCall) {
-        isInitialApplyCall = false
-
-        val value = TypedValue()
-
-        insetsController.isAppearanceLightStatusBars = activity.theme
-          .resolveAttribute(android.R.attr.windowLightStatusBar, value, true) && value.data != 0
-      }
-
       val isDarkMode =
         view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
           Configuration.UI_MODE_NIGHT_YES
 
-      insetsController.isAppearanceLightNavigationBars = !isDarkMode
+      WindowInsetsControllerCompat(window, view).run {
+        isAppearanceLightNavigationBars = !isDarkMode
+      }
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         window.isStatusBarContrastEnforced = false
@@ -68,16 +60,25 @@ object RNEdgeToEdgeModuleImpl {
     }
   }
 
-  fun onHostResume(reactContext: ReactContext) {
-    applyEdgeToEdge(reactContext)
+  fun onHostResume(reactContext: ReactApplicationContext) {
+    val activity = reactContext.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
+
+    applyEdgeToEdge(activity.window)
+
+    if (isInitialHostResume) {
+      isInitialHostResume = false
+    }
   }
 
   fun onHostDestroy() {
-    isInitialApplyCall = true
+    isInitialHostResume = true
   }
 
-  fun onConfigChange(reactContext: ReactContext) {
-    Handler(Looper.getMainLooper()).postDelayed({ applyEdgeToEdge(reactContext) }, 100)
+  fun onConfigChange(reactContext: ReactApplicationContext) {
+    Handler(Looper.getMainLooper()).postDelayed({
+      applyEdgeToEdge(reactContext.currentActivity?.window)
+    }, 100)
   }
 
   fun setSystemBarsConfig(activity: Activity?, config: ReadableMap) {
