@@ -82,8 +82,10 @@ object RNEdgeToEdgeModuleImpl {
             systemBarsBehavior =
               WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
-            if (latestStatusBarHidden) hide(WindowInsetsCompat.Type.statusBars())
-            if (latestNavigationBarHidden) hide(WindowInsetsCompat.Type.navigationBars())
+            if (latestStatusBarHidden)
+              hide(WindowInsetsCompat.Type.statusBars())
+            if (latestNavigationBarHidden)
+              hide(WindowInsetsCompat.Type.navigationBars())
           }
         }
       }, { dialog ->
