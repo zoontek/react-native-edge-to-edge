@@ -8,7 +8,7 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 
 @ReactModule(name = RNEdgeToEdgeModuleImpl.NAME)
-class RNEdgeToEdgeModule(reactContext: ReactApplicationContext?) :
+class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext), LifecycleEventListener {
 
   init {

@@ -56,12 +56,7 @@ object RNEdgeToEdgeModuleImpl {
           view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
             Configuration.UI_MODE_NIGHT_YES
 
-        window.navigationBarColor = when {
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> Color.TRANSPARENT
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isDarkMode ->
-            ContextCompat.getColor(context, R.color.systemBarLightScrim)
-          else -> ContextCompat.getColor(context, R.color.systemBarDarkScrim)
-        }
+        window.navigationBarColor = ContextCompat.getColor(context, R.color.navigationBarColor)
 
         WindowInsetsControllerCompat(window, view).run {
           val typedValue = TypedValue()

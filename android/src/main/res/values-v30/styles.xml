@@ -4,6 +4,5 @@
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
         <item name="android:enforceStatusBarContrast">false</item>
         <item name="android:enforceNavigationBarContrast">true</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 </resources>
