@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.WindowManager
 
@@ -20,18 +22,37 @@ import com.facebook.react.common.ReactConstants
 object RNEdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
-  private var isInitialHostResume = true
+  private var isInitialApplyCall = true
 
-  fun onHostResume(reactContext: ReactContext) {
+  private fun applyEdgeToEdge(reactContext: ReactContext) {
     val activity = reactContext.currentActivity
       ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
 
     activity.runOnUiThread {
       val window = activity.window
+      val view = window.decorView
+
+      val insetsController = WindowInsetsControllerCompat(window, view)
 
       WindowCompat.setDecorFitsSystemWindows(window, false)
 
       window.statusBarColor = Color.TRANSPARENT
+      window.navigationBarColor = ContextCompat.getColor(view.context, R.color.navigationBarColor)
+
+      if (isInitialApplyCall) {
+        isInitialApplyCall = false
+
+        val value = TypedValue()
+
+        insetsController.isAppearanceLightStatusBars = activity.theme
+          .resolveAttribute(android.R.attr.windowLightStatusBar, value, true) && value.data != 0
+      }
+
+      val isDarkMode =
+        view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+          Configuration.UI_MODE_NIGHT_YES
+
+      insetsController.isAppearanceLightNavigationBars = !isDarkMode
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         window.isStatusBarContrastEnforced = false
@@ -40,39 +61,23 @@ object RNEdgeToEdgeModuleImpl {
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         window.attributes.layoutInDisplayCutoutMode = when {
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
-            WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+          Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
           else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        }
-      }
-
-      if (isInitialHostResume) {
-        isInitialHostResume = false
-
-        val view = window.decorView
-        val context = view.context
-
-        val isDarkMode =
-          view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-            Configuration.UI_MODE_NIGHT_YES
-
-        window.navigationBarColor = ContextCompat.getColor(context, R.color.navigationBarColor)
-
-        WindowInsetsControllerCompat(window, view).run {
-          val typedValue = TypedValue()
-
-          val resolved = activity.theme
-            .resolveAttribute(android.R.attr.windowLightStatusBar, typedValue, true)
-
-          isAppearanceLightStatusBars = resolved && typedValue.data != 0
-          isAppearanceLightNavigationBars = !isDarkMode
         }
       }
     }
   }
 
+  fun onHostResume(reactContext: ReactContext) {
+    applyEdgeToEdge(reactContext)
+  }
+
   fun onHostDestroy() {
-    isInitialHostResume = true
+    isInitialApplyCall = true
+  }
+
+  fun onConfigChange(reactContext: ReactContext) {
+    Handler(Looper.getMainLooper()).postDelayed({ applyEdgeToEdge(reactContext) }, 100)
   }
 
   fun setSystemBarsConfig(activity: Activity?, config: ReadableMap) {
