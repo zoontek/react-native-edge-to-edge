@@ -17,7 +17,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.ReactConstants
 
-object RNEdgeToEdgeModuleImpl {
+object EdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
   private fun applyEdgeToEdge(reactContext: ReactApplicationContext) {

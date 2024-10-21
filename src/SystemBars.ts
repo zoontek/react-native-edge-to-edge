@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Appearance, Platform, StatusBar, useColorScheme } from "react-native";
-import NativeModule from "./NativeRNEdgeToEdge";
+import NativeEdgeToEdgeModule from "./specs/NativeEdgeToEdgeModule";
 import { SystemBarsEntry, SystemBarsProps } from "./types";
 
 function getColorScheme(): "light" | "dark" {
@@ -97,7 +97,7 @@ function updateEntriesStack() {
         currentMergedEntries?.navigationBarHidden !== navigationBarHidden
       ) {
         if (Platform.OS === "android") {
-          NativeModule?.setSystemBarsConfig({
+          NativeEdgeToEdgeModule?.setSystemBarsConfig({
             statusBarStyle,
             statusBarHidden,
             navigationBarHidden,

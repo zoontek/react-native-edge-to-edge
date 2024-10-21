@@ -6,10 +6,10 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 
-class RNEdgeToEdgePackage : TurboReactPackage() {
+class EdgeToEdgePackage : TurboReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
     return when (name) {
-      RNEdgeToEdgeModuleImpl.NAME -> RNEdgeToEdgeModule(reactContext)
+      EdgeToEdgeModuleImpl.NAME -> EdgeToEdgeModule(reactContext)
       else -> null
     }
   }
@@ -20,8 +20,8 @@ class RNEdgeToEdgePackage : TurboReactPackage() {
       val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
 
       val moduleInfo = ReactModuleInfo(
-        RNEdgeToEdgeModuleImpl.NAME,
-        RNEdgeToEdgeModuleImpl.NAME,
+        EdgeToEdgeModuleImpl.NAME,
+        EdgeToEdgeModuleImpl.NAME,
         false,
         true,
         true,
@@ -29,7 +29,7 @@ class RNEdgeToEdgePackage : TurboReactPackage() {
         isTurboModule
       )
 
-      moduleInfos[RNEdgeToEdgeModuleImpl.NAME] = moduleInfo
+      moduleInfos[EdgeToEdgeModuleImpl.NAME] = moduleInfo
       moduleInfos
     }
   }

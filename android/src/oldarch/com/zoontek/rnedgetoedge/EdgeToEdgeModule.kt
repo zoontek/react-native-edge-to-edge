@@ -12,13 +12,13 @@ import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 
-@ReactModule(name = RNEdgeToEdgeModuleImpl.NAME)
-class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
+@ReactModule(name = EdgeToEdgeModuleImpl.NAME)
+class EdgeToEdgeModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext), LifecycleEventListener {
 
   private val configChangeReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-      RNEdgeToEdgeModuleImpl.onConfigChange(reactContext)
+      EdgeToEdgeModuleImpl.onConfigChange(reactContext)
     }
   }
 
@@ -33,11 +33,11 @@ class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
   }
 
   override fun getName(): String {
-    return RNEdgeToEdgeModuleImpl.NAME
+    return EdgeToEdgeModuleImpl.NAME
   }
 
   override fun onHostResume() {
-    RNEdgeToEdgeModuleImpl.onHostResume(reactApplicationContext)
+    EdgeToEdgeModuleImpl.onHostResume(reactApplicationContext)
   }
 
   override fun onHostPause() {}
@@ -46,6 +46,6 @@ class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
 
   @ReactMethod
   fun setSystemBarsConfig(config: ReadableMap) {
-    RNEdgeToEdgeModuleImpl.setSystemBarsConfig(reactApplicationContext, config)
+    EdgeToEdgeModuleImpl.setSystemBarsConfig(reactApplicationContext, config)
   }
 }

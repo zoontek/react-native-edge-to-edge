@@ -68,9 +68,9 @@
     "typescript": "^5.6.3"
   },
   "codegenConfig": {
-    "name": "RNEdgeToEdgeSpec",
+    "name": "RNEdgeToEdge",
     "type": "modules",
-    "jsSrcsDir": "./src",
+    "jsSrcsDir": "./src/specs",
     "android": {
       "javaPackageName": "com.zoontek.rnedgetoedge"
     }

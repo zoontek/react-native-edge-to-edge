@@ -1,4 +1,4 @@
-import type { Spec } from "./NativeRNEdgeToEdge";
+import type { Spec } from "./NativeEdgeToEdgeModule";
 
 export default {
   setSystemBarsConfig() {},

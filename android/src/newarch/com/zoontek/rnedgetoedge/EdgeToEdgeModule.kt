@@ -10,13 +10,13 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 
-@ReactModule(name = RNEdgeToEdgeModuleImpl.NAME)
-class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
-  NativeRNEdgeToEdgeSpec(reactContext), LifecycleEventListener {
+@ReactModule(name = EdgeToEdgeModuleImpl.NAME)
+class EdgeToEdgeModule(reactContext: ReactApplicationContext) :
+  NativeEdgeToEdgeModuleSpec(reactContext), LifecycleEventListener {
 
   private val configChangeReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-      RNEdgeToEdgeModuleImpl.onConfigChange(reactContext)
+      EdgeToEdgeModuleImpl.onConfigChange(reactContext)
     }
   }
 
@@ -31,11 +31,11 @@ class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
   }
 
   override fun getName(): String {
-    return RNEdgeToEdgeModuleImpl.NAME
+    return EdgeToEdgeModuleImpl.NAME
   }
 
   override fun onHostResume() {
-    RNEdgeToEdgeModuleImpl.onHostResume(reactApplicationContext)
+    EdgeToEdgeModuleImpl.onHostResume(reactApplicationContext)
   }
 
   override fun onHostPause() {}
@@ -43,6 +43,6 @@ class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
   override fun onHostDestroy() {}
 
   override fun setSystemBarsConfig(config: ReadableMap) {
-    RNEdgeToEdgeModuleImpl.setSystemBarsConfig(reactApplicationContext, config)
+    EdgeToEdgeModuleImpl.setSystemBarsConfig(reactApplicationContext, config)
   }
 }
