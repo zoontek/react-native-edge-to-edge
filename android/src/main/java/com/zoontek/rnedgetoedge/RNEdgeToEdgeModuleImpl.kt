@@ -1,10 +1,10 @@
 package com.zoontek.rnedgetoedge
 
-import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
-import android.util.TypedValue
+import android.os.Handler
+import android.os.Looper
 import android.view.WindowManager
 
 import androidx.core.content.ContextCompat
@@ -13,36 +13,33 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 import com.facebook.common.logging.FLog
+import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.ReactConstants
 
 object RNEdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
-  private var isInitialHostResume = true
 
-  fun onHostResume(activity: Activity?) {
-    if (activity == null) {
-      return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
-    }
+  private fun applyEdgeToEdge(reactContext: ReactApplicationContext) {
+    val activity = reactContext.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
 
     activity.runOnUiThread {
       val window = activity.window
       val view = window.decorView
       val context = view.context
 
+      WindowCompat.setDecorFitsSystemWindows(window, false)
+
+      window.statusBarColor = Color.TRANSPARENT
+      window.navigationBarColor = ContextCompat.getColor(context, R.color.navigationBarColor)
+
       val isDarkMode =
         view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
           Configuration.UI_MODE_NIGHT_YES
 
-      WindowCompat.setDecorFitsSystemWindows(window, false)
-
-      window.statusBarColor = Color.TRANSPARENT
-
-      window.navigationBarColor = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> Color.TRANSPARENT
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isDarkMode ->
-          ContextCompat.getColor(context, R.color.systemBarLightScrim)
-        else -> ContextCompat.getColor(context, R.color.systemBarDarkScrim)
+      WindowInsetsControllerCompat(window, view).run {
+        isAppearanceLightNavigationBars = !isDarkMode
       }
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -50,38 +47,26 @@ object RNEdgeToEdgeModuleImpl {
         window.isNavigationBarContrastEnforced = true
       }
 
-      WindowInsetsControllerCompat(window, view).run {
-        if (isInitialHostResume) {
-          val typedValue = TypedValue()
-
-          isAppearanceLightStatusBars = activity
-            .theme
-            .resolveAttribute(android.R.attr.windowLightStatusBar, typedValue, true) &&
-            typedValue.data != 0
-        }
-
-        isInitialHostResume = false
-        isAppearanceLightNavigationBars = !isDarkMode
-      }
-
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         window.attributes.layoutInDisplayCutoutMode = when {
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
-            WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+          Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
           else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
       }
     }
   }
 
-  fun onHostDestroy() {
-    isInitialHostResume = true
+  fun onHostResume(reactContext: ReactApplicationContext) {
+    applyEdgeToEdge(reactContext)
   }
 
-  fun setSystemBarsConfig(activity: Activity?, config: ReadableMap) {
-    if (activity == null) {
-      return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
-    }
+  fun onConfigChange(reactContext: ReactApplicationContext) {
+    Handler(Looper.getMainLooper()).postDelayed({ applyEdgeToEdge(reactContext) }, 100)
+  }
+
+  fun setSystemBarsConfig(reactContext: ReactApplicationContext, config: ReadableMap) {
+    val activity = reactContext.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
 
     val statusBarHidden =
       config.takeIf { it.hasKey("statusBarHidden") }?.getBoolean("statusBarHidden")
