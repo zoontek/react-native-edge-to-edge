@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
 
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -31,7 +32,7 @@ object RNEdgeToEdgeModuleImpl {
       WindowCompat.setDecorFitsSystemWindows(window, false)
 
       window.statusBarColor = Color.TRANSPARENT
-      window.navigationBarColor = context.getColor(R.color.navigationBarColor)
+      window.navigationBarColor = ContextCompat.getColor(context, R.color.navigationBarColor)
 
       val isDarkMode =
         view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
