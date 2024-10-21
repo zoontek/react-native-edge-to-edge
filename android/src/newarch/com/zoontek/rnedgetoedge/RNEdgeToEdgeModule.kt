@@ -40,11 +40,9 @@ class RNEdgeToEdgeModule(reactContext: ReactApplicationContext) :
 
   override fun onHostPause() {}
 
-  override fun onHostDestroy() {
-    RNEdgeToEdgeModuleImpl.onHostDestroy()
-  }
+  override fun onHostDestroy() {}
 
   override fun setSystemBarsConfig(config: ReadableMap) {
-    RNEdgeToEdgeModuleImpl.setSystemBarsConfig(currentActivity, config)
+    RNEdgeToEdgeModuleImpl.setSystemBarsConfig(reactApplicationContext, config)
   }
 }
