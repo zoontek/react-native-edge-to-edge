@@ -106,9 +106,6 @@ Status bar management has never worked effectively with the built-in [`Modal`](h
 
 ## API
 
-> [!WARNING]  
-> The API is subject to change before reaching version **1.0.0**.
-
 ### `<SystemBars />`
 
 A component for managing your app's system bars. This replace [`StatusBar`](https://reactnative.dev/docs/statusbar), [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) (that uses a lot of now [deprecated APIs](https://developer.android.com/about/versions/15/behavior-changes-15#deprecated-apis)).
