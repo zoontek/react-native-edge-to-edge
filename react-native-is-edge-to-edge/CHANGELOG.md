@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.0.0
+
+- Stable release. No changes, except that the API is not subject to changes.
+
 ## 0.1.2
 
 - Add ES module build format (d7e932d)
