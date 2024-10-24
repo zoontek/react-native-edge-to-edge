@@ -1,6 +1,6 @@
 {
   "name": "react-native-edge-to-edge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "Effortlessly enable edge-to-edge display in React Native",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",

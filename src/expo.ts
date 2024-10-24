@@ -20,7 +20,8 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
   ]);
 
   return withAndroidStyles(config, (config) => {
-    const { userInterfaceStyle = "light" } = config;
+    const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
+    const { barStyle } = androidStatusBar;
 
     config.modResults.resources.style = config.modResults.resources.style?.map(
       (style): typeof style => {
@@ -33,7 +34,12 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
             );
           }
 
-          if (userInterfaceStyle !== "automatic") {
+          if (barStyle != null) {
+            style.item.push({
+              $: { name: "android:windowLightStatusBar" },
+              _: String(barStyle === "dark-content"),
+            });
+          } else if (userInterfaceStyle !== "automatic") {
             style.item.push({
               $: { name: "android:windowLightStatusBar" },
               _: String(userInterfaceStyle === "light"),
