@@ -2,7 +2,7 @@
 
 # 1.0.0
 
-- Stable release. No changes, except that the API is not subject to changes.
+- Stable release. The API is not subject to changes anymore.
 
 ## 0.1.2
 
