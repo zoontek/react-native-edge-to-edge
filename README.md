@@ -25,7 +25,7 @@ It is supporting the **latest version**, and the **two previous minor series**.
 
 ### Android 15
 
-With the upcoming release of Android 15, Google is introducing a significant change: apps targeting SDK 35 [will have edge-to-edge enforcement](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge). Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
+With the release of Android 15, Google is introducing a significant change: apps targeting SDK 35 [will have edge-to-edge enforcement](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge). Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
 
 Currently, new React Native projects target SDK 34.
 
