@@ -20,7 +20,6 @@ export const controlEdgeToEdgeValues = (values: Record<string, unknown>) => {
         return;
       }
 
-      console.log(warnings, stableKey);
       warnings.add(stableKey);
 
       const isPlural = entries.length > 1;
