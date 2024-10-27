@@ -1,6 +1,6 @@
 {
   "name": "react-native-is-edge-to-edge",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "license": "MIT",
   "description": "Detect react-native-edge-to-edge package install",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",

@@ -1,12 +1,16 @@
 import { Platform, TurboModuleRegistry } from "react-native";
 
+const warnings = new Set();
+
 export const isEdgeToEdge = () =>
   Platform.OS !== "android" || TurboModuleRegistry.get("RNEdgeToEdge") != null;
 
-const warnings = new Set();
-
 export const controlEdgeToEdgeValues = (values: Record<string, unknown>) => {
-  if (__DEV__ && isEdgeToEdge()) {
+  if (
+    __DEV__ &&
+    Platform.OS === "android" &&
+    TurboModuleRegistry.get("RNEdgeToEdge") != null
+  ) {
     const entries = Object.entries(values).filter(
       ([, value]) => typeof value !== "undefined",
     );

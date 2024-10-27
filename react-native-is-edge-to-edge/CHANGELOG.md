@@ -1,5 +1,13 @@
 # Changelog
 
+# 1.1.3
+
+- Fix `controlEdgeToEdgeValues` behavior on non-android platforms.
+
+# 1.1.2
+
+- Fix metro module resolution with new architecture enabled.
+
 # 1.1.1
 
 - Make `isEdgeToEdge` function call lazy.
