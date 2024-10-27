@@ -29,7 +29,7 @@ describe("controlEdgeToEdgeValues", () => {
 
     expect(mock).toHaveBeenCalledOnce();
     expect(mock).toHaveBeenCalledWith(
-      "statusBarTranslucent and navigationBarTranslucent value are ignored when using react-native-edge-to-edge",
+      "statusBarTranslucent and navigationBarTranslucent values are ignored when using react-native-edge-to-edge",
     );
   });
 
@@ -48,7 +48,7 @@ describe("controlEdgeToEdgeValues", () => {
 
     expect(mock).toHaveBeenCalledOnce();
     expect(mock).toHaveBeenCalledWith(
-      "statusBarTranslucent and navigationBarTranslucent value are ignored when using react-native-edge-to-edge",
+      "statusBarTranslucent and navigationBarTranslucent values are ignored when using react-native-edge-to-edge",
     );
   });
 
@@ -62,11 +62,11 @@ describe("controlEdgeToEdgeValues", () => {
 
     expect(mock).toHaveBeenNthCalledWith(
       1,
-      "statusBarTranslucent and navigationBarTranslucent value are ignored when using react-native-edge-to-edge",
+      "statusBarTranslucent and navigationBarTranslucent values are ignored when using react-native-edge-to-edge",
     );
     expect(mock).toHaveBeenNthCalledWith(
       2,
-      "statusBarTranslucent values are ignored when using react-native-edge-to-edge",
+      "statusBarTranslucent value is ignored when using react-native-edge-to-edge",
     );
   });
 });

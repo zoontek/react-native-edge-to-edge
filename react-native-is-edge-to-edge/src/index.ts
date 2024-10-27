@@ -31,7 +31,7 @@ export const controlEdgeToEdgeValues = (values: Record<string, unknown>) => {
     );
 
     console.warn(
-      `${list} ${isPlural ? "value" : "values"} are ignored when using react-native-edge-to-edge`,
+      `${list} ${isPlural ? "values are" : "value is"} ignored when using react-native-edge-to-edge`,
     );
   }
 };
