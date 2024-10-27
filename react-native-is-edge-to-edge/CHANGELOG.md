@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.1.1
+
+- Make `isEdgeToEdge` function call lazy.
+
 # 1.1.0
 
 - Add `controlEdgeToEdgeValues` to warn users in development.

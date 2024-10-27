@@ -85,10 +85,47 @@ Many libraries expose options that you can set to account for the transparency o
 For library authors, we provide a lightweight package called `react-native-is-edge-to-edge` (note the `-is-`!), which checks whether `react-native-edge-to-edge` is installed, making it easy to update your library accordingly:
 
 ```ts
-import { isEdgeToEdge } from "react-native-is-edge-to-edge";
+import {
+  controlEdgeToEdgeValues,
+  isEdgeToEdge,
+} from "react-native-is-edge-to-edge";
 
-if (isEdgeToEdge()) {
-  // …do something
+const EDGE_TO_EDGE = isEdgeToEdge();
+
+function MyAwesomeLibraryComponent({
+  statusBarTranslucent,
+  navigationBarTranslucent,
+}) {
+  if (__DEV__) {
+    // warn the user once about unnecessary defined values
+    controlEdgeToEdgeValues({
+      statusBarTranslucent,
+      navigationBarTranslucent,
+    });
+  }
+
+  return (
+    <MyAwesomeLibraryNativeComponent
+      statusBarTranslucent={EDGE_TO_EDGE || statusBarTranslucent}
+      navigationBarTranslucent={EDGE_TO_EDGE || navigationBarTranslucent}
+      // …
+    />
+  );
+}
+```
+
+If you want to check for the library's presence on the native side to bypass certain parts of your code, consider using this small utility:
+
+```kotlin
+object EdgeToEdgeUtil {
+  val ENABLED: Boolean
+    get() = try {
+      // we cannot detect edge-to-edge, but we can detect react-native-edge-to-edge install
+      Class.forName("com.zoontek.rnedgetoedge.EdgeToEdgePackage")
+      true
+    } catch (exception: ClassNotFoundException) {
+      false
+    }
 }
 ```
 
