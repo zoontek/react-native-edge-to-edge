@@ -8,6 +8,7 @@ beforeAll(() => {
 });
 
 vi.mock("react-native", () => ({
+  Platform: { OS: "android" },
   TurboModuleRegistry: { get: () => ({}) },
 }));
 
@@ -22,7 +23,7 @@ describe("controlEdgeToEdgeValues", () => {
   });
 
   it("is called when some values are defined", async () => {
-    const { controlEdgeToEdgeValues } = await import("../src/index.android");
+    const { controlEdgeToEdgeValues } = await import("../src");
 
     controlEdgeToEdgeValues({ statusBarTranslucent, navigationBarTranslucent });
 
@@ -33,14 +34,14 @@ describe("controlEdgeToEdgeValues", () => {
   });
 
   it("is not called if the values are undefined", async () => {
-    const { controlEdgeToEdgeValues } = await import("../src/index.android");
+    const { controlEdgeToEdgeValues } = await import("../src");
 
     controlEdgeToEdgeValues({ statusBarTranslucent: undefined });
     expect(mock).not.toHaveBeenCalled();
   });
 
   it("is called once if the values doesn't change", async () => {
-    const { controlEdgeToEdgeValues } = await import("../src/index.android");
+    const { controlEdgeToEdgeValues } = await import("../src");
 
     controlEdgeToEdgeValues({ statusBarTranslucent, navigationBarTranslucent });
     controlEdgeToEdgeValues({ statusBarTranslucent, navigationBarTranslucent });
@@ -52,7 +53,7 @@ describe("controlEdgeToEdgeValues", () => {
   });
 
   it("is called twice if the values change", async () => {
-    const { controlEdgeToEdgeValues } = await import("../src/index.android");
+    const { controlEdgeToEdgeValues } = await import("../src");
 
     controlEdgeToEdgeValues({ statusBarTranslucent, navigationBarTranslucent });
     controlEdgeToEdgeValues({ statusBarTranslucent });
