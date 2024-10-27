@@ -2,7 +2,7 @@
 
 # 1.1.4
 
-- Remove `browser` module entry from `package.json`
+- Remove `browser` module entry from `package.json` (54c0c85)
 
 # 1.1.3
 
