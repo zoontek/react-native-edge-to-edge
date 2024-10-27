@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.1.5
+
+- Fix typo with plural in warnings (fe30873)
+
 # 1.1.4
 
 - Remove `browser` module entry from `package.json` (54c0c85)
