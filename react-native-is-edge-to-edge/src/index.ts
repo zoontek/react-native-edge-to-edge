@@ -6,11 +6,7 @@ export const isEdgeToEdge = () =>
   Platform.OS !== "android" || TurboModuleRegistry.get("RNEdgeToEdge") != null;
 
 export const controlEdgeToEdgeValues = (values: Record<string, unknown>) => {
-  if (
-    __DEV__ &&
-    Platform.OS === "android" &&
-    TurboModuleRegistry.get("RNEdgeToEdge") != null
-  ) {
+  if (__DEV__ && TurboModuleRegistry.get("RNEdgeToEdge") != null) {
     const entries = Object.entries(values).filter(
       ([, value]) => typeof value !== "undefined",
     );

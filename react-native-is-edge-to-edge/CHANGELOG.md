@@ -1,24 +1,28 @@
 # Changelog
 
+# 1.1.4
+
+- Remove `browser` module entry from `package.json`
+
 # 1.1.3
 
-- Fix `controlEdgeToEdgeValues` behavior on non-android platforms.
+- Fix `controlEdgeToEdgeValues` behavior on non-android platforms (6b22078)
 
 # 1.1.2
 
-- Fix metro module resolution with new architecture enabled.
+- Fix metro module resolution with new architecture enabled (67a2bda)
 
 # 1.1.1
 
-- Make `isEdgeToEdge` function call lazy.
+- Make `isEdgeToEdge` function call lazy (5294ca6)
 
 # 1.1.0
 
-- Add `controlEdgeToEdgeValues` to warn users in development.
+- Add `controlEdgeToEdgeValues` to warn users in development (cc7b248)
 
 # 1.0.0
 
-- Stable release. The API is not subject to changes anymore.
+- Stable release. The API is not subject to changes anymore (a93e6af)
 
 ## 0.1.2
 
