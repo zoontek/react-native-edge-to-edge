@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.1.0
+
+- Add `controlEdgeToEdgeValues` to warn users in development.
+
 # 1.0.0
 
 - Stable release. The API is not subject to changes anymore.
