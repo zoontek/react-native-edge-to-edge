@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.1.6
+
+- Fix module resolution - thanks to [@robjhogan](https://twitter.com/robjhogan/status/1850963256745025785) (44d3be7)
+
 # 1.1.5
 
 - Fix typo with plural in warnings (fe30873)
