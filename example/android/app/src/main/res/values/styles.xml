@@ -1,9 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.EdgeToEdge">
         <!-- Customize your theme here. -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+
+        <!-- Apply edge-to-edge defaults. -->
+        <item name="android:navigationBarColor">@color/edgeToEdgeNavigationBarColor</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">@bool/edgeToEdgeWindowLightSystemBar</item>
+        <item name="android:windowLightStatusBar">@bool/edgeToEdgeWindowLightSystemBar</item>
     </style>
 
 </resources>
