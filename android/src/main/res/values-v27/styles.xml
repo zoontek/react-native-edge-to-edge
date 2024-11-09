@@ -2,5 +2,6 @@
 <resources>
     <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.Common">
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
     </style>
 </resources>

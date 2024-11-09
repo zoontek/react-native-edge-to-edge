@@ -2,6 +2,7 @@
 <resources>
     <style name="Theme.EdgeToEdge" parent="Theme.EdgeToEdge.Common">
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
+        <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
         <item name="android:enforceStatusBarContrast">false</item>
         <item name="android:enforceNavigationBarContrast">true</item>
     </style>

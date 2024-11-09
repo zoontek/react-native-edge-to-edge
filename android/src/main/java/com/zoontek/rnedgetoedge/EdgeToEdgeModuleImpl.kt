@@ -32,7 +32,7 @@ object EdgeToEdgeModuleImpl {
       WindowCompat.setDecorFitsSystemWindows(window, false)
 
       window.statusBarColor = Color.TRANSPARENT
-      window.navigationBarColor = ContextCompat.getColor(context, R.color.edgeToEdgeNavigationBarColor)
+      window.navigationBarColor = ContextCompat.getColor(context, R.color.navigationBarColor)
 
       val isDarkMode =
         view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
