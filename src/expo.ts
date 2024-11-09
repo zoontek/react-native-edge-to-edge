@@ -4,11 +4,15 @@ import {
   withAndroidStyles,
 } from "@expo/config-plugins";
 
-type Theme = "material2" | "material3";
+type Theme = "Material2" | "Material3";
+
+type Props = {
+  android?: { parentTheme?: Theme };
+};
 
 const themes: Record<string, string> = {
-  material2: "Theme.EdgeToEdge.Material2",
-  material3: "Theme.EdgeToEdge.Material3",
+  Material2: "Theme.EdgeToEdge.Material2",
+  Material3: "Theme.EdgeToEdge.Material3",
 } satisfies Record<Theme, string>;
 
 const ignoreList = new Set([
@@ -25,17 +29,17 @@ const ignoreList = new Set([
   "android:windowTranslucentStatus",
 ]);
 
-const withAndroidEdgeToEdgeTheme: ConfigPlugin<{
-  theme?: Theme;
-}> = (config, { theme = "default" }) =>
-  withAndroidStyles(config, (config) => {
+const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (config, props) => {
+  return withAndroidStyles(config, (config) => {
     const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
     const { barStyle } = androidStatusBar;
+    const { android = {} } = props;
+    const { parentTheme = "Default" } = android;
 
     config.modResults.resources.style = config.modResults.resources.style?.map(
       (style): typeof style => {
         if (style.$.name === "AppTheme") {
-          style.$.parent = themes[theme] ?? "Theme.EdgeToEdge";
+          style.$.parent = themes[parentTheme] ?? "Theme.EdgeToEdge";
 
           if (style.item != null) {
             style.item = style.item.filter(
@@ -63,7 +67,8 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<{
     return config;
   });
 
-export default createRunOncePlugin(
-  withAndroidEdgeToEdgeTheme,
-  "react-native-edge-to-edge",
-);
+  export default createRunOncePlugin(
+    withAndroidEdgeToEdgeTheme,
+    "react-native-edge-to-edge",
+  );
+};
