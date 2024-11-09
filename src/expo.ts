@@ -4,7 +4,18 @@ import {
   withAndroidStyles,
 } from "@expo/config-plugins";
 
-const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
+type Theme = "Material2" | "Material3";
+
+type Props = {
+  android?: { parentTheme?: Theme };
+};
+
+const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (config, props) => {
+  const themes: Record<string, string> = {
+    Material2: "Theme.EdgeToEdge.Material2",
+    Material3: "Theme.EdgeToEdge.Material3",
+  } satisfies Record<Theme, string>;
+
   const ignoreList = new Set([
     "android:enforceNavigationBarContrast",
     "android:enforceStatusBarContrast",
@@ -22,11 +33,13 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
   return withAndroidStyles(config, (config) => {
     const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
     const { barStyle } = androidStatusBar;
+    const { android = {} } = props;
+    const { parentTheme = "Default" } = android;
 
     config.modResults.resources.style = config.modResults.resources.style?.map(
       (style): typeof style => {
         if (style.$.name === "AppTheme") {
-          style.$.parent = "Theme.EdgeToEdge";
+          style.$.parent = themes[parentTheme] ?? "Theme.EdgeToEdge";
 
           if (style.item != null) {
             style.item = style.item.filter(

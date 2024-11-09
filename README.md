@@ -57,15 +57,27 @@ Add the library plugin in your `app.json` config file and [create a new build](h
 }
 ```
 
+_📌 The available plugins options are:_
+
+```ts
+type Options = {
+  android?: {
+    // use an edge-to-edge version of `Theme.{MaterialComponents,Material3}.DayNight.NoActionBar`
+    parentTheme?: "Material2" | "Material3"; // optional, default is `undefined` (`Theme.EdgeToEdge`)
+  };
+};
+```
+
 > [!NOTE]
 > This library is not yet supported in the [Expo Go](https://expo.dev/go) sandbox app.
 
 ### Bare React Native
 
-Edit your `android/app/src/main/res/values/styles.xml` file to inherit from the provided theme:
+Edit your `android/app/src/main/res/values/styles.xml` file to inherit from one of the provided themes:
 
 ```diff
 <resources>
+  <!-- inherit from Theme.EdgeToEdge / Theme.EdgeToEdge.Material2 / Theme.EdgeToEdge.Material3 -->
 - <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 + <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->

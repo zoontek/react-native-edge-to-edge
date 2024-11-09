@@ -4,11 +4,10 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   Appearance,
   Text as BaseText,
-  ColorSchemeName,
   Modal,
   Platform,
   StyleProp,
@@ -101,6 +100,7 @@ const Button = ({
   );
 };
 
+const SCHEMES = ["system", "light", "dark"];
 const STYLES: SystemBarStyle[] = ["auto", "light", "dark"];
 
 type StackParamList = {
@@ -160,10 +160,17 @@ export const HomeScreen = ({
     ? { false: "#1c1c1f", true: "#2b3e55" }
     : { false: "#eeeef0", true: "#ccd8e5" };
 
+  const [schemeIndex, setSchemeIndex] = useState(0);
   const [styleIndex, setStyleIndex] = useState(0);
   const [statusBarHidden, setStatusBarHidden] = useState(false);
   const [navigationBarHidden, setNavigationBarHidden] = useState(false);
   const [reactNativeModalVisible, setReactNativeModalVisible] = useState(false);
+
+  useEffect(() => {
+    const value = SCHEMES[schemeIndex];
+    const scheme = value === "light" || value === "dark" ? value : null;
+    Appearance.setColorScheme(scheme);
+  }, [schemeIndex]);
 
   const closeReactNativeModal = () => {
     setReactNativeModalVisible(false);
@@ -182,10 +189,10 @@ export const HomeScreen = ({
       <Title>Theme</Title>
 
       <SegmentedControl
-        values={["light", "dark"] satisfies ColorSchemeName[]}
-        selectedIndex={dark ? 1 : 0}
+        values={SCHEMES}
+        selectedIndex={schemeIndex}
         onValueChange={(value) => {
-          Appearance.setColorScheme(value as ColorSchemeName);
+          setSchemeIndex(SCHEMES.indexOf(value));
         }}
       />
 
