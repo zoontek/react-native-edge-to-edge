@@ -10,26 +10,26 @@ type Props = {
   android?: { parentTheme?: Theme };
 };
 
-const themes: Record<string, string> = {
-  Material2: "Theme.EdgeToEdge.Material2",
-  Material3: "Theme.EdgeToEdge.Material3",
-} satisfies Record<Theme, string>;
-
-const ignoreList = new Set([
-  "android:enforceNavigationBarContrast",
-  "android:enforceStatusBarContrast",
-  "android:fitsSystemWindows",
-  "android:navigationBarColor",
-  "android:statusBarColor",
-  "android:windowDrawsSystemBarBackgrounds",
-  "android:windowLayoutInDisplayCutoutMode",
-  "android:windowLightNavigationBar",
-  "android:windowLightStatusBar",
-  "android:windowTranslucentNavigation",
-  "android:windowTranslucentStatus",
-]);
-
 const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (config, props) => {
+  const themes: Record<string, string> = {
+    Material2: "Theme.EdgeToEdge.Material2",
+    Material3: "Theme.EdgeToEdge.Material3",
+  } satisfies Record<Theme, string>;
+
+  const ignoreList = new Set([
+    "android:enforceNavigationBarContrast",
+    "android:enforceStatusBarContrast",
+    "android:fitsSystemWindows",
+    "android:navigationBarColor",
+    "android:statusBarColor",
+    "android:windowDrawsSystemBarBackgrounds",
+    "android:windowLayoutInDisplayCutoutMode",
+    "android:windowLightNavigationBar",
+    "android:windowLightStatusBar",
+    "android:windowTranslucentNavigation",
+    "android:windowTranslucentStatus",
+  ]);
+
   return withAndroidStyles(config, (config) => {
     const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
     const { barStyle } = androidStatusBar;
@@ -66,9 +66,9 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (config, props) => {
 
     return config;
   });
-
-  export default createRunOncePlugin(
-    withAndroidEdgeToEdgeTheme,
-    "react-native-edge-to-edge",
-  );
 };
+
+export default createRunOncePlugin(
+  withAndroidEdgeToEdgeTheme,
+  "react-native-edge-to-edge",
+);
