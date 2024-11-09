@@ -4,29 +4,38 @@ import {
   withAndroidStyles,
 } from "@expo/config-plugins";
 
-const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
-  const ignoreList = new Set([
-    "android:enforceNavigationBarContrast",
-    "android:enforceStatusBarContrast",
-    "android:fitsSystemWindows",
-    "android:navigationBarColor",
-    "android:statusBarColor",
-    "android:windowDrawsSystemBarBackgrounds",
-    "android:windowLayoutInDisplayCutoutMode",
-    "android:windowLightNavigationBar",
-    "android:windowLightStatusBar",
-    "android:windowTranslucentNavigation",
-    "android:windowTranslucentStatus",
-  ]);
+type Theme = "material2" | "material3";
 
-  return withAndroidStyles(config, (config) => {
+const themes: Record<string, string> = {
+  material2: "Theme.EdgeToEdge.Material2",
+  material3: "Theme.EdgeToEdge.Material3",
+} satisfies Record<Theme, string>;
+
+const ignoreList = new Set([
+  "android:enforceNavigationBarContrast",
+  "android:enforceStatusBarContrast",
+  "android:fitsSystemWindows",
+  "android:navigationBarColor",
+  "android:statusBarColor",
+  "android:windowDrawsSystemBarBackgrounds",
+  "android:windowLayoutInDisplayCutoutMode",
+  "android:windowLightNavigationBar",
+  "android:windowLightStatusBar",
+  "android:windowTranslucentNavigation",
+  "android:windowTranslucentStatus",
+]);
+
+const withAndroidEdgeToEdgeTheme: ConfigPlugin<{
+  theme?: Theme;
+}> = (config, { theme = "default" }) =>
+  withAndroidStyles(config, (config) => {
     const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
     const { barStyle } = androidStatusBar;
 
     config.modResults.resources.style = config.modResults.resources.style?.map(
       (style): typeof style => {
         if (style.$.name === "AppTheme") {
-          style.$.parent = "Theme.EdgeToEdge";
+          style.$.parent = themes[theme] ?? "Theme.EdgeToEdge";
 
           if (style.item != null) {
             style.item = style.item.filter(
@@ -53,7 +62,6 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin = (config) => {
 
     return config;
   });
-};
 
 export default createRunOncePlugin(
   withAndroidEdgeToEdgeTheme,
