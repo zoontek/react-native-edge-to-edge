@@ -5,12 +5,12 @@ import {
 } from "@expo/config-plugins";
 
 type Theme = "Material2" | "Material3";
+type Props = { android?: { parentTheme?: Theme } } | undefined;
 
-type Props = {
-  android?: { parentTheme?: Theme };
-};
-
-const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (config, props) => {
+const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
+  config,
+  props = {},
+) => {
   const themes: Record<string, string> = {
     Material2: "Theme.EdgeToEdge.Material2",
     Material3: "Theme.EdgeToEdge.Material3",
