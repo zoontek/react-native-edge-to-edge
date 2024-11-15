@@ -1,5 +1,5 @@
 import type { TurboModule } from "react-native";
-import { TurboModuleRegistry } from "react-native";
+import { Appearance, TurboModuleRegistry } from "react-native";
 
 type SystemBarsConfig = {
   statusBarHidden: boolean | undefined;
@@ -8,7 +8,16 @@ type SystemBarsConfig = {
 };
 
 export interface Spec extends TurboModule {
+  onColorSchemeChange(): void;
   setSystemBarsConfig(config: SystemBarsConfig): void;
 }
 
-export default TurboModuleRegistry.get<Spec>("RNEdgeToEdge");
+const NativeModule = TurboModuleRegistry.get<Spec>("RNEdgeToEdge");
+
+if (NativeModule != null) {
+  Appearance.addChangeListener(() => {
+    NativeModule.onColorSchemeChange();
+  });
+}
+
+export default NativeModule;

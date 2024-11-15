@@ -3,8 +3,6 @@ package com.zoontek.rnedgetoedge
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.view.WindowManager
 
 import androidx.core.content.ContextCompat
@@ -20,7 +18,7 @@ import com.facebook.react.common.ReactConstants
 object EdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
-  private fun applyEdgeToEdge(reactContext: ReactApplicationContext) {
+  fun applyEdgeToEdge(reactContext: ReactApplicationContext) {
     val activity = reactContext.currentActivity
       ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
 
@@ -54,14 +52,6 @@ object EdgeToEdgeModuleImpl {
         }
       }
     }
-  }
-
-  fun onHostResume(reactContext: ReactApplicationContext) {
-    applyEdgeToEdge(reactContext)
-  }
-
-  fun onConfigChange(reactContext: ReactApplicationContext) {
-    Handler(Looper.getMainLooper()).postDelayed({ applyEdgeToEdge(reactContext) }, 100)
   }
 
   fun setSystemBarsConfig(reactContext: ReactApplicationContext, config: ReadableMap) {

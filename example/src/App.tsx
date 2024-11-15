@@ -189,6 +189,7 @@ export const HomeScreen = ({
       <Title>Theme</Title>
 
       <SegmentedControl
+        appearance={dark ? "dark" : "light"}
         values={SCHEMES}
         selectedIndex={schemeIndex}
         onValueChange={(value) => {
@@ -201,6 +202,7 @@ export const HomeScreen = ({
       <Title>{"<SystemBars />"}</Title>
 
       <SegmentedControl
+        appearance={dark ? "dark" : "light"}
         values={STYLES}
         selectedIndex={styleIndex}
         onValueChange={(value) => {
