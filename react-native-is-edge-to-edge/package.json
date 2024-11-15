@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "react": "18.3.1",
-    "react-native": "0.76.1",
+    "react-native": "0.76.2",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.5"
   }
 }
