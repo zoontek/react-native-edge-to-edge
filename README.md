@@ -129,15 +129,14 @@ function MyAwesomeLibraryComponent({
 If you want to check for the library's presence on the native side to bypass certain parts of your code, consider using this small utility:
 
 ```kotlin
-object EdgeToEdgeUtil {
-  val ENABLED: Boolean
-    get() = try {
-      // we cannot detect edge-to-edge, but we can detect react-native-edge-to-edge install
-      Class.forName("com.zoontek.rnedgetoedge.EdgeToEdgePackage")
-      true
-    } catch (exception: ClassNotFoundException) {
-      false
-    }
+object EdgeToEdge {
+  // we cannot detect edge-to-edge, but we can detect react-native-edge-to-edge install
+  val ENABLED: Boolean = try {
+    Class.forName("com.zoontek.rnedgetoedge.EdgeToEdgePackage")
+    true
+  } catch (exception: ClassNotFoundException) {
+    false
+  }
 }
 ```
 
