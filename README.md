@@ -132,11 +132,11 @@ If you want to check for the library's presence on the native side to bypass cer
 object EdgeToEdge {
   // we cannot detect edge-to-edge, but we can detect react-native-edge-to-edge install
   val ENABLED: Boolean = try {
-    Class.forName("com.zoontek.rnedgetoedge.EdgeToEdgePackage")
-    true
-  } catch (exception: ClassNotFoundException) {
-    false
-  }
+      Class.forName("com.zoontek.rnedgetoedge.EdgeToEdgePackage")
+      true
+    } catch (exception: ClassNotFoundException) {
+      false
+    }
 }
 ```
 
