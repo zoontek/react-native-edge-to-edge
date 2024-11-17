@@ -18,6 +18,7 @@ import com.facebook.react.common.ReactConstants
 object EdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
+  @Suppress("DEPRECATION")
   fun applyEdgeToEdge(reactContext: ReactApplicationContext) {
     val activity = reactContext.currentActivity
       ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
