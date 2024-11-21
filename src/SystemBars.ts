@@ -74,54 +74,56 @@ let currentMergedEntries: {
  * Updates the native system bars with the entries from the stack.
  */
 function updateEntriesStack() {
-  if (updateImmediate != null) {
-    clearImmediate(updateImmediate);
-  }
+  if (Platform.OS === "android" || Platform.OS === "ios") {
+    if (updateImmediate != null) {
+      clearImmediate(updateImmediate);
+    }
 
-  updateImmediate = setImmediate(() => {
-    const mergedEntries = mergeEntriesStack(entriesStack);
+    updateImmediate = setImmediate(() => {
+      const mergedEntries = mergeEntriesStack(entriesStack);
 
-    if (mergedEntries != null) {
-      const { statusBarHidden, navigationBarHidden } = mergedEntries;
+      if (mergedEntries != null) {
+        const { statusBarHidden, navigationBarHidden } = mergedEntries;
 
-      const statusBarStyle: "light" | "dark" | undefined =
-        mergedEntries.statusBarStyle === "auto"
-          ? getColorScheme() === "light"
-            ? "dark"
-            : "light"
-          : mergedEntries.statusBarStyle;
+        const statusBarStyle: "light" | "dark" | undefined =
+          mergedEntries.statusBarStyle === "auto"
+            ? getColorScheme() === "light"
+              ? "dark"
+              : "light"
+            : mergedEntries.statusBarStyle;
 
-      if (
-        currentMergedEntries?.statusBarStyle !== statusBarStyle ||
-        currentMergedEntries?.statusBarHidden !== statusBarHidden ||
-        currentMergedEntries?.navigationBarHidden !== navigationBarHidden
-      ) {
-        if (Platform.OS === "android") {
-          NativeEdgeToEdgeModule?.setSystemBarsConfig({
-            statusBarStyle,
-            statusBarHidden,
-            navigationBarHidden,
-          });
-        } else if (Platform.OS === "ios") {
-          // Emulate android behavior with react-native StatusBar
-          if (statusBarStyle != null) {
-            StatusBar.setBarStyle(`${statusBarStyle}-content`, true);
-          }
-          if (statusBarHidden != null) {
-            StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
+        if (
+          currentMergedEntries?.statusBarStyle !== statusBarStyle ||
+          currentMergedEntries?.statusBarHidden !== statusBarHidden ||
+          currentMergedEntries?.navigationBarHidden !== navigationBarHidden
+        ) {
+          if (Platform.OS === "android") {
+            NativeEdgeToEdgeModule?.setSystemBarsConfig({
+              statusBarStyle,
+              statusBarHidden,
+              navigationBarHidden,
+            });
+          } else {
+            // Emulate android behavior with react-native StatusBar
+            if (statusBarStyle != null) {
+              StatusBar.setBarStyle(`${statusBarStyle}-content`, true);
+            }
+            if (statusBarHidden != null) {
+              StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
+            }
           }
         }
-      }
 
-      currentMergedEntries = {
-        statusBarStyle,
-        statusBarHidden,
-        navigationBarHidden,
-      };
-    } else {
-      currentMergedEntries = null;
-    }
-  });
+        currentMergedEntries = {
+          statusBarStyle,
+          statusBarHidden,
+          navigationBarHidden,
+        };
+      } else {
+        currentMergedEntries = null;
+      }
+    });
+  }
 }
 
 /**
