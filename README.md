@@ -101,7 +101,7 @@ Edge-to-edge support for the built-in [`Modal`](https://reactnative.dev/docs/mod
 
 ### 3-button navigation mode
 
-This library follows the default [AndroidX `enableEdgeToEdge`](https://developer.android.com/develop/ui/views/layout/edge-to-edge) behavior. The system bars are transparent, except in 3-button navigation mode, where the navigation bar becomes translucent (semi-opaque). Its color adjusts based on your app's light or dark theme.
+This library follows the default [AndroidX `enableEdgeToEdge`](https://developer.android.com/develop/ui/views/layout/edge-to-edge) behavior. The system bars are transparent, except in 3-button navigation mode, where the navigation bar becomes translucent (semi-opaque). Its color adjusts based on light or dark theme.
 
 ## API
 
