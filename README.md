@@ -23,6 +23,12 @@ It is supporting the **latest version**, and the **two previous minor series**.
 
 ## Motivations
 
+### Android 15
+
+Recently, Google introduced a significant change: apps targeting SDK 35 will have edge-to-edge display [enforced by default](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge) on Android 15+. Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
+
+Currently, new React Native projects target SDK 34.
+
 ### Consistency
 
 iOS has long used edge-to-edge displays, so adopting this design across all platforms ensures a consistent user experience. It also simplifies managing safe areas, eliminating the need for special cases specific to Android.
@@ -30,12 +36,6 @@ iOS has long used edge-to-edge displays, so adopting this design across all plat
 ### Immersive mode
 
 [Immersive mode](https://developer.android.com/develop/ui/views/layout/immersive) allows you to hide the status and navigation bars, making it ideal for full-screen experiences. Currently, the built-in [`StatusBar`](https://reactnative.dev/docs/statusbar) component uses [`FLAG_FULLSCREEN`](https://developer.android.com/reference/android/view/WindowManager.LayoutParams#FLAG_FULLSCREEN), a flag that has been deprecated since Android 11.
-
-### Android 15
-
-Recently, Google introduced a significant change: apps targeting SDK 35 will have edge-to-edge display [enforced by default](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge) on Android 15+. Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
-
-Currently, new React Native projects target SDK 34.
 
 ## Installation
 
@@ -87,6 +87,10 @@ Edit your `android/app/src/main/res/values/styles.xml` file to inherit from one 
 
 ## Considerations
 
+### Keyboard management
+
+Enabling edge-to-edge display disrupts Android keyboard management (`android:windowSoftInputMode="adjustResize"`), requiring an alternative solution. While [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview) is a viable option, we recommend using [react-native-keyboard-controller](https://github.com/kirillzyusko/react-native-keyboard-controller) for its enhanced capabilities.
+
 ### Safe area management
 
 Effective safe area management is essential to prevent content from being displayed behind transparent system bars. To achieve this, we highly recommend using [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context), a well-known and trusted library.
@@ -95,11 +99,7 @@ Effective safe area management is essential to prevent content from being displa
 
 Edge-to-edge support for the built-in [`Modal`](https://reactnative.dev/docs/modal) component will be available in [React Native 0.77](https://github.com/facebook/react-native/pull/47254). Meanwhile, we recommend using the [react-navigation modals](https://reactnavigation.org/docs/modal) or the [`expo-router` modal screens](https://docs.expo.dev/router/advanced/modals/#modal-screen-using-expo-router).
 
-### Keyboard management
-
-Enabling edge-to-edge display disrupts Android keyboard management (`android:windowSoftInputMode="adjustResize"`), requiring an alternative solution. While [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview) is a viable option, we recommend using [react-native-keyboard-controller](https://github.com/kirillzyusko/react-native-keyboard-controller) for its enhanced capabilities.
-
-### Transparent navigation bar
+### 3-button navigation mode
 
 This library follows the default [AndroidX `enableEdgeToEdge`](https://developer.android.com/develop/ui/views/layout/edge-to-edge) behavior. The system bars are transparent, except in 3-button navigation mode, where the navigation bar becomes translucent (semi-opaque). Its color adjusts based on your app's light or dark theme.
 
