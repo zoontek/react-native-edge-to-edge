@@ -23,19 +23,19 @@ It is supporting the **latest version**, and the **two previous minor series**.
 
 ## Motivations
 
-### Android 15
+### Consistency
 
-Recently, Google introduced a significant change: apps targeting SDK 35 will have edge-to-edge display [enforced by default](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge) on Android 15+. Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
-
-Currently, new React Native projects target SDK 34.
+iOS has long used edge-to-edge displays, so adopting this design across all platforms ensures a consistent user experience. It also simplifies managing safe areas, eliminating the need for special cases specific to Android.
 
 ### Immersive mode
 
 [Immersive mode](https://developer.android.com/develop/ui/views/layout/immersive) allows you to hide the status and navigation bars, making it ideal for full-screen experiences. Currently, the built-in [`StatusBar`](https://reactnative.dev/docs/statusbar) component uses [`FLAG_FULLSCREEN`](https://developer.android.com/reference/android/view/WindowManager.LayoutParams#FLAG_FULLSCREEN), a flag that has been deprecated since Android 11.
 
-### Consistency
+### Android 15
 
-iOS has long used edge-to-edge displays, so adopting this design across all platforms ensures a consistent user experience. It also simplifies managing safe areas, eliminating the need for special cases specific to Android.
+Recently, Google introduced a significant change: apps targeting SDK 35 will have edge-to-edge display [enforced by default](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge) on Android 15+. Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
+
+Currently, new React Native projects target SDK 34.
 
 ## Installation
 
@@ -87,7 +87,67 @@ Edit your `android/app/src/main/res/values/styles.xml` file to inherit from one 
 
 ## Considerations
 
-### Third-party libraries
+### Safe area management
+
+Effective safe area management is essential to prevent content from being displayed behind transparent system bars. To achieve this, we highly recommend using [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context), a well-known and trusted library.
+
+### Modal component quirks
+
+Edge-to-edge support for the built-in [`Modal`](https://reactnative.dev/docs/modal) component will be available in [React Native 0.77](https://github.com/facebook/react-native/pull/47254). Meanwhile, we recommend using the [react-navigation modals](https://reactnavigation.org/docs/modal), or the [`expo-router` modal screens](https://docs.expo.dev/router/advanced/modals/#modal-screen-using-expo-router).
+
+### Keyboard management
+
+Enabling edge-to-edge display disrupts Android keyboard management (`android:windowSoftInputMode="adjustResize"`), requiring an alternative solution. While [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview) is a viable option, we recommend using [react-native-keyboard-controller](https://github.com/kirillzyusko/react-native-keyboard-controller) for its enhanced capabilities.
+
+## API
+
+### `<SystemBars />`
+
+A component for managing your app's system bars. Replace all occurrences of [`StatusBar`](https://reactnative.dev/docs/statusbar), [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) with it (they uses a lot of now [deprecated APIs](https://developer.android.com/about/versions/15/behavior-changes-15#deprecated-apis) and interfere with edge-to-edge).
+
+```tsx
+import { SystemBars } from "react-native-edge-to-edge";
+
+type SystemBarsProps = {
+  // Sets the color of the status bar content (navigation bar adjusts itself automatically)
+  // "auto" is based on current color scheme (light -> dark content, dark -> light content)
+  style?: "auto" | "light" | "dark";
+  // Hide system bars (the navigation bar cannot be hidden on iOS)
+  hidden?: boolean | { statusBar?: boolean; navigationBar?: boolean };
+};
+
+const App = () => (
+  <>
+    <SystemBars style="light" />
+    {/* … */}
+  </>
+);
+```
+
+#### SystemBars.pushStackEntry
+
+```ts
+const entry: SystemBarsEntry = SystemBars.pushStackEntry(
+  props /*: SystemBarsProps */,
+);
+```
+
+#### SystemBars.popStackEntry
+
+```ts
+SystemBars.popStackEntry(entry /*: SystemBarsEntry */);
+```
+
+#### SystemBars.replaceStackEntry
+
+```ts
+const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
+  entry /*: SystemBarsEntry */,
+  props /*: SystemBarsProps */,
+);
+```
+
+## Third-party
 
 Many libraries expose options that you can set to account for the transparency of status and navigation bars. For example, the [`useHideAnimation`](https://github.com/zoontek/react-native-bootsplash?tab=readme-ov-file#usehideanimation) hook in `react-native-bootsplash` has `statusBarTranslucent` and `navigationBarTranslucent` options, the [`useAnimatedKeyboard`](https://docs.swmansion.com/react-native-reanimated/docs/device/useAnimatedKeyboard) in `react-native-reanimated` has an `isStatusBarTranslucentAndroid` option, etc.
 
@@ -138,64 +198,4 @@ object EdgeToEdge {
       false
     }
 }
-```
-
-### Keyboard management
-
-Enabling edge-to-edge display disrupts basic Android keyboard management (`android:windowSoftInputMode="adjustResize"`), requiring an alternative solution. While [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview) is a viable option, we recommend using [react-native-keyboard-controller](https://github.com/kirillzyusko/react-native-keyboard-controller) for its enhanced capabilities.
-
-### Safe area management
-
-Effective safe area management is essential to prevent content from being displayed behind transparent system bars. To achieve this, we highly recommend using [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context), a well-known and trusted library.
-
-### Modal component quirks
-
-Status bar management has never worked effectively with the built-in [`Modal`](https://reactnative.dev/docs/modal) component (as it creates a `Dialog` with a `Window` instance distinct from `MainActivity`). A `statusBarTranslucent` prop was introduced, but it is insufficient because there is no equivalent for the navigation bar. Instead, we recommend using the [react-navigation modals](https://reactnavigation.org/docs/modal), which do not suffer from this issue, as they utilize [react-native-screens](https://docs.swmansion.com/react-native-screens) and `Fragment` behind the scenes.
-
-## API
-
-### `<SystemBars />`
-
-A component for managing your app's system bars. This replace [`StatusBar`](https://reactnative.dev/docs/statusbar), [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) (that uses a lot of now [deprecated APIs](https://developer.android.com/about/versions/15/behavior-changes-15#deprecated-apis)).
-
-```tsx
-import { SystemBars } from "react-native-edge-to-edge";
-
-type SystemBarsProps = {
-  // Sets the color of the status bar content (navigation bar adjusts itself automatically)
-  // "auto" is based on current color scheme (light -> dark content, dark -> light content)
-  style?: "auto" | "light" | "dark";
-  // Hide system bars (the navigation bar cannot be hidden on iOS)
-  hidden?: boolean | { statusBar?: boolean; navigationBar?: boolean };
-};
-
-const App = () => (
-  <>
-    <SystemBars style="light" />
-    {/* … */}
-  </>
-);
-```
-
-#### SystemBars.pushStackEntry
-
-```ts
-const entry: SystemBarsEntry = SystemBars.pushStackEntry(
-  props /*: SystemBarsProps */,
-);
-```
-
-#### SystemBars.popStackEntry
-
-```ts
-SystemBars.popStackEntry(entry /*: SystemBarsEntry */);
-```
-
-#### SystemBars.replaceStackEntry
-
-```ts
-const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
-  entry /*: SystemBarsEntry */,
-  props /*: SystemBarsProps */,
-);
 ```
