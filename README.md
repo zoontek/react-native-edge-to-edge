@@ -52,7 +52,9 @@ Add the library plugin in your `app.json` config file and [create a new build](h
 ```diff
 {
   "expo": {
-+   "plugins": ["react-native-edge-to-edge"]
++   "plugins": [
++     ["react-native-edge-to-edge", { "android": { "parentTheme": "Light" } }]
++   ]
   }
 }
 ```
@@ -60,10 +62,18 @@ Add the library plugin in your `app.json` config file and [create a new build](h
 _📌 The available plugins options are:_
 
 ```ts
+type Theme =
+  | "Default" // Theme.EdgeToEdge (default)
+  | "Material2" // Theme.EdgeToEdge.Material2
+  | "Material3" // Theme.EdgeToEdge.Material3
+  | "Light" // Theme.EdgeToEdge.Light
+  | "Material2.Light" // Theme.EdgeToEdge.Material2.Light
+  | "Material3.Light"; // Theme.EdgeToEdge.Material3.Light
+
 type Options = {
   android?: {
-    // use an edge-to-edge version of `Theme.{MaterialComponents,Material3}.DayNight.NoActionBar`
-    parentTheme?: "Material2" | "Material3"; // optional, default is `undefined` (`Theme.EdgeToEdge`)
+    // use an edge-to-edge version of `Theme.{MaterialComponents,Material3}.{DayNight,Light}.NoActionBar`
+    parentTheme?: Theme; // optional
   };
 };
 ```
@@ -77,7 +87,10 @@ Edit your `android/app/src/main/res/values/styles.xml` file to inherit from one 
 
 ```diff
 <resources>
-  <!-- inherit from Theme.EdgeToEdge / Theme.EdgeToEdge.Material2 / Theme.EdgeToEdge.Material3 -->
+  <!-- inherit from one of the provided edge-to-edge parent themes:
+     - Theme.EdgeToEdge / Theme.EdgeToEdge.Light
+     - Theme.EdgeToEdge.Material2 / Theme.EdgeToEdge.Material2.Light
+     - Theme.EdgeToEdge.Material3 / Theme.EdgeToEdge.Material3.Light -->
 - <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 + <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->
