@@ -4,6 +4,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import * as React from "react";
 import { ReactNode, useEffect, useState } from "react";
 import {
   Appearance,
