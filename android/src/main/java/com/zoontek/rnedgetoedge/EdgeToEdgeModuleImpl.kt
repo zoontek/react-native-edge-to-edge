@@ -33,13 +33,10 @@ object EdgeToEdgeModuleImpl {
       activity.theme.resolveAttribute(resId, value, true) && value.data != 0
     }
 
-  private fun isDarkMode(view: View): Boolean =
-    view.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-      Configuration.UI_MODE_NIGHT_YES
-
-  private fun hasNavigationBarDarkContent(activity: Activity): Boolean =
+  private fun isNavigationBarLight(activity: Activity): Boolean =
     resolveBoolAttribute(activity, R.attr.enforceLightMode) ||
-      !isDarkMode(activity.window.decorView)
+      activity.window.decorView.resources.configuration.uiMode and
+        Configuration.UI_MODE_NIGHT_MASK != Configuration.UI_MODE_NIGHT_YES
 
   private fun isNavigationBarTransparent(activity: Activity): Boolean =
     !resolveBoolAttribute(activity, R.attr.enforceNavigationBarContrast)
@@ -65,16 +62,18 @@ object EdgeToEdgeModuleImpl {
           window.isNavigationBarContrastEnforced = false
         }
       } else {
+        val isLight = isNavigationBarLight(activity)
+
         window.navigationBarColor = when {
           VERSION.SDK_INT >= VERSION_CODES.Q -> Color.TRANSPARENT
-          VERSION.SDK_INT >= VERSION_CODES.O_MR1 -> LightNavigationBarColor
+          VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isLight -> LightNavigationBarColor
           else -> DarkNavigationBarColor
         }
 
         WindowInsetsControllerCompat(window, view).run {
           isAppearanceLightNavigationBars = when {
-            VERSION.SDK_INT >= VERSION_CODES.Q -> hasNavigationBarDarkContent(activity)
-            else -> VERSION.SDK_INT < VERSION_CODES.O_MR1
+            VERSION.SDK_INT >= VERSION_CODES.O_MR1 -> isLight
+            else -> false
           }
         }
 
