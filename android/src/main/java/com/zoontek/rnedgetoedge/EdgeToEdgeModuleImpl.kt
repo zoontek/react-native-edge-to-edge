@@ -7,7 +7,6 @@ import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Color
 import android.util.TypedValue
-import android.view.View
 import android.view.WindowManager
 
 import androidx.core.view.WindowCompat
