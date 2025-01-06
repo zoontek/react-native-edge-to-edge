@@ -4,9 +4,12 @@ export type SystemBarsEntry = {
   statusBarHidden: boolean | undefined;
   statusBarStyle: SystemBarStyle | undefined;
   navigationBarHidden: boolean | undefined;
+  navigationBarStyle: SystemBarStyle | undefined;
 };
 
 export type SystemBarsProps = {
-  style?: SystemBarStyle;
+  style?:
+    | SystemBarStyle
+    | { statusBar?: SystemBarStyle; navigationBar?: SystemBarStyle };
   hidden?: boolean | { statusBar?: boolean; navigationBar?: boolean };
 };

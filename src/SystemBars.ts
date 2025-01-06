@@ -26,6 +26,7 @@ function mergeEntriesStack(
     {
       statusBarStyle: undefined,
       statusBarHidden: undefined,
+      navigationBarStyle: undefined,
       navigationBarHidden: undefined,
     },
   );
@@ -33,6 +34,7 @@ function mergeEntriesStack(
   if (
     mergedEntry.statusBarStyle == null &&
     mergedEntry.statusBarHidden == null &&
+    mergedEntry.navigationBarStyle == null &&
     mergedEntry.navigationBarHidden == null
   ) {
     return null;
@@ -46,11 +48,16 @@ function mergeEntriesStack(
  */
 function createStackEntry(props: SystemBarsProps): SystemBarsEntry {
   return {
-    statusBarStyle: props.style,
+    statusBarStyle:
+      typeof props.style === "string" ? props.style : props.style?.statusBar,
     statusBarHidden:
       typeof props.hidden === "boolean"
         ? props.hidden
         : props.hidden?.statusBar,
+    navigationBarStyle:
+      typeof props.style === "string"
+        ? props.style
+        : props.style?.navigationBar,
     navigationBarHidden:
       typeof props.hidden === "boolean"
         ? props.hidden
@@ -67,6 +74,7 @@ let updateImmediate: NodeJS.Immediate | null = null;
 let currentMergedEntries: {
   statusBarStyle: "light" | "dark" | undefined;
   statusBarHidden: boolean | undefined;
+  navigationBarStyle: "light" | "dark" | undefined;
   navigationBarHidden: boolean | undefined;
 } | null = null;
 
@@ -84,23 +92,29 @@ function updateEntriesStack() {
 
       if (mergedEntries != null) {
         const { statusBarHidden, navigationBarHidden } = mergedEntries;
+        const autoBarStyle = getColorScheme() === "light" ? "dark" : "light";
 
         const statusBarStyle: "light" | "dark" | undefined =
           mergedEntries.statusBarStyle === "auto"
-            ? getColorScheme() === "light"
-              ? "dark"
-              : "light"
+            ? autoBarStyle
             : mergedEntries.statusBarStyle;
+
+        const navigationBarStyle: "light" | "dark" | undefined =
+          mergedEntries.navigationBarStyle === "auto"
+            ? autoBarStyle
+            : mergedEntries.navigationBarStyle;
 
         if (
           currentMergedEntries?.statusBarStyle !== statusBarStyle ||
           currentMergedEntries?.statusBarHidden !== statusBarHidden ||
+          currentMergedEntries?.navigationBarStyle !== navigationBarStyle ||
           currentMergedEntries?.navigationBarHidden !== navigationBarHidden
         ) {
           if (Platform.OS === "android") {
             NativeEdgeToEdgeModule?.setSystemBarsConfig({
               statusBarStyle,
               statusBarHidden,
+              navigationBarStyle,
               navigationBarHidden,
             });
           } else {
@@ -117,6 +131,7 @@ function updateEntriesStack() {
         currentMergedEntries = {
           statusBarStyle,
           statusBarHidden,
+          navigationBarStyle,
           navigationBarHidden,
         };
       } else {
@@ -172,20 +187,26 @@ function replaceStackEntry(
 }
 
 export function SystemBars({ hidden, style }: SystemBarsProps) {
+  const statusBarStyle = typeof style === "string" ? style : style?.statusBar;
   const statusBarHidden =
     typeof hidden === "boolean" ? hidden : hidden?.statusBar;
+  const navigationBarStyle =
+    typeof style === "string" ? style : style?.navigationBar;
   const navigationBarHidden =
     typeof hidden === "boolean" ? hidden : hidden?.navigationBar;
 
   const stableProps = useMemo<SystemBarsProps>(
     () => ({
+      style:
+        statusBarStyle === navigationBarStyle
+          ? statusBarStyle
+          : { statusBar: statusBarStyle, navigationBar: navigationBarStyle },
       hidden:
         statusBarHidden === navigationBarHidden
           ? statusBarHidden
           : { statusBar: statusBarHidden, navigationBar: navigationBarHidden },
-      style,
     }),
-    [style, statusBarHidden, navigationBarHidden],
+    [statusBarStyle, navigationBarStyle, statusBarHidden, navigationBarHidden],
   );
 
   const colorScheme = useColorScheme();

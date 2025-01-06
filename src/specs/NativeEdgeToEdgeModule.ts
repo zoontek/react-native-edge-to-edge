@@ -5,6 +5,7 @@ type SystemBarsConfig = {
   statusBarHidden: boolean | undefined;
   statusBarStyle: string | undefined;
   navigationBarHidden: boolean | undefined;
+  navigationBarStyle: string | undefined;
 };
 
 export interface Spec extends TurboModule {
