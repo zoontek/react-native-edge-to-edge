@@ -1,9 +1,11 @@
 package com.zoontek.rnedgetoedge
 
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
+
 import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Color
-import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
@@ -26,14 +28,9 @@ object EdgeToEdgeModuleImpl {
   private val boolAttributes = mutableMapOf<Int, Boolean>()
 
   private fun resolveBoolAttribute(activity: Activity, resId: Int): Boolean =
-    boolAttributes.getOrElse(resId) {
+    boolAttributes.getOrPut(resId) {
       val value = TypedValue()
-
-      val bool = activity.theme
-        .resolveAttribute(resId, value, true) && value.data != 0
-
-      boolAttributes[resId] = bool
-      return bool
+      activity.theme.resolveAttribute(resId, value, true) && value.data != 0
     }
 
   private fun isDarkMode(view: View): Boolean =
@@ -60,35 +57,36 @@ object EdgeToEdgeModuleImpl {
 
       window.statusBarColor = Color.TRANSPARENT
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && isNavigationBarTransparent(activity)) {
+      if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isNavigationBarTransparent(activity)) {
         window.navigationBarColor = Color.TRANSPARENT
 
-        window.isStatusBarContrastEnforced = false
-        window.isNavigationBarContrastEnforced = false
+        if (VERSION.SDK_INT >= VERSION_CODES.Q) {
+          window.isStatusBarContrastEnforced = false
+          window.isNavigationBarContrastEnforced = false
+        }
       } else {
         window.navigationBarColor = when {
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> Color.TRANSPARENT
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> LightNavigationBarColor
+          VERSION.SDK_INT >= VERSION_CODES.Q -> Color.TRANSPARENT
+          VERSION.SDK_INT >= VERSION_CODES.O_MR1 -> LightNavigationBarColor
           else -> DarkNavigationBarColor
         }
 
         WindowInsetsControllerCompat(window, view).run {
           isAppearanceLightNavigationBars = when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> hasNavigationBarDarkContent(activity)
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> false
-            else -> true
+            VERSION.SDK_INT >= VERSION_CODES.Q -> hasNavigationBarDarkContent(activity)
+            else -> VERSION.SDK_INT < VERSION_CODES.O_MR1
           }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (VERSION.SDK_INT >= VERSION_CODES.Q) {
           window.isStatusBarContrastEnforced = false
           window.isNavigationBarContrastEnforced = true
         }
       }
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+      if (VERSION.SDK_INT >= VERSION_CODES.P) {
         window.attributes.layoutInDisplayCutoutMode = when {
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+          VERSION.SDK_INT >= VERSION_CODES.R -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
           else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
       }
@@ -116,7 +114,7 @@ object EdgeToEdgeModuleImpl {
         insetsController.isAppearanceLightStatusBars = it == "dark"
       }
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && isNavigationBarTransparent(activity)) {
+      if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isNavigationBarTransparent(activity)) {
         navigationBarStyle?.let {
           insetsController.isAppearanceLightNavigationBars = it == "dark"
         }
