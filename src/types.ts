@@ -1,3 +1,5 @@
+type SystemBarsProp<T> = T | { statusBar?: T; navigationBar?: T };
+
 export type SystemBarStyle = "auto" | "light" | "dark";
 
 export type SystemBarsEntry = {
@@ -8,8 +10,6 @@ export type SystemBarsEntry = {
 };
 
 export type SystemBarsProps = {
-  style?:
-    | SystemBarStyle
-    | { statusBar?: SystemBarStyle; navigationBar?: SystemBarStyle };
-  hidden?: boolean | { statusBar?: boolean; navigationBar?: boolean };
+  style?: SystemBarsProp<SystemBarStyle>;
+  hidden?: SystemBarsProp<boolean>;
 };
