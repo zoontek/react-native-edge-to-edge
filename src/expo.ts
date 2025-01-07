@@ -12,7 +12,12 @@ type Theme =
   | "Material2.Light"
   | "Material3.Light";
 
-type Props = { android?: { parentTheme?: Theme } } | undefined;
+type AndroidProps = {
+  enforceNavigationBarContrast?: boolean;
+  parentTheme?: Theme;
+};
+
+type Props = { android?: AndroidProps } | undefined;
 
 const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
   config,
@@ -29,6 +34,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
   };
 
   const ignoreList = new Set([
+    "enforceNavigationBarContrast",
     "android:enforceNavigationBarContrast",
     "android:enforceStatusBarContrast",
     "android:fitsSystemWindows",
@@ -46,7 +52,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
     const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
     const { barStyle } = androidStatusBar;
     const { android = {} } = props;
-    const { parentTheme = "Default" } = android;
+    const { enforceNavigationBarContrast, parentTheme = "Default" } = android;
 
     config.modResults.resources.style = config.modResults.resources.style?.map(
       (style): typeof style => {
@@ -57,6 +63,13 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
             style.item = style.item.filter(
               (item) => !ignoreList.has(item.$.name),
             );
+          }
+
+          if (enforceNavigationBarContrast === false) {
+            style.item.push({
+              $: { name: "enforceNavigationBarContrast" },
+              _: String(false),
+            });
           }
 
           if (barStyle != null) {
