@@ -33,7 +33,7 @@ object EdgeToEdgeModuleImpl {
     }
 
   private fun isNavigationBarLight(activity: Activity): Boolean =
-    resolveBoolAttribute(activity, R.attr.enforceNavigationBarLight) ||
+    resolveBoolAttribute(activity, R.attr.enforceNavigationBarLightTheme) ||
       activity.window.decorView.resources.configuration.uiMode and
         Configuration.UI_MODE_NIGHT_MASK != Configuration.UI_MODE_NIGHT_YES
 

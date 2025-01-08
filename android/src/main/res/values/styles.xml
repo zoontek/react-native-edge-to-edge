@@ -2,7 +2,7 @@
 <resources>
     <style name="Theme.EdgeToEdge.DayNight.Common" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="enforceNavigationBarContrast">true</item>
-        <item name="enforceNavigationBarLight">false</item>
+        <item name="enforceNavigationBarLightTheme">false</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:fitsSystemWindows">false</item>
@@ -13,7 +13,7 @@
 
     <style name="Theme.EdgeToEdge.Material2.DayNight.Common" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="enforceNavigationBarContrast">true</item>
-        <item name="enforceNavigationBarLight">false</item>
+        <item name="enforceNavigationBarLightTheme">false</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:fitsSystemWindows">false</item>
@@ -24,7 +24,7 @@
 
     <style name="Theme.EdgeToEdge.Material3.DayNight.Common" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="enforceNavigationBarContrast">true</item>
-        <item name="enforceNavigationBarLight">false</item>
+        <item name="enforceNavigationBarLightTheme">false</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:fitsSystemWindows">false</item>
@@ -35,7 +35,7 @@
 
     <style name="Theme.EdgeToEdge.Light.Common" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="enforceNavigationBarContrast">true</item>
-        <item name="enforceNavigationBarLight">true</item>
+        <item name="enforceNavigationBarLightTheme">true</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:fitsSystemWindows">false</item>
@@ -46,7 +46,7 @@
 
     <style name="Theme.EdgeToEdge.Material2.Light.Common" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="enforceNavigationBarContrast">true</item>
-        <item name="enforceNavigationBarLight">true</item>
+        <item name="enforceNavigationBarLightTheme">true</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:fitsSystemWindows">false</item>
@@ -57,7 +57,7 @@
 
     <style name="Theme.EdgeToEdge.Material3.Light.Common" parent="Theme.Material3.Light.NoActionBar">
         <item name="enforceNavigationBarContrast">true</item>
-        <item name="enforceNavigationBarLight">true</item>
+        <item name="enforceNavigationBarLightTheme">true</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:fitsSystemWindows">false</item>
