@@ -1,12 +1,12 @@
 package com.zoontek.rnedgetoedge
 
-import com.facebook.react.TurboReactPackage
+import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 
-class EdgeToEdgePackage : TurboReactPackage() {
+class EdgeToEdgePackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
     return when (name) {
       EdgeToEdgeModuleImpl.NAME -> EdgeToEdgeModule(reactContext)
@@ -23,7 +23,6 @@ class EdgeToEdgePackage : TurboReactPackage() {
         EdgeToEdgeModuleImpl.NAME,
         EdgeToEdgeModuleImpl.NAME,
         false,
-        true,
         true,
         false,
         isTurboModule
