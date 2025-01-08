@@ -33,7 +33,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
     "Material3.Light": "Theme.EdgeToEdge.Material3.Light",
   };
 
-  const ignoreList = new Set([
+  const cleanupList = new Set([
     "enforceNavigationBarContrast",
     "android:enforceNavigationBarContrast",
     "android:enforceStatusBarContrast",
@@ -61,7 +61,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
 
           if (style.item != null) {
             style.item = style.item.filter(
-              (item) => !ignoreList.has(item.$.name),
+              (item) => !cleanupList.has(item.$.name),
             );
           }
 
