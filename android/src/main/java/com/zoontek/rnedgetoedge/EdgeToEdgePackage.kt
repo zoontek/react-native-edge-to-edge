@@ -16,14 +16,16 @@ class EdgeToEdgePackage : BaseReactPackage() {
 
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
+      val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+
       val moduleInfo = ReactModuleInfo(
         EdgeToEdgeModuleImpl.NAME,
         EdgeToEdgeModuleImpl.NAME,
-        canOverrideExistingModule = false,
-        needsEagerInit = true,
-        hasConstants = true,
-        isCxxModule = false,
-        isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+        false,
+        true,
+        true,
+        false,
+        isTurboModule
       )
 
       mapOf(
