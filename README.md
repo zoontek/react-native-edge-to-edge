@@ -186,6 +186,10 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 );
 ```
 
+## Third-party libraries 🧩
+
+If you're an author and your package interferes with edge-to-edge, refer to the [`react-native-is-edge-to-edge` `README.md`](./react-native-is-edge-to-edge) for compatibility instructions.
+
 ## Troubleshooting 🤔
 
 #### The system bars stays opaque
@@ -197,7 +201,3 @@ For example, make sure to set `react-native-reanimated` `useAnimatedKeyboard` `i
 #### The navigation bar style is erratic
 
 There's currently [an open issue](https://issuetracker.google.com/issues/346386744) with the Android 15 emulator image regarding the navigation bar style when it is is fully transparent. This issue does not occur on physical devices.
-
-## Third-party libraries 🧩
-
-If you're an author and your package interferes with edge-to-edge, refer to the [`react-native-is-edge-to-edge` `README.md`](./react-native-is-edge-to-edge) for compatibility instructions.
