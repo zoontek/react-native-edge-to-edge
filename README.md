@@ -1,6 +1,6 @@
 # react-native-edge-to-edge
 
-Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your Android app content to flow seamlessly beneath the system bars.
+Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your Android (v6 and above) app content to flow seamlessly beneath the system bars.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-edge-to-edge/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
@@ -27,8 +27,6 @@ It is supporting the **latest version**, and the **two previous minor series**.
 
 Recently, Google introduced a significant change: apps targeting SDK 35 will have edge-to-edge display [enforced by default](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge) on Android 15+. Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
 
-Currently, new React Native projects target SDK 34.
-
 ### Consistency
 
 iOS has long used edge-to-edge displays, so adopting this design across all platforms ensures a consistent user experience. It also simplifies managing safe areas, eliminating the need for special cases specific to Android.
@@ -45,16 +43,37 @@ $ npm i -S react-native-edge-to-edge
 $ yarn add react-native-edge-to-edge
 ```
 
+### Pick a parent theme
+
+This library requires you to update the parent of your Android `AppTheme` to an edge-to-edge version. Don't worry, it's very easy to understand! You just need to choose a theme based on the current value:
+
+| If you currently have…                          | …you should use                    |
+| :---------------------------------------------- | :--------------------------------- |
+| `Theme.AppCompat.DayNight.NoActionBar`          | `Theme.EdgeToEdge`                 |
+| `Theme.MaterialComponents.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material2`       |
+| `Theme.Material3.DayNight.NoActionBar`          | `Theme.EdgeToEdge.Material3`       |
+| `Theme.AppCompat.Light.NoActionBar`             | `Theme.EdgeToEdge.Light`           |
+| `Theme.MaterialComponents.Light.NoActionBar`    | `Theme.EdgeToEdge.Material2.Light` |
+| `Theme.Material3.Light.NoActionBar`             | `Theme.EdgeToEdge.Material3.Light` |
+
 ### Expo
 
-Add the library plugin in your `app.json` config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build/) 👷:
+Add the library plugin in your `app.json` config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build) 👷:
 
-```diff
+```json
 {
   "expo": {
-+   "plugins": [
-+     ["react-native-edge-to-edge", { "android": { "parentTheme": "Light" } }]
-+   ]
+    "plugins": [
+      [
+        "react-native-edge-to-edge",
+        {
+          "android": {
+            "parentTheme": "Light",
+            "enforceNavigationBarContrast": false
+          }
+        }
+      ]
+    ]
   }
 }
 ```
@@ -62,18 +81,20 @@ Add the library plugin in your `app.json` config file and [create a new build](h
 _📌 The available plugins options are:_
 
 ```ts
-type Theme =
-  | "Default" // Theme.EdgeToEdge (default)
-  | "Material2" // Theme.EdgeToEdge.Material2
-  | "Material3" // Theme.EdgeToEdge.Material3
-  | "Light" // Theme.EdgeToEdge.Light
-  | "Material2.Light" // Theme.EdgeToEdge.Material2.Light
-  | "Material3.Light"; // Theme.EdgeToEdge.Material3.Light
+type ParentTheme =
+  | "Default" // uses `Theme.EdgeToEdge`
+  | "Material2" // uses `Theme.EdgeToEdge.Material2`
+  | "Material3" // uses `Theme.EdgeToEdge.Material3`
+  | "Light" // uses `Theme.EdgeToEdge.Light`
+  | "Material2.Light" // uses `Theme.EdgeToEdge.Material2.Light`
+  | "Material3.Light"; // uses `Theme.EdgeToEdge.Material3.Light`
 
 type Options = {
   android?: {
-    // use an edge-to-edge version of `Theme.{MaterialComponents,Material3}.{DayNight,Light}.NoActionBar`
-    parentTheme?: Theme; // optional
+    // see the "Pick a parent theme" section
+    parentTheme?: ParentTheme; // optional (default: `Default`)
+    // see the "Transparent navigation bar" section
+    enforceNavigationBarContrast?: boolean; // optional (default: `true`)
   };
 };
 ```
@@ -85,20 +106,23 @@ type Options = {
 
 Edit your `android/app/src/main/res/values/styles.xml` file to inherit from one of the provided themes:
 
-```diff
+```xml
 <resources>
-  <!-- inherit from one of the provided edge-to-edge parent themes:
-     - Theme.EdgeToEdge / Theme.EdgeToEdge.Light
-     - Theme.EdgeToEdge.Material2 / Theme.EdgeToEdge.Material2.Light
-     - Theme.EdgeToEdge.Material3 / Theme.EdgeToEdge.Material3.Light -->
-- <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-+ <style name="AppTheme" parent="Theme.EdgeToEdge">
+  <!-- update your AppTheme parent (see the "Pick a parent theme" section) -->
+  <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->
+    <!-- disable the contrasting background of the navigation bar (optional) -->
+    <item name="enforceNavigationBarContrast">false</item>
   </style>
 </resources>
 ```
 
 ## Considerations
+
+### Transparent navigation bar
+
+By default, this library adopts [Android 15 defaults](https://developer.android.com/about/versions/15/behavior-changes-15#ux): a fully transparent status bar, a fully transparent gesture navigation bar, and a semi-opaque button navigation bar. To enforce full transparency in all cases, set the `enforceNavigationBarContrast` option to `false`.<br/>
+Note that by doing so, you will need to manage the navigation bar style (using `SystemBars`) in the same way you handle the status bar.
 
 ### Keyboard management
 
@@ -112,10 +136,6 @@ Effective safe area management is essential to prevent content from being displa
 
 Edge-to-edge support for the built-in [`Modal`](https://reactnative.dev/docs/modal) component will be available in [React Native 0.77](https://github.com/facebook/react-native/pull/47254). Meanwhile, we recommend using the [react-navigation modals](https://reactnavigation.org/docs/modal) or the [`expo-router` modal screens](https://docs.expo.dev/router/advanced/modals/#modal-screen-using-expo-router).
 
-### 3-button navigation mode
-
-This library follows the default [AndroidX `enableEdgeToEdge`](https://developer.android.com/develop/ui/views/layout/edge-to-edge) behavior. The system bars are transparent, except in 3-button navigation mode, where the navigation bar becomes translucent (semi-opaque). Its color adjusts based on light or dark theme.
-
 ## API
 
 ### `<SystemBars />`
@@ -125,11 +145,13 @@ A component for managing your app's system bars. Replace all occurrences of [`St
 ```tsx
 import { SystemBars } from "react-native-edge-to-edge";
 
+// "auto" is based on current color scheme (light -> dark content, dark -> light content)
+type Style = "auto" | "light" | "dark";
+
 type SystemBarsProps = {
-  // Sets the color of the status bar content (navigation bar adjusts itself automatically)
-  // "auto" is based on current color scheme (light -> dark content, dark -> light content)
-  style?: "auto" | "light" | "dark";
-  // Hide system bars (the navigation bar cannot be hidden on iOS)
+  // set the color of the system bar content (as no effect on semi-opaque navigation bar)
+  style?: Style | { statusBar?: Style; navigationBar?: Style };
+  // hide system bars (the navigation bar cannot be hidden on iOS)
   hidden?: boolean | { statusBar?: boolean; navigationBar?: boolean };
 };
 
@@ -164,55 +186,18 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 );
 ```
 
-## Third-party
+## Third-party libraries 🧩
 
-Many libraries expose options that you can set to account for the transparency of status and navigation bars. For example, the [`useHideAnimation`](https://github.com/zoontek/react-native-bootsplash?tab=readme-ov-file#usehideanimation) hook in `react-native-bootsplash` has `statusBarTranslucent` and `navigationBarTranslucent` options, the [`useAnimatedKeyboard`](https://docs.swmansion.com/react-native-reanimated/docs/device/useAnimatedKeyboard) in `react-native-reanimated` has an `isStatusBarTranslucentAndroid` option, etc.
+If you're an author and your package interferes with edge-to-edge, refer to the [`react-native-is-edge-to-edge` `README.md`](./react-native-is-edge-to-edge) for compatibility instructions.
 
-> [!IMPORTANT]  
-> Until third-party libraries officially add support for `react-native-edge-to-edge` to set these options automatically, you may need to adjust these options to prevent interference with the library.
+## Troubleshooting 🤔
 
-For library authors, we provide a lightweight package called `react-native-is-edge-to-edge` (note the `-is-`!), which checks whether `react-native-edge-to-edge` is installed, making it easy to update your library accordingly:
+#### The system bars stays opaque
 
-```ts
-import {
-  controlEdgeToEdgeValues,
-  isEdgeToEdge,
-} from "react-native-is-edge-to-edge";
+Until third-party libraries officially add support for `react-native-edge-to-edge` to set these options automatically, you may need to adjust them manually to prevent interference with the library.
 
-const EDGE_TO_EDGE = isEdgeToEdge();
+For example, make sure to set `react-native-reanimated` `useAnimatedKeyboard` `isStatusBarTranslucentAndroid` and `isNavigationBarTranslucentAndroid` to `true` (until [this PR](https://github.com/software-mansion/react-native-reanimated/pull/6732) is merged), or to replace all occurrences of the built-in `StatusBar`, [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) with `SystemBars`.
 
-function MyAwesomeLibraryComponent({
-  statusBarTranslucent,
-  navigationBarTranslucent,
-}) {
-  if (__DEV__) {
-    // warn the user once about unnecessary defined values
-    controlEdgeToEdgeValues({
-      statusBarTranslucent,
-      navigationBarTranslucent,
-    });
-  }
+#### The navigation bar style is erratic
 
-  return (
-    <MyAwesomeLibraryNativeComponent
-      statusBarTranslucent={EDGE_TO_EDGE || statusBarTranslucent}
-      navigationBarTranslucent={EDGE_TO_EDGE || navigationBarTranslucent}
-      // …
-    />
-  );
-}
-```
-
-If you want to check for the library's presence on the native side to bypass certain parts of your code, consider using this small utility:
-
-```kotlin
-object EdgeToEdge {
-  // we cannot detect edge-to-edge, but we can detect react-native-edge-to-edge install
-  val ENABLED: Boolean = try {
-      Class.forName("com.zoontek.rnedgetoedge.EdgeToEdgePackage")
-      true
-    } catch (exception: ClassNotFoundException) {
-      false
-    }
-}
-```
+There's currently [an open issue](https://issuetracker.google.com/issues/346386744) with the Android 15 emulator image regarding the navigation bar style when it is is fully transparent. This issue does not occur on physical devices.

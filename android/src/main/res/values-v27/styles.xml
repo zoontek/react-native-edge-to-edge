@@ -16,17 +16,17 @@
     </style>
 
     <style name="Theme.EdgeToEdge.Light" parent="Theme.EdgeToEdge.Light.Common">
-        <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
     <style name="Theme.EdgeToEdge.Material2.Light" parent="Theme.EdgeToEdge.Material2.Light.Common">
-        <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
     <style name="Theme.EdgeToEdge.Material3.Light" parent="Theme.EdgeToEdge.Material3.Light.Common">
-        <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 </resources>

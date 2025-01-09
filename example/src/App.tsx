@@ -258,6 +258,7 @@ export const HomeScreen = ({
       <Modal
         visible={reactNativeModalVisible}
         statusBarTranslucent={true}
+        navigationBarTranslucent={true}
         animationType="slide"
         presentationStyle="pageSheet"
         onDismiss={closeReactNativeModal}

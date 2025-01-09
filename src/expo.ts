@@ -4,7 +4,7 @@ import {
   withAndroidStyles,
 } from "@expo/config-plugins";
 
-type Theme =
+type ParentTheme =
   | "Default"
   | "Material2"
   | "Material3"
@@ -12,13 +12,18 @@ type Theme =
   | "Material2.Light"
   | "Material3.Light";
 
-type Props = { android?: { parentTheme?: Theme } } | undefined;
+type AndroidProps = {
+  enforceNavigationBarContrast?: boolean;
+  parentTheme?: ParentTheme;
+};
+
+type Props = { android?: AndroidProps } | undefined;
 
 const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
   config,
   props = {},
 ) => {
-  const themes: Record<Theme, string> = {
+  const themes: Record<ParentTheme, string> = {
     Default: "Theme.EdgeToEdge",
     Material2: "Theme.EdgeToEdge.Material2",
     Material3: "Theme.EdgeToEdge.Material3",
@@ -28,7 +33,8 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
     "Material3.Light": "Theme.EdgeToEdge.Material3.Light",
   };
 
-  const ignoreList = new Set([
+  const cleanupList = new Set([
+    "enforceNavigationBarContrast",
     "android:enforceNavigationBarContrast",
     "android:enforceStatusBarContrast",
     "android:fitsSystemWindows",
@@ -46,7 +52,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
     const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
     const { barStyle } = androidStatusBar;
     const { android = {} } = props;
-    const { parentTheme = "Default" } = android;
+    const { enforceNavigationBarContrast, parentTheme = "Default" } = android;
 
     config.modResults.resources.style = config.modResults.resources.style?.map(
       (style): typeof style => {
@@ -55,8 +61,15 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
 
           if (style.item != null) {
             style.item = style.item.filter(
-              (item) => !ignoreList.has(item.$.name),
+              (item) => !cleanupList.has(item.$.name),
             );
+          }
+
+          if (enforceNavigationBarContrast === false) {
+            style.item.push({
+              $: { name: "enforceNavigationBarContrast" },
+              _: String(false),
+            });
           }
 
           if (barStyle != null) {
