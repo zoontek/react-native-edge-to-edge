@@ -187,3 +187,17 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 ```
 
 ## Troubleshooting
+
+### The system bars stays opaque
+
+Until third-party libraries officially add support for `react-native-edge-to-edge` to set these options automatically, you may need to adjust them manually to prevent interference with the library.
+
+For example, make sure to set `react-native-reanimated` `useAnimatedKeyboard` `isStatusBarTranslucentAndroid` and `isNavigationBarTranslucentAndroid` to `true` (until [this PR](https://github.com/software-mansion/react-native-reanimated/pull/6732) is merged), or to replace all occurrences of the built-in `StatusBar`, [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) with `SystemBars`.
+
+### The navigation bar style is erratic
+
+There's currently [an open issue](https://issuetracker.google.com/issues/346386744) with the Android 15 emulator image regarding the navigation bar style when it is is fully transparent. This issue does not occur on physical devices.
+
+## Third-party
+
+If you're an author and your package interferes with edge-to-edge, refer to the [`react-native-is-edge-to-edge` `README.md`](./react-native-is-edge-to-edge) for compatibility instructions.
