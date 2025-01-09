@@ -1,6 +1,6 @@
 # react-native-edge-to-edge
 
-Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your Android app content to flow seamlessly beneath the system bars.
+Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your Android app content to flow seamlessly beneath the system bars. Compatible with Android 6 and above.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-edge-to-edge/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
@@ -119,6 +119,11 @@ Edit your `android/app/src/main/res/values/styles.xml` file to inherit from one 
 
 ## Considerations
 
+### Transparent navigation bar
+
+By default, this library adopts [Android 15 defaults](https://developer.android.com/about/versions/15/behavior-changes-15#ux): a fully transparent status bar, a fully transparent gesture navigation bar, and a semi-opaque button navigation bar. To enforce full transparency in all cases, set the `enforceNavigationBarContrast` option to `false`.<br/>
+Note that by doing so, you will need to manage the navigation bar style (using `SystemBars`) in the same way you handle the status bar.
+
 ### Keyboard management
 
 Enabling edge-to-edge display disrupts Android keyboard management (`android:windowSoftInputMode="adjustResize"`), requiring an alternative solution. While [`KeyboardAvoidingView`](https://reactnative.dev/docs/keyboardavoidingview) is a viable option, we recommend using [react-native-keyboard-controller](https://github.com/kirillzyusko/react-native-keyboard-controller) for its enhanced capabilities.
@@ -131,10 +136,6 @@ Effective safe area management is essential to prevent content from being displa
 
 Edge-to-edge support for the built-in [`Modal`](https://reactnative.dev/docs/modal) component will be available in [React Native 0.77](https://github.com/facebook/react-native/pull/47254). Meanwhile, we recommend using the [react-navigation modals](https://reactnavigation.org/docs/modal) or the [`expo-router` modal screens](https://docs.expo.dev/router/advanced/modals/#modal-screen-using-expo-router).
 
-### 3-button navigation mode
-
-This library follows the default [AndroidX `enableEdgeToEdge`](https://developer.android.com/develop/ui/views/layout/edge-to-edge) behavior. The system bars are transparent, except in 3-button navigation mode, where the navigation bar becomes translucent (semi-opaque). Its color adjusts based on light or dark theme.
-
 ## API
 
 ### `<SystemBars />`
@@ -144,11 +145,13 @@ A component for managing your app's system bars. Replace all occurrences of [`St
 ```tsx
 import { SystemBars } from "react-native-edge-to-edge";
 
+// "auto" is based on current color scheme (light -> dark content, dark -> light content)
+type Style = "auto" | "light" | "dark";
+
 type SystemBarsProps = {
-  // Sets the color of the status bar content (navigation bar adjusts itself automatically)
-  // "auto" is based on current color scheme (light -> dark content, dark -> light content)
-  style?: "auto" | "light" | "dark";
-  // Hide system bars (the navigation bar cannot be hidden on iOS)
+  // set the color of the system bar content (as no effect on semi-opaque navigation bar)
+  style?: Style | { statusBar?: Style; navigationBar?: Style };
+  // hide system bars (the navigation bar cannot be hidden on iOS)
   hidden?: boolean | { statusBar?: boolean; navigationBar?: boolean };
 };
 
