@@ -27,8 +27,6 @@ It is supporting the **latest version**, and the **two previous minor series**.
 
 Recently, Google introduced a significant change: apps targeting SDK 35 will have edge-to-edge display [enforced by default](https://developer.android.com/about/versions/15/behavior-changes-15#edge-to-edge) on Android 15+. Google is _likely_ to mandate that app updates on the Play Store target SDK 35 starting on August 31, 2025. This assumption is based on the [previous years' requirements following a similar timeline](https://support.google.com/googleplay/android-developer/answer/11926878?sjid=11853000253346477363-EU#zippy=%2Care-there-any-exceptions-for-existing-apps-targeting-api-or-below:~:text=App%20update%20requirements).
 
-Currently, new React Native projects target SDK 34.
-
 ### Consistency
 
 iOS has long used edge-to-edge displays, so adopting this design across all platforms ensures a consistent user experience. It also simplifies managing safe areas, eliminating the need for special cases specific to Android.
@@ -45,16 +43,37 @@ $ npm i -S react-native-edge-to-edge
 $ yarn add react-native-edge-to-edge
 ```
 
+### Pick a parent theme
+
+This library requires you to update the parent of your Android `AppTheme` to an edge-to-edge version. Don't worry, it's very easy to understand! You just need to choose a theme based on the current value:
+
+| If you have…                                    | …you should use (bare react-native) | …you should use (expo config) |
+| ----------------------------------------------- | ----------------------------------- | ----------------------------- |
+| `Theme.AppCompat.DayNight.NoActionBar`          | `Theme.EdgeToEdge`                  | `Default` _(optional)_        |
+| `Theme.MaterialComponents.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material2`        | `Material2`                   |
+| `Theme.Material3.DayNight.NoActionBar`          | `Theme.EdgeToEdge.Material3`        | `Material3`                   |
+| `Theme.AppCompat.Light.NoActionBar`             | `Theme.EdgeToEdge.Light`            | `Light`                       |
+| `Theme.MaterialComponents.Light.NoActionBar`    | `Theme.EdgeToEdge.Material2.Light`  | `Material2.Light`             |
+| `Theme.Material3.Light.NoActionBar`             | `Theme.EdgeToEdge.Material3.Light`  | `Material3.Light`             |
+
 ### Expo
 
-Add the library plugin in your `app.json` config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build/) 👷:
+Add the library plugin in your `app.json` config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build) 👷:
 
-```diff
+```json
 {
   "expo": {
-+   "plugins": [
-+     ["react-native-edge-to-edge", { "android": { "parentTheme": "Light" } }]
-+   ]
+    "plugins": [
+      [
+        "react-native-edge-to-edge",
+        {
+          "android": {
+            "parentTheme": "Light",
+            "enforceNavigationBarContrast": false
+          }
+        }
+      ]
+    ]
   }
 }
 ```
@@ -62,18 +81,20 @@ Add the library plugin in your `app.json` config file and [create a new build](h
 _📌 The available plugins options are:_
 
 ```ts
-type Theme =
-  | "Default" // Theme.EdgeToEdge (default)
-  | "Material2" // Theme.EdgeToEdge.Material2
-  | "Material3" // Theme.EdgeToEdge.Material3
-  | "Light" // Theme.EdgeToEdge.Light
-  | "Material2.Light" // Theme.EdgeToEdge.Material2.Light
-  | "Material3.Light"; // Theme.EdgeToEdge.Material3.Light
+type ParentTheme =
+  | "Default"
+  | "Material2"
+  | "Material3"
+  | "Light"
+  | "Material2.Light"
+  | "Material3.Light";
 
 type Options = {
   android?: {
-    // use an edge-to-edge version of `Theme.{MaterialComponents,Material3}.{DayNight,Light}.NoActionBar`
-    parentTheme?: Theme; // optional
+    // see the "Pick a parent theme" section
+    parentTheme?: ParentTheme; // optional (default: `Default`)
+    // see the "Transparent navigation bar" section
+    enforceNavigationBarContrast?: boolean; // optional (default: `true`)
   };
 };
 ```
@@ -85,15 +106,13 @@ type Options = {
 
 Edit your `android/app/src/main/res/values/styles.xml` file to inherit from one of the provided themes:
 
-```diff
+```xml
 <resources>
-  <!-- inherit from one of the provided edge-to-edge parent themes:
-     - Theme.EdgeToEdge / Theme.EdgeToEdge.Light
-     - Theme.EdgeToEdge.Material2 / Theme.EdgeToEdge.Material2.Light
-     - Theme.EdgeToEdge.Material3 / Theme.EdgeToEdge.Material3.Light -->
-- <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-+ <style name="AppTheme" parent="Theme.EdgeToEdge">
+  <!-- update your AppTheme parent (see the "Pick a parent theme" section) -->
+  <style name="AppTheme" parent="Theme.EdgeToEdge">
     <!-- … -->
+    <!-- disable the contrasting background of the navigation bar (optional) -->
+    <item name="enforceNavigationBarContrast">false</item>
   </style>
 </resources>
 ```
@@ -163,3 +182,5 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
   props /*: SystemBarsProps */,
 );
 ```
+
+## Troubleshooting

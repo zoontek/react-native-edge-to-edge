@@ -4,7 +4,7 @@ import {
   withAndroidStyles,
 } from "@expo/config-plugins";
 
-type Theme =
+type ParentTheme =
   | "Default"
   | "Material2"
   | "Material3"
@@ -14,7 +14,7 @@ type Theme =
 
 type AndroidProps = {
   enforceNavigationBarContrast?: boolean;
-  parentTheme?: Theme;
+  parentTheme?: ParentTheme;
 };
 
 type Props = { android?: AndroidProps } | undefined;
@@ -23,7 +23,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
   config,
   props = {},
 ) => {
-  const themes: Record<Theme, string> = {
+  const themes: Record<ParentTheme, string> = {
     Default: "Theme.EdgeToEdge",
     Material2: "Theme.EdgeToEdge.Material2",
     Material3: "Theme.EdgeToEdge.Material3",
