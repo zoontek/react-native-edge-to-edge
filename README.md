@@ -47,14 +47,14 @@ $ yarn add react-native-edge-to-edge
 
 This library requires you to update the parent of your Android `AppTheme` to an edge-to-edge version. Don't worry, it's very easy to understand! You just need to choose a theme based on the current value:
 
-| If you have…                                    | …you should use (bare react-native) | …you should use (expo config) |
-| ----------------------------------------------- | ----------------------------------- | ----------------------------- |
-| `Theme.AppCompat.DayNight.NoActionBar`          | `Theme.EdgeToEdge`                  | `Default` _(optional)_        |
-| `Theme.MaterialComponents.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material2`        | `Material2`                   |
-| `Theme.Material3.DayNight.NoActionBar`          | `Theme.EdgeToEdge.Material3`        | `Material3`                   |
-| `Theme.AppCompat.Light.NoActionBar`             | `Theme.EdgeToEdge.Light`            | `Light`                       |
-| `Theme.MaterialComponents.Light.NoActionBar`    | `Theme.EdgeToEdge.Material2.Light`  | `Material2.Light`             |
-| `Theme.Material3.Light.NoActionBar`             | `Theme.EdgeToEdge.Material3.Light`  | `Material3.Light`             |
+| If you currently have…                          | …you should use (bare react-native / expo)             |
+| :---------------------------------------------- | :----------------------------------------------------- |
+| `Theme.AppCompat.DayNight.NoActionBar`          | `Theme.EdgeToEdge` / `Default` _(optional)_            |
+| `Theme.MaterialComponents.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material2` / `Material2`             |
+| `Theme.Material3.DayNight.NoActionBar`          | `Theme.EdgeToEdge.Material3` / `Material3`             |
+| `Theme.AppCompat.Light.NoActionBar`             | `Theme.EdgeToEdge.Light` / `Light`                     |
+| `Theme.MaterialComponents.Light.NoActionBar`    | `Theme.EdgeToEdge.Material2.Light` / `Material2.Light` |
+| `Theme.Material3.Light.NoActionBar`             | `Theme.EdgeToEdge.Material3.Light` / `Material3.Light` |
 
 ### Expo
 
@@ -186,7 +186,7 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 );
 ```
 
-## Troubleshooting
+## Troubleshooting 🤔
 
 ### The system bars stays opaque
 
@@ -198,6 +198,6 @@ For example, make sure to set `react-native-reanimated` `useAnimatedKeyboard` `i
 
 There's currently [an open issue](https://issuetracker.google.com/issues/346386744) with the Android 15 emulator image regarding the navigation bar style when it is is fully transparent. This issue does not occur on physical devices.
 
-## Third-party
+## Third-party libraries 🧩
 
 If you're an author and your package interferes with edge-to-edge, refer to the [`react-native-is-edge-to-edge` `README.md`](./react-native-is-edge-to-edge) for compatibility instructions.
