@@ -21,6 +21,7 @@ class EdgeToEdgePackage : BaseReactPackage() {
         EdgeToEdgeModuleImpl.NAME,
         canOverrideExistingModule = false,
         needsEagerInit = true,
+        hasConstants = true,
         isCxxModule = false,
         isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
       )
