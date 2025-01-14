@@ -21,7 +21,7 @@
         <item name="android:enforceNavigationBarContrast">?enforceNavigationBarContrast</item>
     </style>
 
-    <style name="Theme.EdgeToEdge.Material3.DynamicColors" parent="Theme.EdgeToEdge.Material3.DynamicColors.DayNight.Common">
+    <style name="Theme.EdgeToEdge.Material3.Dynamic" parent="Theme.EdgeToEdge.Material3.Dynamic.DayNight.Common">
         <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
         <item name="android:enforceStatusBarContrast">false</item>
@@ -49,7 +49,7 @@
         <item name="android:enforceNavigationBarContrast">?enforceNavigationBarContrast</item>
     </style>
 
-    <style name="Theme.EdgeToEdge.Material3.DynamicColors.Light" parent="Theme.EdgeToEdge.Material3.DynamicColors.Light.Common">
+    <style name="Theme.EdgeToEdge.Material3.Dynamic.Light" parent="Theme.EdgeToEdge.Material3.Dynamic.Light.Common">
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
         <item name="android:enforceStatusBarContrast">false</item>

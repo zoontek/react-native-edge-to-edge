@@ -11,8 +11,8 @@ type ParentTheme =
   | "Light"
   | "Material2.Light"
   | "Material3.Light"
-  | "Material3.DynamicColors"
-  | "Material3.DynamicColors.Light";
+  | "Material3.Dynamic"
+  | "Material3.Dynamic.Light";
 
 type AndroidProps = {
   enforceNavigationBarContrast?: boolean;
@@ -33,8 +33,8 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
     Light: "Theme.EdgeToEdge.Light",
     "Material2.Light": "Theme.EdgeToEdge.Material2.Light",
     "Material3.Light": "Theme.EdgeToEdge.Material3.Light",
-    "Material3.DynamicColors": "Theme.EdgeToEdge.Material3.DynamicColors",
-    "Material3.DynamicColors.Light": "Theme.EdgeToEdge.Material3.DynamicColors.Light",
+    "Material3.Dynamic": "Theme.EdgeToEdge.Material3.Dynamic",
+    "Material3.Dynamic.Light": "Theme.EdgeToEdge.Material3.Dynamic.Light",
   };
 
   const cleanupList = new Set([
