@@ -5,10 +5,10 @@
     <public name="Theme.EdgeToEdge" type="style" />
     <public name="Theme.EdgeToEdge.Material2" type="style" />
     <public name="Theme.EdgeToEdge.Material3" type="style" />
+    <public name="Theme.EdgeToEdge.Material3.Dynamic" type="style" />
 
     <public name="Theme.EdgeToEdge.Light" type="style" />
     <public name="Theme.EdgeToEdge.Material2.Light" type="style" />
     <public name="Theme.EdgeToEdge.Material3.Light" type="style" />
-    <public name="Theme.EdgeToEdge.Material3.Dynamic" type="style" />
     <public name="Theme.EdgeToEdge.Material3.Dynamic.Light" type="style" />
 </resources>

@@ -8,10 +8,10 @@ type ParentTheme =
   | "Default"
   | "Material2"
   | "Material3"
+  | "Material3.Dynamic"
   | "Light"
   | "Material2.Light"
   | "Material3.Light"
-  | "Material3.Dynamic"
   | "Material3.Dynamic.Light";
 
 type AndroidProps = {
@@ -29,11 +29,11 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
     Default: "Theme.EdgeToEdge",
     Material2: "Theme.EdgeToEdge.Material2",
     Material3: "Theme.EdgeToEdge.Material3",
+    "Material3.Dynamic": "Theme.EdgeToEdge.Material3.Dynamic",
 
     Light: "Theme.EdgeToEdge.Light",
     "Material2.Light": "Theme.EdgeToEdge.Material2.Light",
     "Material3.Light": "Theme.EdgeToEdge.Material3.Light",
-    "Material3.Dynamic": "Theme.EdgeToEdge.Material3.Dynamic",
     "Material3.Dynamic.Light": "Theme.EdgeToEdge.Material3.Dynamic.Light",
   };
 
