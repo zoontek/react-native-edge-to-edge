@@ -47,14 +47,16 @@ $ yarn add react-native-edge-to-edge
 
 This library requires you to update the parent of your Android `AppTheme` to an edge-to-edge version. Don't worry, it's very easy to understand! You just need to choose a theme based on the current value:
 
-| If you currently have…                          | …you should use                    |
-| :---------------------------------------------- | :--------------------------------- |
-| `Theme.AppCompat.DayNight.NoActionBar`          | `Theme.EdgeToEdge`                 |
-| `Theme.MaterialComponents.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material2`       |
-| `Theme.Material3.DayNight.NoActionBar`          | `Theme.EdgeToEdge.Material3`       |
-| `Theme.AppCompat.Light.NoActionBar`             | `Theme.EdgeToEdge.Light`           |
-| `Theme.MaterialComponents.Light.NoActionBar`    | `Theme.EdgeToEdge.Material2.Light` |
-| `Theme.Material3.Light.NoActionBar`             | `Theme.EdgeToEdge.Material3.Light` |
+| If you currently have…                               | …you should use                                  |
+| :--------------------------------------------------- | :------------------------------------------------|
+| `Theme.AppCompat.DayNight.NoActionBar`               | `Theme.EdgeToEdge`                               |
+| `Theme.MaterialComponents.DayNight.NoActionBar`      | `Theme.EdgeToEdge.Material2`                     |
+| `Theme.Material3.DayNight.NoActionBar`               | `Theme.EdgeToEdge.Material3`                     |
+| `Theme.Material3.DynamicColors.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material3.DynamicColors`       |
+| `Theme.AppCompat.Light.NoActionBar`                  | `Theme.EdgeToEdge.Light`                         |
+| `Theme.MaterialComponents.Light.NoActionBar`         | `Theme.EdgeToEdge.Material2.Light`               |
+| `Theme.Material3.Light.NoActionBar`                  | `Theme.EdgeToEdge.Material3.Light`               |
+| `Theme.Material3.DynamicColors.Light.NoActionBar`    | `Theme.EdgeToEdge.Material3.DynamicColors.Light` |
 
 ### Expo
 
@@ -85,9 +87,11 @@ type ParentTheme =
   | "Default" // uses `Theme.EdgeToEdge`
   | "Material2" // uses `Theme.EdgeToEdge.Material2`
   | "Material3" // uses `Theme.EdgeToEdge.Material3`
+  | "Material3.DynamicColors" // uses `Theme.EdgeToEdge.Material3.DynamicColors`
   | "Light" // uses `Theme.EdgeToEdge.Light`
   | "Material2.Light" // uses `Theme.EdgeToEdge.Material2.Light`
-  | "Material3.Light"; // uses `Theme.EdgeToEdge.Material3.Light`
+  | "Material3.Light" // uses `Theme.EdgeToEdge.Material3.Light`
+  | "Material3.DynamicColors.Light" // uses `Theme.EdgeToEdge.Material3.DynamicColors.Light`
 
 type Options = {
   android?: {
