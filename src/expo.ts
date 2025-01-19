@@ -53,8 +53,14 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
   ]);
 
   return withAndroidStyles(config, (config) => {
-    const { androidStatusBar = {}, userInterfaceStyle = "light" } = config;
-    const { barStyle } = androidStatusBar;
+    const {
+      androidNavigationBar = {},
+      androidStatusBar = {},
+      userInterfaceStyle = "light",
+    } = config;
+
+    const { barStyle: navigationBarStyle } = androidNavigationBar;
+    const { barStyle: statusBarStyle } = androidStatusBar;
     const { android = {} } = props;
     const { enforceNavigationBarContrast, parentTheme = "Default" } = android;
 
@@ -76,15 +82,27 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
             });
           }
 
-          if (barStyle != null) {
+          if (statusBarStyle != null) {
             style.item.push({
               $: { name: "android:windowLightStatusBar" },
-              _: String(barStyle === "dark-content"),
+              _: String(statusBarStyle === "dark-content"),
             });
           } else if (userInterfaceStyle !== "automatic") {
             style.item.push({
               $: { name: "android:windowLightStatusBar" },
               _: String(userInterfaceStyle === "light"),
+            });
+          }
+
+          if (navigationBarStyle != null) {
+            style.item.push({
+              $: { name: "android:windowLightNavigationBar" },
+              _: String(navigationBarStyle === "dark-content"),
+            });
+          } else if (userInterfaceStyle !== "automatic") {
+            style.item.push({
+              $: { name: "android:windowLightNavigationBar" },
+              _: String(navigationBarStyle === "light"),
             });
           }
         }
