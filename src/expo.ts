@@ -75,13 +75,6 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
             );
           }
 
-          if (enforceNavigationBarContrast === false) {
-            style.item.push({
-              $: { name: "enforceNavigationBarContrast" },
-              _: String(false),
-            });
-          }
-
           if (statusBarStyle != null) {
             style.item.push({
               $: { name: "android:windowLightStatusBar" },
@@ -94,15 +87,22 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
             });
           }
 
-          if (navigationBarStyle != null) {
+          if (enforceNavigationBarContrast === false) {
+            if (navigationBarStyle != null) {
+              style.item.push({
+                $: { name: "android:windowLightNavigationBar" },
+                _: String(navigationBarStyle === "dark-content"),
+              });
+            } else if (userInterfaceStyle !== "automatic") {
+              style.item.push({
+                $: { name: "android:windowLightNavigationBar" },
+                _: String(navigationBarStyle === "light"),
+              });
+            }
+
             style.item.push({
-              $: { name: "android:windowLightNavigationBar" },
-              _: String(navigationBarStyle === "dark-content"),
-            });
-          } else if (userInterfaceStyle !== "automatic") {
-            style.item.push({
-              $: { name: "android:windowLightNavigationBar" },
-              _: String(navigationBarStyle === "light"),
+              $: { name: "enforceNavigationBarContrast" },
+              _: String(false),
             });
           }
         }
