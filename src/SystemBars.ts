@@ -77,7 +77,6 @@ function updateEntriesStack() {
     updateImmediate = setImmediate(() => {
       const autoBarStyle = getColorScheme() === "light" ? "dark" : "light";
       const mergedEntries = mergeEntriesStack(entriesStack);
-      const { statusBarHidden, navigationBarHidden } = mergedEntries;
 
       const statusBarStyle: "light" | "dark" | undefined =
         mergedEntries.statusBarStyle === "auto"
@@ -89,27 +88,32 @@ function updateEntriesStack() {
           ? autoBarStyle
           : mergedEntries.navigationBarStyle;
 
-      if (
+      const { statusBarHidden, navigationBarHidden } = mergedEntries;
+
+      const statusBarChanged =
         currentMergedEntries?.statusBarStyle !== statusBarStyle ||
-        currentMergedEntries?.statusBarHidden !== statusBarHidden ||
+        currentMergedEntries?.statusBarHidden !== statusBarHidden;
+
+      const navigationBarChanged =
         currentMergedEntries?.navigationBarStyle !== navigationBarStyle ||
-        currentMergedEntries?.navigationBarHidden !== navigationBarHidden
-      ) {
-        if (Platform.OS === "android") {
+        currentMergedEntries?.navigationBarHidden !== navigationBarHidden;
+
+      if (Platform.OS === "android") {
+        if (statusBarChanged || navigationBarChanged) {
           NativeEdgeToEdgeModule?.setSystemBarsConfig({
             statusBarStyle,
             statusBarHidden,
             navigationBarStyle,
             navigationBarHidden,
           });
-        } else {
-          // Emulate android behavior with react-native StatusBar
-          if (statusBarStyle != null) {
-            StatusBar.setBarStyle(`${statusBarStyle}-content`, true);
-          }
-          if (statusBarHidden != null) {
-            StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
-          }
+        }
+      } else if (statusBarChanged) {
+        // Emulate android behavior with react-native StatusBar
+        if (statusBarStyle != null) {
+          StatusBar.setBarStyle(`${statusBarStyle}-content`, true);
+        }
+        if (statusBarHidden != null) {
+          StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
         }
       }
 
