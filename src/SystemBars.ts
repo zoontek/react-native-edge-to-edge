@@ -10,10 +10,8 @@ function getColorScheme(): "light" | "dark" {
 /**
  * Merges the entries stack.
  */
-function mergeEntriesStack(
-  entriesStack: SystemBarsEntry[],
-): SystemBarsEntry | null {
-  const mergedEntry = entriesStack.reduce<SystemBarsEntry>(
+function mergeEntriesStack(entriesStack: SystemBarsEntry[]): SystemBarsEntry {
+  return entriesStack.reduce<SystemBarsEntry>(
     (prev, cur) => {
       for (const prop in cur) {
         if (cur[prop as keyof SystemBarsEntry] != null) {
@@ -25,22 +23,11 @@ function mergeEntriesStack(
     },
     {
       statusBarStyle: undefined,
-      statusBarHidden: undefined,
+      statusBarHidden: false,
       navigationBarStyle: undefined,
-      navigationBarHidden: undefined,
+      navigationBarHidden: false,
     },
   );
-
-  if (
-    mergedEntry.statusBarStyle == null &&
-    mergedEntry.statusBarHidden == null &&
-    mergedEntry.navigationBarStyle == null &&
-    mergedEntry.navigationBarHidden == null
-  ) {
-    return null;
-  } else {
-    return mergedEntry;
-  }
 }
 
 /**
@@ -88,46 +75,45 @@ function updateEntriesStack() {
     }
 
     updateImmediate = setImmediate(() => {
+      const autoBarStyle = getColorScheme() === "light" ? "dark" : "light";
       const mergedEntries = mergeEntriesStack(entriesStack);
+      const { statusBarHidden, navigationBarHidden } = mergedEntries;
 
-      if (mergedEntries != null) {
-        const { statusBarHidden, navigationBarHidden } = mergedEntries;
-        const autoBarStyle = getColorScheme() === "light" ? "dark" : "light";
+      const statusBarStyle: "light" | "dark" | undefined =
+        mergedEntries.statusBarStyle === "auto"
+          ? autoBarStyle
+          : mergedEntries.statusBarStyle;
 
-        const statusBarStyle: "light" | "dark" | undefined =
-          mergedEntries.statusBarStyle === "auto"
-            ? autoBarStyle
-            : mergedEntries.statusBarStyle;
+      const navigationBarStyle: "light" | "dark" | undefined =
+        mergedEntries.navigationBarStyle === "auto"
+          ? autoBarStyle
+          : mergedEntries.navigationBarStyle;
 
-        const navigationBarStyle: "light" | "dark" | undefined =
-          mergedEntries.navigationBarStyle === "auto"
-            ? autoBarStyle
-            : mergedEntries.navigationBarStyle;
-
-        if (
-          currentMergedEntries?.statusBarStyle !== statusBarStyle ||
-          currentMergedEntries?.statusBarHidden !== statusBarHidden ||
-          currentMergedEntries?.navigationBarStyle !== navigationBarStyle ||
-          currentMergedEntries?.navigationBarHidden !== navigationBarHidden
-        ) {
-          if (Platform.OS === "android") {
-            NativeEdgeToEdgeModule?.setSystemBarsConfig({
-              statusBarStyle,
-              statusBarHidden,
-              navigationBarStyle,
-              navigationBarHidden,
-            });
-          } else {
-            // Emulate android behavior with react-native StatusBar
-            if (statusBarStyle != null) {
-              StatusBar.setBarStyle(`${statusBarStyle}-content`, true);
-            }
-            if (statusBarHidden != null) {
-              StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
-            }
+      if (
+        currentMergedEntries?.statusBarStyle !== statusBarStyle ||
+        currentMergedEntries?.statusBarHidden !== statusBarHidden ||
+        currentMergedEntries?.navigationBarStyle !== navigationBarStyle ||
+        currentMergedEntries?.navigationBarHidden !== navigationBarHidden
+      ) {
+        if (Platform.OS === "android") {
+          NativeEdgeToEdgeModule?.setSystemBarsConfig({
+            statusBarStyle,
+            statusBarHidden,
+            navigationBarStyle,
+            navigationBarHidden,
+          });
+        } else {
+          // Emulate android behavior with react-native StatusBar
+          if (statusBarStyle != null) {
+            StatusBar.setBarStyle(`${statusBarStyle}-content`, true);
+          }
+          if (statusBarHidden != null) {
+            StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
           }
         }
+      }
 
+      if (entriesStack.length > 0) {
         currentMergedEntries = {
           statusBarStyle,
           statusBarHidden,
