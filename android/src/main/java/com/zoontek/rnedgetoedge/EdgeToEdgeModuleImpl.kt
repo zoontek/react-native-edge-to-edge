@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 
 import com.facebook.common.logging.FLog
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.ReactConstants
 
 internal val LightNavigationBarColor = Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
@@ -24,7 +23,11 @@ internal val DarkNavigationBarColor = Color.argb(0x80, 0x1b, 0x1b, 0x1b)
 object EdgeToEdgeModuleImpl {
   const val NAME = "RNEdgeToEdge"
 
+  private const val NO_ACTIVITY_ERROR = "$NAME: Ignored system bars change, current activity is null."
   private val boolAttributes = mutableMapOf<Int, Boolean>()
+
+  private var statusBarHidden = false
+  private var navigationBarHidden = false
 
   private fun resolveBoolAttribute(activity: Activity, resId: Int): Boolean =
     boolAttributes.getOrPut(resId) {
@@ -32,8 +35,8 @@ object EdgeToEdgeModuleImpl {
       activity.theme.resolveAttribute(resId, value, true) && value.data != 0
     }
 
-  private fun isNavigationBarLight(activity: Activity): Boolean =
-    resolveBoolAttribute(activity, R.attr.enforceNavigationBarLightTheme) ||
+  private fun isDefaultLightSystemBars(activity: Activity): Boolean =
+    resolveBoolAttribute(activity, R.attr.enforceSystemBarsLightTheme) ||
       activity.window.decorView.resources.configuration.uiMode and
         Configuration.UI_MODE_NIGHT_MASK != Configuration.UI_MODE_NIGHT_YES
 
@@ -41,13 +44,13 @@ object EdgeToEdgeModuleImpl {
     !resolveBoolAttribute(activity, R.attr.enforceNavigationBarContrast)
 
   @Suppress("DEPRECATION")
-  fun applyEdgeToEdge(reactContext: ReactApplicationContext) {
-    val activity = reactContext.currentActivity
+  fun applyEdgeToEdge(reactContext: ReactApplicationContext?) {
+    val activity = reactContext?.currentActivity
       ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
 
     activity.runOnUiThread {
       val window = activity.window
-      val view = window.decorView
+      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
 
       WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -61,17 +64,17 @@ object EdgeToEdgeModuleImpl {
           window.isNavigationBarContrastEnforced = false
         }
       } else {
-        val isLight = isNavigationBarLight(activity)
+        val light = isDefaultLightSystemBars(activity)
 
         window.navigationBarColor = when {
           VERSION.SDK_INT >= VERSION_CODES.Q -> Color.TRANSPARENT
-          VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isLight -> LightNavigationBarColor
+          VERSION.SDK_INT >= VERSION_CODES.O_MR1 && light -> LightNavigationBarColor
           else -> DarkNavigationBarColor
         }
 
-        WindowInsetsControllerCompat(window, view).run {
+        insetsController.run {
           isAppearanceLightNavigationBars = when {
-            VERSION.SDK_INT >= VERSION_CODES.O_MR1 -> isLight
+            VERSION.SDK_INT >= VERSION_CODES.O_MR1 -> light
             else -> false
           }
         }
@@ -88,52 +91,93 @@ object EdgeToEdgeModuleImpl {
           else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
       }
+
+      // re-apply statusBarHidden / navigationBarHidden when app gains focus
+      // see https://github.com/zoontek/react-native-edge-to-edge/issues/66
+      if (statusBarHidden || navigationBarHidden) {
+        insetsController.systemBarsBehavior =
+          WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        if (statusBarHidden) {
+          insetsController.hide(WindowInsetsCompat.Type.statusBars())
+        }
+        if (navigationBarHidden) {
+          insetsController.hide(WindowInsetsCompat.Type.navigationBars())
+        }
+      }
     }
   }
 
-  fun setSystemBarsConfig(reactContext: ReactApplicationContext, config: ReadableMap) {
-    val activity = reactContext.currentActivity
-      ?: return FLog.w(ReactConstants.TAG, "$NAME: Ignored, current activity is null.")
-
-    val statusBarHidden =
-      config.takeIf { it.hasKey("statusBarHidden") }?.getBoolean("statusBarHidden")
-    val statusBarStyle =
-      config.takeIf { it.hasKey("statusBarStyle") }?.getString("statusBarStyle")
-    val navigationBarHidden =
-      config.takeIf { it.hasKey("navigationBarHidden") }?.getBoolean("navigationBarHidden")
-    val navigationBarStyle =
-      config.takeIf { it.hasKey("navigationBarStyle") }?.getString("navigationBarStyle")
+  fun setStatusBarStyle(reactContext: ReactApplicationContext?, style: String) {
+    val activity = reactContext?.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
 
     activity.runOnUiThread {
       val window = activity.window
       val insetsController = WindowInsetsControllerCompat(window, window.decorView)
 
-      statusBarStyle?.let {
-        insetsController.isAppearanceLightStatusBars = it == "dark"
+      insetsController.isAppearanceLightStatusBars = when (style) {
+        "dark-content" -> true
+        "light-content" -> false
+        else -> isDefaultLightSystemBars(activity)
       }
+    }
+  }
 
-      if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isNavigationBarTransparent(activity)) {
-        navigationBarStyle?.let {
-          insetsController.isAppearanceLightNavigationBars = it == "dark"
+  fun setNavigationBarStyle(reactContext: ReactApplicationContext?, style: String) {
+    val activity = reactContext?.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
+
+    if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isNavigationBarTransparent(activity)) {
+      activity.runOnUiThread {
+        val window = activity.window
+        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+
+        insetsController.isAppearanceLightNavigationBars = when (style) {
+          "dark-content" -> true
+          "light-content" -> false
+          else -> isDefaultLightSystemBars(activity)
         }
       }
+    }
+  }
 
-      if (statusBarHidden != null || navigationBarHidden != null) {
-        insetsController.systemBarsBehavior =
-          WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+  fun setStatusBarHidden(reactContext: ReactApplicationContext?, hidden: Boolean) {
+    val activity = reactContext?.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
 
-        statusBarHidden?.let {
-          when (it) {
-            true -> insetsController.hide(WindowInsetsCompat.Type.statusBars())
-            else -> insetsController.show(WindowInsetsCompat.Type.statusBars())
-          }
-        }
-        navigationBarHidden?.let {
-          when (it) {
-            true -> insetsController.hide(WindowInsetsCompat.Type.navigationBars())
-            else -> insetsController.show(WindowInsetsCompat.Type.navigationBars())
-          }
-        }
+    statusBarHidden = hidden
+
+    activity.runOnUiThread {
+      val window = activity.window
+      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+
+      insetsController.systemBarsBehavior =
+        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+      when (hidden) {
+        true -> insetsController.hide(WindowInsetsCompat.Type.statusBars())
+        else -> insetsController.show(WindowInsetsCompat.Type.statusBars())
+      }
+    }
+  }
+
+  fun setNavigationBarHidden(reactContext: ReactApplicationContext?, hidden: Boolean) {
+    val activity = reactContext?.currentActivity
+      ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
+
+    navigationBarHidden = hidden
+
+    activity.runOnUiThread {
+      val window = activity.window
+      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+
+      insetsController.systemBarsBehavior =
+        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+      when (hidden) {
+        true -> insetsController.hide(WindowInsetsCompat.Type.navigationBars())
+        else -> insetsController.show(WindowInsetsCompat.Type.navigationBars())
       }
     }
   }

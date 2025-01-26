@@ -18,8 +18,8 @@
     "react": "18.3.1",
     "react-native": "0.77.0",
     "react-native-edge-to-edge": "link:../",
-    "react-native-safe-area-context": "5.0.0",
-    "react-native-screens": "4.4.0"
+    "react-native-safe-area-context": "5.1.0",
+    "react-native-screens": "4.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

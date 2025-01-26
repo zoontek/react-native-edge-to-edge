@@ -1,17 +1,30 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Appearance, Platform, StatusBar, useColorScheme } from "react-native";
-import NativeEdgeToEdgeModule from "./specs/NativeEdgeToEdgeModule";
-import { SystemBarsEntry, SystemBarsProps } from "./types";
+import NativeModule from "./specs/NativeEdgeToEdgeModule";
+import { SystemBarsEntry, SystemBarsProps, SystemBarStyle } from "./types";
+
+type MergeableBarStyle = "light" | "dark" | undefined;
 
 function getColorScheme(): "light" | "dark" {
   return Appearance?.getColorScheme() ?? "light";
 }
 
+function toNativeBarStyle(
+  style: MergeableBarStyle,
+): "default" | "light-content" | "dark-content" {
+  return style === "light" || style === "dark" ? `${style}-content` : "default";
+}
+
 /**
  * Merges the entries stack.
  */
-function mergeEntriesStack(entriesStack: SystemBarsEntry[]): SystemBarsEntry {
-  return entriesStack.reduce<SystemBarsEntry>(
+function mergeEntriesStack(entriesStack: SystemBarsEntry[]) {
+  return entriesStack.reduce<{
+    statusBarStyle: SystemBarStyle | undefined;
+    navigationBarStyle: SystemBarStyle | undefined;
+    statusBarHidden: boolean;
+    navigationBarHidden: boolean;
+  }>(
     (prev, cur) => {
       for (const prop in cur) {
         if (cur[prop as keyof SystemBarsEntry] != null) {
@@ -23,8 +36,8 @@ function mergeEntriesStack(entriesStack: SystemBarsEntry[]): SystemBarsEntry {
     },
     {
       statusBarStyle: undefined,
-      statusBarHidden: false,
       navigationBarStyle: undefined,
+      statusBarHidden: false,
       navigationBarHidden: false,
     },
   );
@@ -37,14 +50,14 @@ function createStackEntry(props: SystemBarsProps): SystemBarsEntry {
   return {
     statusBarStyle:
       typeof props.style === "string" ? props.style : props.style?.statusBar,
-    statusBarHidden:
-      typeof props.hidden === "boolean"
-        ? props.hidden
-        : props.hidden?.statusBar,
     navigationBarStyle:
       typeof props.style === "string"
         ? props.style
         : props.style?.navigationBar,
+    statusBarHidden:
+      typeof props.hidden === "boolean"
+        ? props.hidden
+        : props.hidden?.statusBar,
     navigationBarHidden:
       typeof props.hidden === "boolean"
         ? props.hidden
@@ -59,11 +72,16 @@ let updateImmediate: NodeJS.Immediate | null = null;
 
 // The current merged values from the entries stack.
 let currentMergedEntries: {
-  statusBarStyle: "light" | "dark" | undefined;
-  statusBarHidden: boolean | undefined;
-  navigationBarStyle: "light" | "dark" | undefined;
-  navigationBarHidden: boolean | undefined;
-} | null = null;
+  statusBarStyle: MergeableBarStyle;
+  navigationBarStyle: MergeableBarStyle;
+  statusBarHidden: boolean;
+  navigationBarHidden: boolean;
+} = {
+  statusBarStyle: undefined,
+  navigationBarStyle: undefined,
+  statusBarHidden: false,
+  navigationBarHidden: false,
+};
 
 /**
  * Updates the native system bars with the entries from the stack.
@@ -78,55 +96,50 @@ function updateEntriesStack() {
       const autoBarStyle = getColorScheme() === "light" ? "dark" : "light";
       const mergedEntries = mergeEntriesStack(entriesStack);
 
-      const statusBarStyle: "light" | "dark" | undefined =
+      const statusBarStyle: MergeableBarStyle =
         mergedEntries.statusBarStyle === "auto"
           ? autoBarStyle
           : mergedEntries.statusBarStyle;
 
-      const navigationBarStyle: "light" | "dark" | undefined =
+      const navigationBarStyle: MergeableBarStyle =
         mergedEntries.navigationBarStyle === "auto"
           ? autoBarStyle
           : mergedEntries.navigationBarStyle;
 
       const { statusBarHidden, navigationBarHidden } = mergedEntries;
 
-      const statusBarChanged =
-        currentMergedEntries?.statusBarStyle !== statusBarStyle ||
-        currentMergedEntries?.statusBarHidden !== statusBarHidden;
+      if (statusBarStyle !== currentMergedEntries.statusBarStyle) {
+        const style = toNativeBarStyle(statusBarStyle);
+        console.log({ style });
 
-      const navigationBarChanged =
-        currentMergedEntries?.navigationBarStyle !== navigationBarStyle ||
-        currentMergedEntries?.navigationBarHidden !== navigationBarHidden;
+        Platform.OS === "android"
+          ? NativeModule?.setStatusBarStyle(style)
+          : StatusBar.setBarStyle(style, true);
+      }
+
+      if (statusBarHidden !== currentMergedEntries.statusBarHidden) {
+        Platform.OS === "android"
+          ? NativeModule?.setStatusBarHidden(statusBarHidden)
+          : StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
+      }
 
       if (Platform.OS === "android") {
-        if (statusBarChanged || navigationBarChanged) {
-          NativeEdgeToEdgeModule?.setSystemBarsConfig({
-            statusBarStyle,
-            statusBarHidden,
-            navigationBarStyle,
-            navigationBarHidden,
-          });
+        if (navigationBarStyle !== currentMergedEntries.navigationBarStyle) {
+          const style = toNativeBarStyle(navigationBarStyle);
+          NativeModule?.setNavigationBarStyle(style);
         }
-      } else if (statusBarChanged) {
-        // Emulate android behavior with react-native StatusBar
-        if (statusBarStyle != null) {
-          StatusBar.setBarStyle(`${statusBarStyle}-content`, true);
-        }
-        if (statusBarHidden != null) {
-          StatusBar.setHidden(statusBarHidden, "fade"); // 'slide' doesn't work in this context
+
+        if (navigationBarHidden !== currentMergedEntries.navigationBarHidden) {
+          NativeModule?.setNavigationBarHidden(navigationBarHidden);
         }
       }
 
-      if (entriesStack.length > 0) {
-        currentMergedEntries = {
-          statusBarStyle,
-          statusBarHidden,
-          navigationBarStyle,
-          navigationBarHidden,
-        };
-      } else {
-        currentMergedEntries = null;
-      }
+      currentMergedEntries = {
+        statusBarStyle,
+        navigationBarStyle,
+        statusBarHidden,
+        navigationBarHidden,
+      };
     });
   }
 }
@@ -178,10 +191,10 @@ function replaceStackEntry(
 
 export function SystemBars({ hidden, style }: SystemBarsProps) {
   const statusBarStyle = typeof style === "string" ? style : style?.statusBar;
-  const statusBarHidden =
-    typeof hidden === "boolean" ? hidden : hidden?.statusBar;
   const navigationBarStyle =
     typeof style === "string" ? style : style?.navigationBar;
+  const statusBarHidden =
+    typeof hidden === "boolean" ? hidden : hidden?.statusBar;
   const navigationBarHidden =
     typeof hidden === "boolean" ? hidden : hidden?.navigationBar;
 
