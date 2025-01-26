@@ -138,7 +138,7 @@ Effective safe area management is essential to prevent content from being displa
 
 ### Modal component quirks
 
-Edge-to-edge support for the built-in [`Modal`](https://reactnative.dev/docs/modal) component will be available in [React Native 0.77](https://github.com/facebook/react-native/pull/47254). Meanwhile, we recommend using the [react-navigation modals](https://reactnavigation.org/docs/modal) or the [`expo-router` modal screens](https://docs.expo.dev/router/advanced/modals/#modal-screen-using-expo-router).
+React native built-in [`Modal`](https://reactnative.dev/docs/modal) component runs in its own native context, so be sure to set both the `statusBarTranslucent` and `navigationBarTranslucent` props to `true`. However, we recommend using the [react-navigation modals](https://reactnavigation.org/docs/modal) or the [`expo-router` modal screens](https://docs.expo.dev/router/advanced/modals/#modal-screen-using-expo-router) instead.
 
 ## API
 
