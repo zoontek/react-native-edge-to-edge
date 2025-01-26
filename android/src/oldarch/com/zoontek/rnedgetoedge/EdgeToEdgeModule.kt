@@ -4,7 +4,6 @@ import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 
 @ReactModule(name = EdgeToEdgeModuleImpl.NAME)
@@ -37,7 +36,22 @@ class EdgeToEdgeModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun setSystemBarsConfig(config: ReadableMap) {
-    EdgeToEdgeModuleImpl.setSystemBarsConfig(reactApplicationContext, config)
+  fun setStatusBarStyle(style: String) {
+    EdgeToEdgeModuleImpl.setStatusBarStyle(reactApplicationContext, style)
+  }
+
+  @ReactMethod
+  fun setNavigationBarStyle(style: String) {
+    EdgeToEdgeModuleImpl.setNavigationBarStyle(reactApplicationContext, style)
+  }
+
+  @ReactMethod
+  fun setStatusBarHidden(hidden: Boolean) {
+    EdgeToEdgeModuleImpl.setStatusBarHidden(reactApplicationContext, hidden)
+  }
+
+  @ReactMethod
+  fun setNavigationBarHidden(hidden: Boolean) {
+    EdgeToEdgeModuleImpl.setNavigationBarHidden(reactApplicationContext, hidden)
   }
 }

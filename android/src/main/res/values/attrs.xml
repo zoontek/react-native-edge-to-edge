@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="enforceNavigationBarContrast" format="boolean" />
-    <attr name="enforceNavigationBarLightTheme" format="boolean" />
+    <attr name="enforceSystemBarsLightTheme" format="boolean" />
 </resources>

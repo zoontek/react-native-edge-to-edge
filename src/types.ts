@@ -3,10 +3,10 @@ type SystemBarsProp<T> = T | { statusBar?: T; navigationBar?: T };
 export type SystemBarStyle = "auto" | "light" | "dark";
 
 export type SystemBarsEntry = {
-  statusBarHidden: boolean | undefined;
   statusBarStyle: SystemBarStyle | undefined;
-  navigationBarHidden: boolean | undefined;
   navigationBarStyle: SystemBarStyle | undefined;
+  statusBarHidden: boolean | undefined;
+  navigationBarHidden: boolean | undefined;
 };
 
 export type SystemBarsProps = {
