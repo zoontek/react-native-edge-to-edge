@@ -1,12 +1,10 @@
 import type { TurboModule } from "react-native";
 import { Appearance, Platform, TurboModuleRegistry } from "react-native";
 
-type SystemBarStyle = "default" | "light-content" | "dark-content";
-
 interface Spec extends TurboModule {
   onColorSchemeChange(): void;
-  setStatusBarStyle(style: SystemBarStyle): void;
-  setNavigationBarStyle(style: SystemBarStyle): void;
+  setStatusBarStyle(style: string): void;
+  setNavigationBarStyle(style: string): void;
   setStatusBarHidden(hidden: boolean): void;
   setNavigationBarHidden(hidden: boolean): void;
 }

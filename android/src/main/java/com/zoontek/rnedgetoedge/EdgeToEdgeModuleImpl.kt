@@ -26,9 +26,6 @@ object EdgeToEdgeModuleImpl {
   private const val NO_ACTIVITY_ERROR = "$NAME: Ignored system bars change, current activity is null."
   private val boolAttributes = mutableMapOf<Int, Boolean>()
 
-  private var statusBarHidden = false
-  private var navigationBarHidden = false
-
   private fun resolveBoolAttribute(activity: Activity, resId: Int): Boolean =
     boolAttributes.getOrPut(resId) {
       val value = TypedValue()
@@ -92,19 +89,10 @@ object EdgeToEdgeModuleImpl {
         }
       }
 
-      // re-apply statusBarHidden / navigationBarHidden when app gains focus
+      // re-apply WindowInsetsController systemBarsBehavior when app gains focus
       // see https://github.com/zoontek/react-native-edge-to-edge/issues/66
-      if (statusBarHidden || navigationBarHidden) {
-        insetsController.systemBarsBehavior =
-          WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-        if (statusBarHidden) {
-          insetsController.hide(WindowInsetsCompat.Type.statusBars())
-        }
-        if (navigationBarHidden) {
-          insetsController.hide(WindowInsetsCompat.Type.navigationBars())
-        }
-      }
+      insetsController.systemBarsBehavior =
+        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
   }
 
@@ -146,8 +134,6 @@ object EdgeToEdgeModuleImpl {
     val activity = reactContext?.currentActivity
       ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
 
-    statusBarHidden = hidden
-
     activity.runOnUiThread {
       val window = activity.window
       val insetsController = WindowInsetsControllerCompat(window, window.decorView)
@@ -165,8 +151,6 @@ object EdgeToEdgeModuleImpl {
   fun setNavigationBarHidden(reactContext: ReactApplicationContext?, hidden: Boolean) {
     val activity = reactContext?.currentActivity
       ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
-
-    navigationBarHidden = hidden
 
     activity.runOnUiThread {
       val window = activity.window

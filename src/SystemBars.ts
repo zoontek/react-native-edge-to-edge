@@ -110,7 +110,6 @@ function updateEntriesStack() {
 
       if (statusBarStyle !== currentMergedEntries.statusBarStyle) {
         const style = toNativeBarStyle(statusBarStyle);
-        console.log({ style });
 
         Platform.OS === "android"
           ? NativeModule?.setStatusBarStyle(style)
