@@ -7,6 +7,7 @@ import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Color
 import android.util.TypedValue
+import android.view.Window
 import android.view.WindowManager
 
 import androidx.core.view.WindowCompat
@@ -26,6 +27,9 @@ object EdgeToEdgeModuleImpl {
   private const val NO_ACTIVITY_ERROR = "$NAME: Ignored system bars change, current activity is null."
   private val boolAttributes = mutableMapOf<Int, Boolean>()
 
+  private var statusBarHidden = false
+  private var navigationBarHidden = false
+
   private fun resolveBoolAttribute(activity: Activity, resId: Int): Boolean =
     boolAttributes.getOrPut(resId) {
       val value = TypedValue()
@@ -40,6 +44,22 @@ object EdgeToEdgeModuleImpl {
   private fun isNavigationBarTransparent(activity: Activity): Boolean =
     !resolveBoolAttribute(activity, R.attr.enforceNavigationBarContrast)
 
+  // re-apply statusBarHidden / navigationBarHidden each time we instantiate a WindowInsetsControllerCompat
+  // see https://github.com/zoontek/react-native-edge-to-edge/issues/66
+  private fun initInsetsController(window: Window): WindowInsetsControllerCompat =
+    WindowInsetsControllerCompat(window, window.decorView).apply {
+      systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+      when (statusBarHidden) {
+        true -> hide(WindowInsetsCompat.Type.statusBars())
+        else -> show(WindowInsetsCompat.Type.statusBars())
+      }
+      when (navigationBarHidden) {
+        true -> hide(WindowInsetsCompat.Type.navigationBars())
+        else -> show(WindowInsetsCompat.Type.navigationBars())
+      }
+    }
+
   @Suppress("DEPRECATION")
   fun applyEdgeToEdge(reactContext: ReactApplicationContext?) {
     val activity = reactContext?.currentActivity
@@ -47,7 +67,7 @@ object EdgeToEdgeModuleImpl {
 
     activity.runOnUiThread {
       val window = activity.window
-      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+      val insetsController = initInsetsController(window)
 
       WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -88,11 +108,6 @@ object EdgeToEdgeModuleImpl {
           else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
       }
-
-      // re-apply WindowInsetsController systemBarsBehavior each time
-      // see https://github.com/zoontek/react-native-edge-to-edge/issues/66
-      insetsController.systemBarsBehavior =
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
   }
 
@@ -101,16 +116,12 @@ object EdgeToEdgeModuleImpl {
       ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
 
     activity.runOnUiThread {
-      val window = activity.window
-      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-
-      insetsController.systemBarsBehavior =
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-      insetsController.isAppearanceLightStatusBars = when (style) {
-        "dark-content" -> true
-        "light-content" -> false
-        else -> isDefaultLightSystemBars(activity)
+      initInsetsController(activity.window).run {
+        isAppearanceLightStatusBars = when (style) {
+          "light-content" -> false
+          "dark-content" -> true
+          else -> isDefaultLightSystemBars(activity)
+        }
       }
     }
   }
@@ -121,16 +132,12 @@ object EdgeToEdgeModuleImpl {
 
     if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isNavigationBarTransparent(activity)) {
       activity.runOnUiThread {
-        val window = activity.window
-        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-
-        insetsController.systemBarsBehavior =
-          WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-        insetsController.isAppearanceLightNavigationBars = when (style) {
-          "dark-content" -> true
-          "light-content" -> false
-          else -> isDefaultLightSystemBars(activity)
+        initInsetsController(activity.window).run {
+          isAppearanceLightNavigationBars = when (style) {
+            "light-content" -> false
+            "dark-content" -> true
+            else -> isDefaultLightSystemBars(activity)
+          }
         }
       }
     }
@@ -140,35 +147,15 @@ object EdgeToEdgeModuleImpl {
     val activity = reactContext?.currentActivity
       ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
 
-    activity.runOnUiThread {
-      val window = activity.window
-      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-
-      insetsController.systemBarsBehavior =
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-      when (hidden) {
-        true -> insetsController.hide(WindowInsetsCompat.Type.statusBars())
-        else -> insetsController.show(WindowInsetsCompat.Type.statusBars())
-      }
-    }
+    statusBarHidden = hidden
+    activity.runOnUiThread { initInsetsController(activity.window) }
   }
 
   fun setNavigationBarHidden(reactContext: ReactApplicationContext?, hidden: Boolean) {
     val activity = reactContext?.currentActivity
       ?: return FLog.w(ReactConstants.TAG, NO_ACTIVITY_ERROR)
 
-    activity.runOnUiThread {
-      val window = activity.window
-      val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-
-      insetsController.systemBarsBehavior =
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-      when (hidden) {
-        true -> insetsController.hide(WindowInsetsCompat.Type.navigationBars())
-        else -> insetsController.show(WindowInsetsCompat.Type.navigationBars())
-      }
-    }
+    navigationBarHidden = hidden
+    activity.runOnUiThread { initInsetsController(activity.window) }
   }
 }
