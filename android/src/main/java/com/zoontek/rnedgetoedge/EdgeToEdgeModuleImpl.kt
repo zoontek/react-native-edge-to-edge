@@ -89,7 +89,7 @@ object EdgeToEdgeModuleImpl {
         }
       }
 
-      // re-apply WindowInsetsController systemBarsBehavior when app gains focus
+      // re-apply WindowInsetsController systemBarsBehavior each time
       // see https://github.com/zoontek/react-native-edge-to-edge/issues/66
       insetsController.systemBarsBehavior =
         WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -103,6 +103,9 @@ object EdgeToEdgeModuleImpl {
     activity.runOnUiThread {
       val window = activity.window
       val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+
+      insetsController.systemBarsBehavior =
+        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
       insetsController.isAppearanceLightStatusBars = when (style) {
         "dark-content" -> true
@@ -120,6 +123,9 @@ object EdgeToEdgeModuleImpl {
       activity.runOnUiThread {
         val window = activity.window
         val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+
+        insetsController.systemBarsBehavior =
+          WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         insetsController.isAppearanceLightNavigationBars = when (style) {
           "dark-content" -> true
