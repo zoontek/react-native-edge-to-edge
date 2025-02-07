@@ -144,7 +144,8 @@ React native built-in [`Modal`](https://reactnative.dev/docs/modal) component ru
 
 ### SystemBars
 
-A component for managing your app's system bars. Replace all occurrences of [`StatusBar`](https://reactnative.dev/docs/statusbar), [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) with it (they uses a lot of now [deprecated APIs](https://developer.android.com/about/versions/15/behavior-changes-15#deprecated-apis) and interfere with edge-to-edge).
+Using [`StatusBar`](https://reactnative.dev/docs/statusbar), [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar), or [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) in apps with edge-to-edge layout enabled may cause unexpected behavior, as they currently use [deprecated APIs](https://developer.android.com/about/versions/15/behavior-changes-15#deprecated-apis).<br/>
+To address this, we provide a component to replace them and manage your app's system bars: `<SystemBars />`.
 
 ```tsx
 import { SystemBars } from "react-native-edge-to-edge";
