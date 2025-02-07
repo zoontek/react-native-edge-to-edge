@@ -142,7 +142,7 @@ React native built-in [`Modal`](https://reactnative.dev/docs/modal) component ru
 
 ## API
 
-### [`<SystemBars />`](#systembars)
+### SystemBars
 
 A component for managing your app's system bars. Replace all occurrences of [`StatusBar`](https://reactnative.dev/docs/statusbar), [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) with it (they uses a lot of now [deprecated APIs](https://developer.android.com/about/versions/15/behavior-changes-15#deprecated-apis) and interfere with edge-to-edge).
 
