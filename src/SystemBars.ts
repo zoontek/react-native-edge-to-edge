@@ -93,18 +93,25 @@ function updateEntriesStack() {
     }
 
     updateImmediate = setImmediate(() => {
-      const autoBarStyle = getColorScheme() === "light" ? "dark" : "light";
+      const isLightColorScheme = getColorScheme() === "light";
+      const autoBarStyle = isLightColorScheme ? "dark" : "light";
+      const invertedBarStyle = isLightColorScheme ? "light" : "dark";
+
       const mergedEntries = mergeEntriesStack(entriesStack);
 
       const statusBarStyle: MergeableBarStyle =
         mergedEntries.statusBarStyle === "auto"
           ? autoBarStyle
-          : mergedEntries.statusBarStyle;
+          : mergedEntries.statusBarStyle === "inverted"
+            ? invertedBarStyle
+            : mergedEntries.statusBarStyle;
 
       const navigationBarStyle: MergeableBarStyle =
         mergedEntries.navigationBarStyle === "auto"
           ? autoBarStyle
-          : mergedEntries.navigationBarStyle;
+          : mergedEntries.navigationBarStyle === "inverted"
+            ? invertedBarStyle
+            : mergedEntries.navigationBarStyle;
 
       const { statusBarHidden, navigationBarHidden } = mergedEntries;
 

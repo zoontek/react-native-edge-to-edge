@@ -151,7 +151,7 @@ To address this, we provide a component to replace them and manage your app's sy
 import { SystemBars } from "react-native-edge-to-edge";
 
 // "auto" is based on current color scheme (light -> dark content, dark -> light content)
-type Style = "auto" | "light" | "dark";
+type Style = "auto" | "inverted" | "light" | "dark";
 
 type SystemBarsProps = {
   // set the color of the system bar content (as no effect on semi-opaque navigation bar)

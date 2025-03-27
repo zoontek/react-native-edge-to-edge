@@ -1,6 +1,6 @@
 type SystemBarsProp<T> = T | { statusBar?: T; navigationBar?: T };
 
-export type SystemBarStyle = "auto" | "light" | "dark";
+export type SystemBarStyle = "auto" | "inverted" | "light" | "dark";
 
 export type SystemBarsEntry = {
   statusBarStyle: SystemBarStyle | undefined;
