@@ -102,7 +102,7 @@ const Button = ({
 };
 
 const SCHEMES = ["system", "light", "dark"];
-const STYLES: SystemBarStyle[] = ["auto", "light", "dark"];
+const STYLES: SystemBarStyle[] = ["auto", "inverted", "light", "dark"];
 
 type StackParamList = {
   Home: undefined;
