@@ -35,10 +35,10 @@
     "react-native": ">=0.73.0"
   },
   "devDependencies": {
-    "react": "18.3.1",
-    "react-native": "0.76.5",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "react": "19.0.0",
+    "react-native": "0.78.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
   }
 }
