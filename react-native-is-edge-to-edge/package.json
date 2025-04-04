@@ -1,6 +1,6 @@
 {
   "name": "react-native-is-edge-to-edge",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "license": "MIT",
   "description": "Detect react-native-edge-to-edge package install",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
@@ -31,8 +31,8 @@
     "build": "yarn clean && yarn test && tsup && tsc -p tsconfig.build.json --emitDeclarationOnly"
   },
   "peerDependencies": {
-    "react": ">=18.2.0",
-    "react-native": ">=0.73.0"
+    "react": "*",
+    "react-native": "*"
   },
   "devDependencies": {
     "react": "19.0.0",
