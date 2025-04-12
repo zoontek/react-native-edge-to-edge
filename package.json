@@ -63,9 +63,9 @@
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "19.0.0",
-    "react-native": "0.78.1",
-    "react-native-builder-bob": "^0.38.4",
-    "typescript": "^5.8.2"
+    "react-native": "0.79.0",
+    "react-native-builder-bob": "^0.40.6",
+    "typescript": "^5.8.3"
   },
   "codegenConfig": {
     "name": "RNEdgeToEdge",
