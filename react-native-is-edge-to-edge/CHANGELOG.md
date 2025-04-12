@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.1.7
+
+- Fix peer dependencies versions (3255daa)
+
 # 1.1.6
 
 - Fix module resolution - thanks to [@robjhogan](https://twitter.com/robjhogan/status/1850963256745025785) (44d3be7)
