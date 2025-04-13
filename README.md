@@ -197,7 +197,7 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 SystemBars.setStyle(style /*: SystemBarsProps["style"] */);
 ```
 
-#### SystemBars.replaceStackEntry
+#### SystemBars.setHidden
 
 ```ts
 SystemBars.setHidden(style /*: SystemBarsProps["hidden"] */);
