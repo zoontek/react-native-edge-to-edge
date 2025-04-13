@@ -216,6 +216,7 @@ function replaceStackEntry(
  */
 function setStyle(style: SystemBarsProps["style"]) {
   const props = resolveProps({ style });
+
   const statusBarStyle = resolveSystemBarStyle(props.statusBarStyle);
   const navigationBarStyle = resolveSystemBarStyle(props.navigationBarStyle);
 
