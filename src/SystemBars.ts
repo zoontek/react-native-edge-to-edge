@@ -32,7 +32,7 @@ function toNativeBarStyle(
 /**
  * Merges the entries stack.
  */
-function mergeEntriesStack() {
+function mergeEntriesStack(entriesStack: SystemBarsEntry[]) {
   return entriesStack.reduce<{
     statusBarStyle: SystemBarStyle | undefined;
     navigationBarStyle: SystemBarStyle | undefined;
@@ -82,7 +82,12 @@ const entriesStack: SystemBarsEntry[] = [];
 let updateImmediate: NodeJS.Immediate | null = null;
 
 // The current merged values from the entries stack.
-const currentValues: ReturnType<typeof mergeEntriesStack> = {
+const currentValues: {
+  statusBarStyle: ResolvedBarStyle;
+  navigationBarStyle: ResolvedBarStyle;
+  statusBarHidden: boolean;
+  navigationBarHidden: boolean;
+} = {
   statusBarStyle: undefined,
   navigationBarStyle: undefined,
   statusBarHidden: false,
@@ -146,7 +151,7 @@ function updateEntriesStack() {
     }
 
     updateImmediate = setImmediate(() => {
-      const mergedEntries = mergeEntriesStack();
+      const mergedEntries = mergeEntriesStack(entriesStack);
       const { statusBarHidden, navigationBarHidden } = mergedEntries;
 
       const statusBarStyle = resolveSystemBarStyle(
