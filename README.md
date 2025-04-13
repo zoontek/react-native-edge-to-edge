@@ -191,6 +191,18 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 );
 ```
 
+#### SystemBars.setStyle
+
+```ts
+SystemBars.setStyle(style /*: SystemBarsProps["style"] */);
+```
+
+#### SystemBars.setHidden
+
+```ts
+SystemBars.setHidden(style /*: SystemBarsProps["hidden"] */);
+```
+
 ## Third-party libraries 🧩
 
 If you're an author and your package interferes with edge-to-edge, refer to the [`react-native-is-edge-to-edge` `README.md`](./react-native-is-edge-to-edge) for compatibility instructions.
