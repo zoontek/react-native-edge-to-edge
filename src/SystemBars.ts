@@ -170,10 +170,10 @@ function updateEntriesStack() {
 }
 
 /**
- * Push a SystemBars entry onto the stack.
+ * Push a `SystemBars` entry onto the stack.
  * The return value should be passed to `popStackEntry` when complete.
  *
- * @param props Object containing the SystemBars props to use in the stack entry.
+ * @param props Object containing the `SystemBars` props to use in the stack entry.
  */
 function pushStackEntry(props: SystemBarsProps): SystemBarsEntry {
   const entry = createStackEntry(props);
@@ -183,7 +183,7 @@ function pushStackEntry(props: SystemBarsProps): SystemBarsEntry {
 }
 
 /**
- * Pop a SystemBars entry from the stack.
+ * Remove an existing `SystemBars` stack entry from the stack.
  *
  * @param entry Entry returned from `pushStackEntry`.
  */
@@ -196,10 +196,10 @@ function popStackEntry(entry: SystemBarsEntry): void {
 }
 
 /**
- * Replace an existing SystemBars stack entry with new props.
+ * Replace an existing `SystemBars` stack entry with new props.
  *
  * @param entry Entry returned from `pushStackEntry` to replace.
- * @param props Object containing the SystemBars props to use in the replacement stack entry.
+ * @param props Object containing the `SystemBars` props to use in the replacement stack entry.
  */
 function replaceStackEntry(
   entry: SystemBarsEntry,
@@ -215,9 +215,9 @@ function replaceStackEntry(
 }
 
 /**
- * Set the SystemBars style.
+ * Set the system bars style.
  *
- * @param style SystemBars style to set.
+ * @param style System bars style to set.
  */
 function setStyle(style: SystemBarsProps["style"]) {
   const props = resolveProps({ style });
@@ -234,9 +234,9 @@ function setStyle(style: SystemBarsProps["style"]) {
 }
 
 /**
- * Show or hide the SystemBars
+ * Show or hide the system bars.
  *
- * @param hidden Hide the SystemBars.
+ * @param hidden Hide the system bars.
  */
 function setHidden(hidden: SystemBarsProps["hidden"]) {
   const { statusBarHidden, navigationBarHidden } = resolveProps({ hidden });

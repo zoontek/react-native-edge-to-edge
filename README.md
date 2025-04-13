@@ -170,6 +170,8 @@ const App = () => (
 
 #### SystemBars.pushStackEntry
 
+Push a `SystemBars` entry onto the stack. The return value should be passed to `popStackEntry` when complete.
+
 ```ts
 const entry: SystemBarsEntry = SystemBars.pushStackEntry(
   props /*: SystemBarsProps */,
@@ -178,11 +180,15 @@ const entry: SystemBarsEntry = SystemBars.pushStackEntry(
 
 #### SystemBars.popStackEntry
 
+Remove an existing `SystemBars` stack entry from the stack.
+
 ```ts
 SystemBars.popStackEntry(entry /*: SystemBarsEntry */);
 ```
 
 #### SystemBars.replaceStackEntry
+
+Replace an existing `SystemBars` stack entry with new props.
 
 ```ts
 const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
@@ -193,11 +199,15 @@ const entry: SystemBarsEntry = SystemBars.replaceStackEntry(
 
 #### SystemBars.setStyle
 
+Set the system bars style.
+
 ```ts
 SystemBars.setStyle(style /*: SystemBarsProps["style"] */);
 ```
 
 #### SystemBars.setHidden
+
+Show or hide the system bars.
 
 ```ts
 SystemBars.setHidden(style /*: SystemBarsProps["hidden"] */);
