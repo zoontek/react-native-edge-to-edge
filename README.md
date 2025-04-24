@@ -219,12 +219,23 @@ If you're an author and your package interferes with edge-to-edge, refer to the 
 
 ## Troubleshooting 🤔
 
-#### The system bars stays opaque
-
-Until third-party libraries officially add support for `react-native-edge-to-edge` to set these options automatically, you may need to adjust them manually to prevent interference with the library.
-
-For example, make sure to set `react-native-reanimated` `useAnimatedKeyboard` `isStatusBarTranslucentAndroid` and `isNavigationBarTranslucentAndroid` to `true` (until [this PR](https://github.com/software-mansion/react-native-reanimated/pull/6732) is merged), or to replace all occurrences of the built-in `StatusBar`, [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) with `SystemBars`.
-
 #### The navigation bar style is erratic
 
 There's currently [an open issue](https://issuetracker.google.com/issues/346386744) with the Android 15 emulator image regarding the navigation bar style when it is is fully transparent. This issue does not occur on physical devices.
+
+#### The system bars stays opaque
+
+In recent months, support has been added across the React Native ecosystem. If you use any of the following libraries, make sure you're on the latest version:
+
+- `expo-router`
+- `galeria`
+- `react-native-avoid-softinput`
+- `react-native-bootsplash`
+- `react-native-bottom-tabs`
+- `react-native-keyboard-controller`
+- `react-native-reanimated`
+- `react-native-screens`
+- `react-native-true-sheet`
+- `react-native-unistyles (v3)`
+
+Make also sure to replace all occurrences of the built-in `StatusBar`, [`expo-status-bar`](https://docs.expo.dev/versions/latest/sdk/status-bar) and [`expo-navigation-bar`](https://docs.expo.dev/versions/latest/sdk/navigation-bar/) with `SystemBars`.
