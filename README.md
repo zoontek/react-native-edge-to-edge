@@ -70,7 +70,6 @@ Add the library plugin in your `app.json` config file and [create a new build](h
         "react-native-edge-to-edge",
         {
           "android": {
-            "parentTheme": "Light",
             "enforceNavigationBarContrast": false
           }
         }
