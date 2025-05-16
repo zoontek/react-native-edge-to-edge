@@ -104,7 +104,7 @@ type Options = {
 ```
 
 > [!NOTE]
-> This library is not yet supported in the [Expo Go](https://expo.dev/go) sandbox app.
+> These configuration properties are not supported in the [Expo Go](https://expo.dev/go) sandbox app, use a [development build](https://docs.expo.dev/develop/development-builds/create-a-build/).
 
 ### Bare React Native
 
