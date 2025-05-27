@@ -36,8 +36,8 @@ function mergeEntriesStack(entriesStack: SystemBarsEntry[]) {
   return entriesStack.reduce<{
     statusBarStyle: SystemBarStyle | undefined;
     navigationBarStyle: SystemBarStyle | undefined;
-    statusBarHidden: boolean;
-    navigationBarHidden: boolean;
+    statusBarHidden: boolean | undefined;
+    navigationBarHidden: boolean | undefined;
   }>(
     (prev, cur) => {
       for (const prop in cur) {
@@ -51,8 +51,8 @@ function mergeEntriesStack(entriesStack: SystemBarsEntry[]) {
     {
       statusBarStyle: undefined,
       navigationBarStyle: undefined,
-      statusBarHidden: false,
-      navigationBarHidden: false,
+      statusBarHidden: undefined,
+      navigationBarHidden: undefined,
     },
   );
 }
@@ -85,13 +85,13 @@ let updateImmediate: NodeJS.Immediate | null = null;
 const currentValues: {
   statusBarStyle: ResolvedBarStyle;
   navigationBarStyle: ResolvedBarStyle;
-  statusBarHidden: boolean;
-  navigationBarHidden: boolean;
+  statusBarHidden: boolean | undefined;
+  navigationBarHidden: boolean | undefined;
 } = {
   statusBarStyle: undefined,
   navigationBarStyle: undefined,
-  statusBarHidden: false,
-  navigationBarHidden: false,
+  statusBarHidden: undefined,
+  navigationBarHidden: undefined,
 };
 
 function setStatusBarStyle(style: ResolvedBarStyle) {
