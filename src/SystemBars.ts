@@ -163,8 +163,13 @@ function updateEntriesStack() {
 
       setStatusBarStyle(statusBarStyle);
       setNavigationBarStyle(navigationBarStyle);
-      setStatusBarHidden(statusBarHidden);
-      setNavigationBarHidden(navigationBarHidden);
+
+      if (statusBarHidden != null) {
+        setStatusBarHidden(statusBarHidden);
+      }
+      if (navigationBarHidden != null) {
+        setNavigationBarHidden(navigationBarHidden);
+      }
     });
   }
 }
