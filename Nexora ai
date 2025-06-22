@@ -1,0 +1,196 @@
+npm install -g react-native-cli
+npx react-native init SurfaceChatBot --template react-native-template-typescript
+cd SurfaceChatBot
+npm install axios react-native-sqlite-storage @react-navigation/native @react-navigation/native-stack
+npm install react-native-gesture-handler react-native-reanimated react-native-screens
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const API_URL = 'http://your-n8n-server.com/webhook/surface';
+
+// صفحه چت
+function ChatScreen({ navigation }: any) {
+  const [messages, setMessages] = useState<Array<{id: number, text: string, sender: string}>>([]);
+  const [input, setInput] = useState('');
+  const [userId] = useState(`user_${Math.random().toString(36).substr(2, 9)}`);
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+
+    const userMessage = { id: Date.now(), text: input, sender: 'user' };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+
+    try {
+      const response = await axios.post(API_URL, {
+        userId,
+        message: input
+      });
+
+      const botMessage = { 
+        id: Date.now(), 
+        text: response.data.reply, 
+        sender: 'bot' 
+      };
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      console.error('Error:', error);
+      const errorMessage = { 
+        id: Date.now(), 
+        text: 'خطا در ارتباط با سرور', 
+        sender: 'bot' 
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={messages}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={[
+            styles.message, 
+            item.sender === 'user' ? styles.userMessage : styles.botMessage
+          ]}>
+            <Text>{item.text}</Text>
+          </View>
+        )}
+      />
+      
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={input}
+          onChangeText={setInput}
+          placeholder="پیام خود را بنویسید..."
+          onSubmitEditing={sendMessage}
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <Text style={styles.sendButtonText}>ارسال</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+// صفحه تنظیمات
+function SettingsScreen({ navigation }: any) {
+  return (
+    <View style={styles.container}>
+      <Text>تنظیمات برنامه</Text>
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Chat">
+        <Stack.Screen name="Chat" component={ChatScreen} options={{ title: 'چت بات سرفیس' }} />
+        <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'تنظیمات' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16 },
+  message: { 
+    padding: 12, 
+    marginVertical: 4, 
+    borderRadius: 8, 
+    maxWidth: '80%' 
+  },
+  userMessage: { 
+    alignSelf: 'flex-end', 
+    backgroundColor: '#DCF8C6' 
+  },
+  botMessage: { 
+    alignSelf: 'flex-start', 
+    backgroundColor: '#ECECEC' 
+  },
+  inputContainer: { 
+    flexDirection: 'row', 
+    alignItems: 'center',
+    borderTopWidth: 1, 
+    borderColor: '#EEE', 
+    padding: 8 
+  },
+  input: { 
+    flex: 1,
+    height: 40, 
+    borderColor: '#CCC', 
+    borderWidth: 1, 
+    borderRadius: 20, 
+    paddingHorizontal: 16,
+    marginRight: 8
+  },
+  sendButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 20
+  },
+  sendButtonText: {
+    color: 'white',
+    fontWeight: 'bold'
+  }
+});
+npm install n8n -g
+n8n start
+npx react-native run-android
+npx react-native run-ios
+cd android
+./gradlew assembleRelease
+// در App.tsx
+const [isOnline, setIsOnline] = useState(true);
+
+useEffect(() => {
+  const checkConnection = async () => {
+    try {
+      await axios.get('http://your-n8n-server.com/health');
+      setIsOnline(true);
+    } catch {
+      setIsOnline(false);
+    }
+  };
+  
+  const interval = setInterval(checkConnection, 30000);
+  return () => clearInterval(interval);
+}, []);
+import SQLite from 'react-native-sqlite-storage';
+
+const db = SQLite.openDatabase(
+  { name: 'chat.db', location: 'default' },
+  () => console.log('Database connected'),
+  error => console.error('Database error', error)
+);
+
+// در useEffect اولیه
+useEffect(() => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT, sender TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'
+    );
+    
+    tx.executeSql(
+      'SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50',
+      [],
+      (_, { rows }) => {
+        const dbMessages = rows.raw().map(row => ({
+          id: row.id,
+          text: row.text,
+          sender: row.sender
+        }));
+        setMessages(dbMessages);
+      }
+    );
+  });
+}, []);
