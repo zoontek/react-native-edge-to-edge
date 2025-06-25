@@ -18,7 +18,7 @@
     "react": "19.0.0",
     "react-native": "0.79.0",
     "react-native-edge-to-edge": "link:../",
-    "react-native-safe-area-context": "5.3.0",
+    "react-native-safe-area-context": "5.5.0",
     "react-native-screens": "4.10.0"
   },
   "devDependencies": {
