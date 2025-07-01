@@ -1,8 +1,12 @@
 # Changelog
 
-# 1.1.7
+# 1.2.1
 
-- Fix peer dependencies versions (3255daa)
+- Detect React Native `edgeToEdgeEnabled` (bc386f4)
+
+# 1.2.0
+
+- Invalid release, use `1.2.1`
 
 # 1.1.6
 
