@@ -28,7 +28,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "test": "vitest run",
-    "build": "yarn clean && yarn test && tsup && tsc -p tsconfig.build.json --emitDeclarationOnly"
+    "prepack": "yarn clean && yarn test && tsup && tsc -p tsconfig.build.json --emitDeclarationOnly"
   },
   "peerDependencies": {
     "react": "*",
