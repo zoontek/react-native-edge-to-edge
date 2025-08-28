@@ -20,12 +20,12 @@
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
-    <style name="Theme.EdgeToEdge.Material3.Expressive" parent="Theme.EdgeToEdge.Material3.Expressive.DayNight.Common">
+    <style name="Theme.EdgeToEdge.Material3Expressive" parent="Theme.EdgeToEdge.Material3Expressive.DayNight.Common">
         <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
-    <style name="Theme.EdgeToEdge.Material3.Expressive.Dynamic" parent="Theme.EdgeToEdge.Material3.Expressive.Dynamic.DayNight.Common">
+    <style name="Theme.EdgeToEdge.Material3Expressive.Dynamic" parent="Theme.EdgeToEdge.Material3Expressive.Dynamic.DayNight.Common">
         <item name="android:windowLightNavigationBar">@bool/windowLightSystemBars</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
@@ -50,12 +50,12 @@
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
-    <style name="Theme.EdgeToEdge.Material3.Expressive.Light" parent="Theme.EdgeToEdge.Material3.Expressive.Light.Common">
+    <style name="Theme.EdgeToEdge.Material3Expressive.Light" parent="Theme.EdgeToEdge.Material3Expressive.Light.Common">
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
-    <style name="Theme.EdgeToEdge.Material3.Expressive.Dynamic.Light" parent="Theme.EdgeToEdge.Material3.Expressive.Dynamic.Light.Common">
+    <style name="Theme.EdgeToEdge.Material3Expressive.Dynamic.Light" parent="Theme.EdgeToEdge.Material3Expressive.Dynamic.Light.Common">
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>

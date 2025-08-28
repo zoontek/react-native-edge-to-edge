@@ -47,20 +47,20 @@ $ yarn add react-native-edge-to-edge
 
 This library requires you to update the parent of your Android `AppTheme` to an edge-to-edge version. Don't worry, it's very easy to understand! You just need to choose a theme based on the current value:
 
-| If you currently have…                                          | …you should use                                       |
-| :-------------------------------------------------------------- | :---------------------------------------------------- |
-| `Theme.AppCompat.DayNight.NoActionBar`                          | `Theme.EdgeToEdge`                                    |
-| `Theme.MaterialComponents.DayNight.NoActionBar`                 | `Theme.EdgeToEdge.Material2`                          |
-| `Theme.Material3.DayNight.NoActionBar`                          | `Theme.EdgeToEdge.Material3`                          |
-| `Theme.Material3.DynamicColors.DayNight.NoActionBar`            | `Theme.EdgeToEdge.Material3.Dynamic`                  |
-| `Theme.Material3.Expressive.DayNight.NoActionBar`               | `Theme.EdgeToEdge.Material3.Expressive`               |
-| `Theme.Material3.Expressive.DynamicColors.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material3.Expressive.Dynamic`       |
-| `Theme.AppCompat.Light.NoActionBar`                             | `Theme.EdgeToEdge.Light`                              |
-| `Theme.MaterialComponents.Light.NoActionBar`                    | `Theme.EdgeToEdge.Material2.Light`                    |
-| `Theme.Material3.Light.NoActionBar`                             | `Theme.EdgeToEdge.Material3.Light`                    |
-| `Theme.Material3.DynamicColors.Light.NoActionBar`               | `Theme.EdgeToEdge.Material3.Dynamic.Light`            |
-| `Theme.Material3.Expressive.Light.NoActionBar`                  | `Theme.EdgeToEdge.Material3.Expressive.Light`         |
-| `Theme.Material3.Expressive.DynamicColors.Light.NoActionBar`    | `Theme.EdgeToEdge.Material3.Expressive.Dynamic.Light` |
+| If you currently have…                                         | …you should use                                      |
+| :------------------------------------------------------------- | :--------------------------------------------------- |
+| `Theme.AppCompat.DayNight.NoActionBar`                         | `Theme.EdgeToEdge`                                   |
+| `Theme.MaterialComponents.DayNight.NoActionBar`                | `Theme.EdgeToEdge.Material2`                         |
+| `Theme.Material3.DayNight.NoActionBar`                         | `Theme.EdgeToEdge.Material3`                         |
+| `Theme.Material3.DynamicColors.DayNight.NoActionBar`           | `Theme.EdgeToEdge.Material3.Dynamic`                 |
+| `Theme.Material3Expressive.DayNight.NoActionBar`               | `Theme.EdgeToEdge.Material3Expressive`               |
+| `Theme.Material3Expressive.DynamicColors.DayNight.NoActionBar` | `Theme.EdgeToEdge.Material3Expressive.Dynamic`       |
+| `Theme.AppCompat.Light.NoActionBar`                            | `Theme.EdgeToEdge.Light`                             |
+| `Theme.MaterialComponents.Light.NoActionBar`                   | `Theme.EdgeToEdge.Material2.Light`                   |
+| `Theme.Material3.Light.NoActionBar`                            | `Theme.EdgeToEdge.Material3.Light`                   |
+| `Theme.Material3.DynamicColors.Light.NoActionBar`              | `Theme.EdgeToEdge.Material3.Dynamic.Light`           |
+| `Theme.Material3Expressive.Light.NoActionBar`                  | `Theme.EdgeToEdge.Material3Expressive.Light`         |
+| `Theme.Material3Expressive.DynamicColors.Light.NoActionBar`    | `Theme.EdgeToEdge.Material3Expressive.Dynamic.Light` |
 
 ### Expo
 
@@ -92,10 +92,14 @@ type ParentTheme =
   | "Material2" // uses `Theme.EdgeToEdge.Material2`
   | "Material3" // uses `Theme.EdgeToEdge.Material3`
   | "Material3.Dynamic" // uses `Theme.EdgeToEdge.Material3.Dynamic`
+  | "Material3Expressive" // uses `Theme.EdgeToEdge.Material3Expressive`
+  | "Material3Expressive.Dynamic" // uses `Theme.EdgeToEdge.Material3Expressive.Dynamic`
   | "Light" // uses `Theme.EdgeToEdge.Light`
   | "Material2.Light" // uses `Theme.EdgeToEdge.Material2.Light`
   | "Material3.Light" // uses `Theme.EdgeToEdge.Material3.Light`
-  | "Material3.Dynamic.Light"; // uses `Theme.EdgeToEdge.Material3.Dynamic.Light`
+  | "Material3.Dynamic.Light" // uses `Theme.EdgeToEdge.Material3.Dynamic.Light`
+  | "Material3Expressive.Light" // uses `Theme.EdgeToEdge.Material3Expressive.Light`
+  | "Material3Expressive.Dynamic.Light"; // uses `Theme.EdgeToEdge.Material3Expressive.Dynamic.Light`
 
 type Options = {
   android?: {
