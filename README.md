@@ -6,7 +6,7 @@ Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/view
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
 [![npm downloads](https://img.shields.io/npm/dt/react-native-edge-to-edge.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
 
-<img width="240" src="./docs/logo.svg" alt="Logo">
+<img width="210" src="./docs/logo.svg" alt="Logo">
 
 ## Credits
 
