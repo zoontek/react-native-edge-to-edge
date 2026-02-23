@@ -73,6 +73,11 @@ object EdgeToEdgeModuleImpl {
 
       window.statusBarColor = Color.TRANSPARENT
 
+      // Fix https://github.com/zoontek/react-native-edge-to-edge/issues/105
+      if (VERSION.SDK_INT <= VERSION_CODES.O_MR1) {
+        window.decorView.setOnSystemUiVisibilityChangeListener { initInsetsController(window) }
+      }
+
       if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && isNavigationBarTransparent(activity)) {
         window.navigationBarColor = Color.TRANSPARENT
 
