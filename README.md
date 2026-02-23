@@ -67,25 +67,53 @@ This library requires you to update the parent of your Android `AppTheme` to an 
 
 ### Expo
 
-Add the library plugin in your `app.json` config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build) 👷:
+Add the library plugin in your app config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build) 👷:
 
-```json
+<details open>
+<summary><strong>With dynamic configuration (app.config.js, app.config.ts)</strong></summary>
+
+```ts
+import type { ConfigContext, ExpoConfig } from "expo/config";
+import edgeToEdge from "react-native-edge-to-edge/expo"; // use `require` in app.config.js
+
+export default ({ config }: ConfigContext): ExpoConfig => ({
+  // …
+  plugins: [
+    edgeToEdge({
+      android: {
+        parentTheme: "Default",
+        enforceNavigationBarContrast: false,
+      },
+    }),
+  ],
+});
+```
+
+</details>
+
+<details>
+<summary><strong>With static configuration (app.json)</strong></summary>
+
+```jsonc
 {
   "expo": {
+    // …
     "plugins": [
       [
         "react-native-edge-to-edge",
         {
           "android": {
             "parentTheme": "Default",
-            "enforceNavigationBarContrast": false
-          }
-        }
-      ]
-    ]
-  }
+            "enforceNavigationBarContrast": false,
+          },
+        },
+      ],
+    ],
+  },
 }
 ```
+
+</details>
 
 _📌 The available plugins options are:_
 

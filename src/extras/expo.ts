@@ -20,7 +20,18 @@ type ParentTheme =
 
 type EdgeToEdgePluginConfig = {
   android?: {
+    /**
+     * Enforce a contrasting background on the navigation bar.
+     * Set to `false` to enforce full transparency in all cases (you will then
+     * need to manage the navigation bar style using `SystemBars`).
+     * @default true
+     */
     enforceNavigationBarContrast?: boolean;
+    /**
+     * The parent theme for the Android `AppTheme`. Choose based on your
+     * current theme.
+     * @default "Default"
+     */
     parentTheme?: ParentTheme;
   };
 };
