@@ -1,6 +1,6 @@
 import { TurboModuleRegistry } from "react-native";
 
-const warnings = new Set();
+const warnings = new Set<string>();
 
 export const isEdgeToEdge = () =>
   TurboModuleRegistry.get("RNEdgeToEdge") != null ||

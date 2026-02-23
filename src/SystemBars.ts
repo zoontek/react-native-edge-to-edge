@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Appearance, Platform, StatusBar, useColorScheme } from "react-native";
 import NativeModule from "./specs/NativeEdgeToEdgeModule";
-import { SystemBarsEntry, SystemBarsProps, SystemBarStyle } from "./types";
+import type { SystemBarsEntry, SystemBarsProps, SystemBarStyle } from "./types";
 
 type ResolvedBarStyle = "light" | "dark" | undefined;
 

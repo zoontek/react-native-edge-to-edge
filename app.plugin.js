@@ -1,1 +1,2 @@
-module.exports = require("./dist/commonjs/expo");
+const { withEdgeToEdge } = require("./dist/commonjs/extras/expo");
+module.exports = withEdgeToEdge;

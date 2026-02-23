@@ -1,13 +1,37 @@
 {
   "name": "react-native-edge-to-edge",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "license": "MIT",
   "description": "Effortlessly enable edge-to-edge display in React Native",
   "author": "Mathieu Acthernoene <zoontek@gmail.com>",
   "homepage": "https://github.com/zoontek/react-native-edge-to-edge",
-  "main": "dist/commonjs/index.js",
-  "module": "dist/module/index.js",
-  "types": "dist/typescript/index.d.ts",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/module/index.js",
+  "types": "./dist/typescript/commonjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/typescript/module/index.d.ts",
+        "default": "./dist/module/index.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./expo": {
+      "import": {
+        "types": "./dist/typescript/module/extras/expo.d.ts",
+        "default": "./dist/module/extras/expo.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/extras/expo.d.ts",
+        "default": "./dist/commonjs/extras/expo.js"
+      }
+    },
+    "./package.json": "./package.json",
+    "./app.plugin.js": "./app.plugin.js"
+  },
   "files": [
     "dist",
     "src",
@@ -34,16 +58,26 @@
     "clean": "rm -rf dist",
     "format": "prettier '**/*' -u -w",
     "typecheck": "tsc --noEmit",
-    "build": "yarn clean && bob build && rm -rf dist/*/package.json",
+    "build": "yarn clean && bob build",
     "prepack": "prettier '**/*' -u -c && yarn typecheck && yarn build"
   },
   "react-native-builder-bob": {
     "source": "src",
     "output": "dist",
     "targets": [
-      "commonjs",
-      "module",
-      "typescript"
+      "typescript",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ]
     ]
   },
   "prettier": {
@@ -58,14 +92,14 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
-    "@expo/config-plugins": "^9.0.0 || ^10.0.0",
-    "@types/react": "^19.0.0",
-    "prettier": "^3.6.2",
-    "prettier-plugin-organize-imports": "^4.1.0",
-    "react": "19.1.0",
-    "react-native": "0.80.0",
-    "react-native-builder-bob": "^0.40.12",
-    "typescript": "^5.8.3"
+    "@expo/config-plugins": "*",
+    "@types/react": "^19.2.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "react-native-builder-bob": "^0.40.18",
+    "typescript": "^5.9.3"
   },
   "codegenConfig": {
     "name": "RNEdgeToEdge",

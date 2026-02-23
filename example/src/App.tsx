@@ -2,25 +2,25 @@ import SegmentedControl from "@react-native-segmented-control/segmented-control"
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createNativeStackNavigator,
-  NativeStackScreenProps,
+  type NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   Appearance,
   Text as BaseText,
   Modal,
   Platform,
-  StyleProp,
   StyleSheet,
   Switch,
-  TextProps,
   TouchableOpacity,
   useColorScheme,
   View,
-  ViewStyle,
+  type StyleProp,
+  type TextProps,
+  type ViewStyle,
 } from "react-native";
-import { SystemBars, SystemBarStyle } from "react-native-edge-to-edge";
+import { SystemBars, type SystemBarStyle } from "react-native-edge-to-edge";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const DARK_BACKGROUND = "#1F2937";
@@ -169,8 +169,10 @@ export const HomeScreen = ({
 
   useEffect(() => {
     const value = SCHEMES[schemeIndex];
-    const scheme = value === "light" || value === "dark" ? value : null;
-    Appearance.setColorScheme(scheme);
+
+    Appearance.setColorScheme(
+      value === "light" || value === "dark" ? value : "unspecified",
+    );
   }, [schemeIndex]);
 
   const closeReactNativeModal = () => {

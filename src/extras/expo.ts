@@ -1,5 +1,5 @@
 import {
-  ConfigPlugin,
+  type ConfigPlugin,
   createRunOncePlugin,
   withAndroidStyles,
 } from "@expo/config-plugins";
@@ -18,16 +18,16 @@ type ParentTheme =
   | "Material3Expressive.Light"
   | "Material3Expressive.Dynamic.Light";
 
-type AndroidProps = {
-  enforceNavigationBarContrast?: boolean;
-  parentTheme?: ParentTheme;
+type EdgeToEdgePluginConfig = {
+  android?: {
+    enforceNavigationBarContrast?: boolean;
+    parentTheme?: ParentTheme;
+  };
 };
 
-type Props = { android?: AndroidProps } | undefined;
-
-const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
-  config,
-  props = {},
+const plugin: ConfigPlugin<EdgeToEdgePluginConfig | undefined> = (
+  expoConfig,
+  pluginConfig = {},
 ) => {
   const themes: Record<ParentTheme, string> = {
     Default: "Theme.EdgeToEdge",
@@ -62,7 +62,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
     "android:windowTranslucentStatus",
   ]);
 
-  return withAndroidStyles(config, (config) => {
+  return withAndroidStyles(expoConfig, (config) => {
     const {
       androidNavigationBar = {},
       androidStatusBar = {},
@@ -71,7 +71,7 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
 
     const { barStyle: navigationBarStyle } = androidNavigationBar;
     const { barStyle: statusBarStyle } = androidStatusBar;
-    const { android = {} } = props;
+    const { android = {} } = pluginConfig;
     const { enforceNavigationBarContrast, parentTheme = "Default" } = android;
 
     config.modResults.resources.style = config.modResults.resources.style?.map(
@@ -125,7 +125,10 @@ const withAndroidEdgeToEdgeTheme: ConfigPlugin<Props> = (
   });
 };
 
-export default createRunOncePlugin(
-  withAndroidEdgeToEdgeTheme,
-  "react-native-edge-to-edge",
-);
+const PACKAGE_NAME = "react-native-edge-to-edge";
+
+export const withEdgeToEdge = createRunOncePlugin(plugin, PACKAGE_NAME);
+
+export default (
+  config: EdgeToEdgePluginConfig,
+): [typeof PACKAGE_NAME, EdgeToEdgePluginConfig] => [PACKAGE_NAME, config];

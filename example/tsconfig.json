@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "esnext",
     "lib": ["ES2017"],
     "jsx": "react-native",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
 
     "allowJs": false,
     "strict": true,
@@ -20,6 +20,7 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
 
     "paths": {
       "react-native-edge-to-edge": ["../src"]

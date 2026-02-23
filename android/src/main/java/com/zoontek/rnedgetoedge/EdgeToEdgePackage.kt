@@ -23,7 +23,6 @@ class EdgeToEdgePackage : BaseReactPackage() {
         EdgeToEdgeModuleImpl.NAME,
         false,
         true,
-        true,
         false,
         isTurboModule
       )
