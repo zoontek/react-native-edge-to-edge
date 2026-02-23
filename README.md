@@ -70,7 +70,7 @@ This library requires you to update the parent of your Android `AppTheme` to an 
 Add the library plugin in your app config file and [create a new build](https://docs.expo.dev/develop/development-builds/create-a-build) 👷:
 
 <details open>
-<summary><strong>With dynamic configuration (app.config.js, app.config.ts)</strong></summary>
+<summary><strong>Dynamic configuration (app.config.js, app.config.ts)</strong></summary>
 
 ```ts
 import type { ConfigContext, ExpoConfig } from "expo/config";
@@ -92,7 +92,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 </details>
 
 <details>
-<summary><strong>With static configuration (app.json)</strong></summary>
+<summary><strong>Static configuration (app.json)</strong></summary>
 
 ```jsonc
 {
