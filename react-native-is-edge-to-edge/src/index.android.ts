@@ -2,11 +2,16 @@ import { TurboModuleRegistry } from "react-native";
 
 const warnings = new Set<string>();
 
-export const isEdgeToEdge = () =>
-  TurboModuleRegistry.get("RNEdgeToEdge") != null ||
+export const isEdgeToEdgeFromLibrary = () =>
+  TurboModuleRegistry.get("RNEdgeToEdge") != null;
+
+export const isEdgeToEdgeFromProperty = () =>
   TurboModuleRegistry.get<{
     getConstants?: () => { isEdgeToEdge?: boolean };
   }>("DeviceInfo")?.getConstants?.().isEdgeToEdge === true;
+
+export const isEdgeToEdge = () =>
+  isEdgeToEdgeFromLibrary() || isEdgeToEdgeFromProperty();
 
 export const controlEdgeToEdgeValues = (values: Record<string, unknown>) => {
   if (__DEV__ && isEdgeToEdge()) {

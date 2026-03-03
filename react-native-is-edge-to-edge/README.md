@@ -11,6 +11,8 @@ To support library authors, we provide this lightweight package called `react-na
 import {
   controlEdgeToEdgeValues,
   isEdgeToEdge,
+  isEdgeToEdgeFromLibrary,
+  isEdgeToEdgeFromProperty,
 } from "react-native-is-edge-to-edge";
 
 const EDGE_TO_EDGE = isEdgeToEdge();
