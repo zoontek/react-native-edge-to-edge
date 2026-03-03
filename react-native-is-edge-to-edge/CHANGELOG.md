@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.3.0
+
+- Add `isEdgeToEdgeFromLibrary` / `isEdgeToEdgeFromProperty` (0f3ec5e)
+
 # 1.2.1
 
 - Detect React Native `edgeToEdgeEnabled` (bc386f4)
