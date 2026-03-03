@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.3.1
+
+- Fix missing TypeScript declarations (e79cbd6)
+
 # 1.3.0
 
 - Add `isEdgeToEdgeFromLibrary` / `isEdgeToEdgeFromProperty` (0f3ec5e)
