@@ -2,8 +2,8 @@
 
 Effortlessly enable [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) display in React Native, allowing your Android (v6 and above) app content to flow seamlessly beneath the system bars.
 
-> [!TIP]
-> If you're running React Native 0.81 or later, consider using the built-in `edgeToEdgeEnabled=true` Gradle property along with [`@zoontek/react-native-navigation-bar`](https://github.com/zoontek/react-native-navigation-bar) instead.
+> [!IMPORTANT]
+> [React Native 0.86](https://reactnative.dev/blog/2026/06/11/react-native-0.86) ships many edge-to-edge fixes. If you're on that version or later, prefer enabling edge-to-edge through the built-in `edgeToEdgeEnabled=true` Gradle property to benefit from them, paired with [`@zoontek/react-native-navigation-bar`](https://github.com/zoontek/react-native-navigation-bar) if you want to style the navigation bar.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/zoontek/react-native-edge-to-edge/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/react-native-edge-to-edge?style=for-the-badge)](https://www.npmjs.org/package/react-native-edge-to-edge)
